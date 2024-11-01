@@ -1,0 +1,34 @@
+{
+    "ReportUniqueId": "fc6738c9dc854b99924c7a1732ae5413",
+    "ReportName": "Time Series Data",
+    "RequestedTimeRange": {
+        "Type": "EntireRecord"
+    },
+    "Parameters": {
+        "ReportTitle": {
+            "Name": "ReportTitle",
+            "Value": "raw_data"
+        },
+        "Description": {
+            "Name": "Description",
+            "Value": ""
+        },
+        "Comment": {
+            "Name": "Comment",
+            "Value": "Raw time series in general"
+        },
+        "Input1": {
+            "Name": "Input1",
+            "Value": "{\"TimeSeriesUniqueId\":\"394d4cc88f694653848d62296572dfdf\",\"IsMaster\":true,\"ColumnLabel\":\"Absorbance @ 254nm Filtered@EX281\",\"ProcessChain\":[]}"
+        }
+    },
+    "UtcOffset": "PT12H",
+    "RequestingUserLocale": "en",
+    "IsTransient": true,
+    "OutputType": "Csv",
+    "LocationInput": {
+        "Name": "Location",
+        "Identifier": "EX281"
+    },
+    "Tags": []
+}

@@ -1,0 +1,34 @@
+{
+    "ReportUniqueId": "fc6738c9dc854b99924c7a1732ae5413",
+    "ReportName": "Time Series Data",
+    "RequestedTimeRange": {
+        "Type": "EntireRecord"
+    },
+    "Parameters": {
+        "ReportTitle": {
+            "Name": "ReportTitle",
+            "Value": "monthly_sum"
+        },
+        "Description": {
+            "Name": "Description",
+            "Value": ""
+        },
+        "Comment": {
+            "Name": "Comment",
+            "Value": "Monthly summation in general"
+        },
+        "Input1": {
+            "Name": "Input1",
+            "Value": "{\"TimeSeriesUniqueId\":\"f48e649b46f0402095a2279f7c506ed8\",\"IsMaster\":true,\"ColumnLabel\":\"Forecast Rainfall@EM316\",\"ProcessChain\":[{\"ProcessType\":\"Statistic\",\"StatType\":\"Sum\",\"Period\":\"Monthly\",\"PeriodCount\":1,\"RequireMinimumDataCoverage\":false,\"BinAnchorOffsetPeriod\":\"00-00 00:00\"}]}"
+        }
+    },
+    "UtcOffset": "PT12H",
+    "RequestingUserLocale": "en",
+    "IsTransient": true,
+    "OutputType": "Csv",
+    "LocationInput": {
+        "Name": "Location",
+        "Identifier": "EM316"
+    },
+    "Tags": []
+}

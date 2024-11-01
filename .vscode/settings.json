@@ -1,0 +1,11 @@
+{
+    "powershell.cwd": "scripts",
+    "python.REPL.enableREPLSmartSend": false,
+    "python.REPL.sendToNativeREPL": false,
+    "python.terminal.launchArgs": [
+        "-m",
+        "IPython",
+        "--no-autoindent",
+        "--simple-prompt"
+    ]
+}

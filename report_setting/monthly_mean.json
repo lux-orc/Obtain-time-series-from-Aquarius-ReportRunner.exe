@@ -1,0 +1,34 @@
+{
+    "ReportUniqueId": "fc6738c9dc854b99924c7a1732ae5413",
+    "ReportName": "Time Series Data",
+    "RequestedTimeRange": {
+        "Type": "EntireRecord"
+    },
+    "Parameters": {
+        "ReportTitle": {
+            "Name": "ReportTitle",
+            "Value": "monthly_mean"
+        },
+        "Description": {
+            "Name": "Description",
+            "Value": ""
+        },
+        "Comment": {
+            "Name": "Comment",
+            "Value": "Monthly mean statistics in general"
+        },
+        "Input1": {
+            "Name": "Input1",
+            "Value": "{\"TimeSeriesUniqueId\":\"1b4aff6cd0644f829970134fe9dffec4\",\"IsMaster\":true,\"ColumnLabel\":\"Groundwater Level@G40/0415\",\"ProcessChain\":[{\"ProcessType\":\"Statistic\",\"StatType\":\"Mean\",\"Period\":\"Monthly\",\"PeriodCount\":1,\"RequireMinimumDataCoverage\":false,\"BinAnchorOffsetPeriod\":\"00-00 00:00\"}]}"
+        }
+    },
+    "UtcOffset": "PT12H",
+    "RequestingUserLocale": "en",
+    "IsTransient": true,
+    "OutputType": "Csv",
+    "LocationInput": {
+        "Name": "Location",
+        "Identifier": "G40/0415"
+    },
+    "Tags": []
+}

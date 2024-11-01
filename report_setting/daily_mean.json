@@ -1,0 +1,34 @@
+{
+    "ReportUniqueId": "fc6738c9dc854b99924c7a1732ae5413",
+    "ReportName": "Time Series Data",
+    "RequestedTimeRange": {
+        "Type": "EntireRecord"
+    },
+    "Parameters": {
+        "ReportTitle": {
+            "Name": "ReportTitle",
+            "Value": "daily_mean"
+        },
+        "Description": {
+            "Name": "Description",
+            "Value": ""
+        },
+        "Comment": {
+            "Name": "Comment",
+            "Value": "Daily mean statistics in general"
+        },
+        "Input1": {
+            "Name": "Input1",
+            "Value": "{\"TimeSeriesUniqueId\":\"30e1327c88364c6dbcc5028212663a82\",\"IsMaster\":true,\"ColumnLabel\":\"Discharge@FA780\",\"ProcessChain\":[{\"ProcessType\":\"Statistic\",\"StatType\":\"Mean\",\"Period\":\"Daily\",\"PeriodCount\":1,\"RequireMinimumDataCoverage\":false,\"BinAnchorOffsetPeriod\":\"00-00 00:00\"}]}"
+        }
+    },
+    "UtcOffset": "PT12H",
+    "RequestingUserLocale": "en",
+    "IsTransient": true,
+    "OutputType": "Csv",
+    "LocationInput": {
+        "Name": "Location",
+        "Identifier": "FA780"
+    },
+    "Tags": []
+}

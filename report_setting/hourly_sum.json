@@ -1,0 +1,34 @@
+{
+    "ReportUniqueId": "fc6738c9dc854b99924c7a1732ae5413",
+    "ReportName": "Time Series Data",
+    "RequestedTimeRange": {
+        "Type": "EntireRecord"
+    },
+    "Parameters": {
+        "ReportTitle": {
+            "Name": "ReportTitle",
+            "Value": "hourly_sum"
+        },
+        "Description": {
+            "Name": "Description",
+            "Value": ""
+        },
+        "Comment": {
+            "Name": "Comment",
+            "Value": "Hourly summation in general"
+        },
+        "Input1": {
+            "Name": "Input1",
+            "Value": "{\"TimeSeriesUniqueId\":\"87da10985fb64e98ac18e37f5191aa89\",\"IsMaster\":true,\"ColumnLabel\":\"Rainfall@EM316\",\"ProcessChain\":[{\"ProcessType\":\"Statistic\",\"StatType\":\"Sum\",\"Period\":\"Hourly\",\"PeriodCount\":1,\"RequireMinimumDataCoverage\":false,\"BinAnchorOffsetPeriod\":\"00-00 00:00\"}]}"
+        }
+    },
+    "UtcOffset": "PT12H",
+    "RequestingUserLocale": "en",
+    "IsTransient": true,
+    "OutputType": "Csv",
+    "LocationInput": {
+        "Name": "Location",
+        "Identifier": "EM316"
+    },
+    "Tags": []
+}
