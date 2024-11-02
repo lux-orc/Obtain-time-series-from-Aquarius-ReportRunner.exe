@@ -4,7 +4,7 @@ To download the time series data from Aquarius and organise the data in `DataFra
 
 # Requirements
 
-- Install [PowerShell](https://www.microsoft.com/store/productId/9MZ1SNWT0N5D?ocid=pdpshare) and [its vscode extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell)
+- Install [PowerShell](https://github.com/PowerShell/PowerShell) and [its vscode extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell)
 - Download the [ReportRunner](https://github.com/AquaticInformatics/getting-started/releases/ReportRunner) executable file and save it into folder `_tools`
 - To process the downloaded CSV files (in folder `out/csv/`)
     - To use [DuckDB](https://duckdb.org) as an optional to process the CSV files downloaded from Aquarius:
