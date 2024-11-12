@@ -633,3 +633,127 @@ def get_field_data_AQ(
 
 
 get_stage_flow_AQ = partial(get_field_data_AQ, parameters=['Stage', 'Discharge'])
+
+
+def _get_field_hydro_s(plate: str) -> pd.DataFrame:
+    """A helper function for `get_field_hydro_AQ()`"""
+    end_point = 'https://aquarius.orc.govt.nz/AQUARIUS/Publish/v2'
+    url = f'{end_point}/GetFieldVisitDataByLocation?LocationIdentifier={plate}'
+    r = get_AQ(url)
+    scm = {
+        'Identifier': str,
+        'LocationIdentifier': str,
+        'MeasurementTime': str,
+        'GradeCode': str,
+        'Measurement': str,
+        'Unit': str,
+        'Numeric': float,
+    }
+    empty_df = pd.DataFrame(columns=scm.keys()).astype(scm)
+    if not (ld := json.loads(r.data.decode('utf-8')).get('FieldVisitData')):
+        return empty_df
+    cois = ['Identifier', 'LocationIdentifier', 'DischargeActivities']
+    data = pd.DataFrame({coi: [i.get(coi) for i in ld] for coi in cois})
+    if data.dropna().empty:
+        return empty_df
+    tmp = data.explode('DischargeActivities')
+    coi = [
+        'DischargeSummary',
+        'PointVelocityDischargeActivities',
+        'AdcpDischargeActivities',
+    ]
+    for c in coi:
+        tmp[c] = tmp['DischargeActivities'].map(
+            lambda i: i.get(c) if isinstance(i, dict) else None
+        )
+    tmp = (
+        tmp.explode('PointVelocityDischargeActivities')
+        .explode('AdcpDischargeActivities')
+        .drop(columns='DischargeActivities')
+        .dropna(
+            subset=[
+                'DischargeSummary',
+                'PointVelocityDischargeActivities',
+                'AdcpDischargeActivities',
+            ],
+            how='all'
+        )
+    )
+    tmp['AP'] = (
+        tmp['AdcpDischargeActivities']
+        .combine_first(tmp['PointVelocityDischargeActivities'])
+    )
+    tmp = tmp.drop(columns=['AdcpDischargeActivities', 'PointVelocityDischargeActivities'])
+    for i in ['MeasurementTime', 'Discharge', 'MeanGageHeight', 'GradeCode']:
+        tmp[i] = tmp['DischargeSummary'].map(
+            lambda d: d.get(i) if isinstance(d, dict) else None
+        )
+    for i in ['Width', 'Area', 'VelocityAverage']:
+        tmp[i] = tmp['AP'].map(lambda d: d.get(i) if isinstance(d, dict) else None)
+    tmp = tmp.drop(columns=['DischargeSummary', 'AP'])
+    fmt = '%Y-%m-%dT%H:%M:%S'
+    t = tmp.melt(
+        id_vars=[
+            'Identifier',
+            'LocationIdentifier',
+            'MeasurementTime',
+            'GradeCode',
+        ],
+        var_name='Measurement',
+        value_name='UV',
+    )
+    t['Unit'] = t['UV'].map(lambda i: i.get('Unit') if isinstance(i, dict) else None)
+    t['Numeric'] = t['UV'].map(lambda i: i.get('Numeric') if isinstance(i, dict) else None)
+    t['MeasurementTime'] = pd.to_datetime(t['MeasurementTime'].str[:19], format=fmt)
+    t.loc[t['Numeric'] == -1, 'Numeric'] = np.nan
+    tt = (
+        t.drop(columns='UV')
+        .dropna(subset=['Numeric'])
+        .drop_duplicates()
+        .sort_values(['Measurement', 'MeasurementTime'])
+        .reset_index(drop=True)
+    )
+    tt['MeasurementTime'] = tt['MeasurementTime'].dt.strftime(fmt)
+    tt['GradeCode'] = tt['GradeCode'].map(lambda x: None if pd.isna(x) else str(int(x)))
+    return tt.astype(scm)
+
+
+def get_field_hydro_AQ(site_list: 'str | list[str]') -> pd.DataFrame:
+    """
+    Get the field spot gauging data for multiple plates
+
+    Parameters
+    ----------
+    site_list : str | list[str]
+        A list of plate(s)
+
+    Returns
+    -------
+    pd.DataFrame
+        Get the field data for the following:
+        - 'Discharge': 'DischargeSummary'
+        - 'MeanGageHeight': 'DischargeSummary'
+        - 'Width': 'AdcpDischargeActivities' -> 'PointVelocityDischargeActivities'
+        - 'Area': 'AdcpDischargeActivities' -> 'PointVelocityDischargeActivities'
+        - 'VelocityAverage': 'AdcpDischargeActivities' -> 'PointVelocityDischargeActivities'
+    """
+    if isinstance(site_list, str):
+        site_list = [site_list]
+    scm = {
+        'Identifier': str,
+        'LocationIdentifier': str,
+        'MeasurementTime': str,
+        'GradeCode': str,
+        'Measurement': str,
+        'Unit': str,
+        'Numeric': float,
+    }
+    ts = pd.DataFrame(columns=scm.keys()).astype(scm)
+    for plate in pd.Series(site_list).unique():
+        print(f'Getting the field visit hydro data for - [{plate}]...')
+        if (tmp := _get_field_hydro_s(plate)).empty:
+            print(cp(f'\t-> No field hydro data for - [{plate}]!', fg=35, display=3))
+            continue
+        ts = pd.concat([ts, tmp], axis=0)
+    ts['GradeCode'] = ts['GradeCode'].map(lambda s: None if s == 'None' else s)
+    return ts.reset_index(drop=True)

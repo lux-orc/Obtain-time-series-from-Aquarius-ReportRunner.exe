@@ -636,3 +636,199 @@ get_stage_flow_AQ <- function(plates) {
   # Get the field visit Stage-Discharge data (from Aquarius) for multi sites (plates).
   return(get_field_data_AQ(plates, parameters = c("Stage", "Discharge")))
 }
+
+
+.get_field_hydro_s <- function(plate) {
+  # A helper function for `get_field_hydro_AQ()`
+  end_point <- "https://aquarius.orc.govt.nz/AQUARIUS/Publish/v2"
+  url_ <- paste0(end_point, "/GetFieldVisitDataByLocation?LocationIdentifier=", plate)
+  url_ <- build_url(parse_url(url_))
+  r <- get_AQ(url_)
+  data_list <- content(r)$FieldVisitData
+  empty_df <- data.table(
+    Identifier = character(),
+    LocationIdentifier = character(),
+    MeasurementTime = character(),
+    GradeCode = character(),
+    Measurement = character(),
+    Unit = character(),
+    Numeric = numeric()
+  )
+  if (is.null(unlist(sapply(data_list, "[", "DischargeActivities"))))
+    return(empty_df)
+  cois <- c("Identifier", "LocationIdentifier", "DischargeActivities")
+  tmp <- data.table()
+  for (coi in cois)
+    tmp[, j := sapply(data_list, "[", coi), env = list(j = coi)]
+  tmp[, let(
+    Identifier = as.character(Identifier),
+    LocationIdentifier = as.character(LocationIdentifier)
+  )]
+  tmp[, Len_list := lapply(DischargeActivities, length)]
+  t <- tmp[Len_list >= 1L]
+  if (!t[, .N])
+    return(empty_df)
+  t <- t[rep(seq(1, nrow(t)), Len_list)]
+  t[, Index := 1:.N, by = Identifier]
+  tmp_list <- list()
+  for (i in t[, .I]) {
+    idx <- t[i, Index]
+    list_i <- t[[i, "DischargeActivities"]]
+    tmp_list[[i]] <- list_i[[idx]]
+  }
+  t[, let(DischargeActivities = tmp_list, Len_list = NULL, Index = NULL)]
+  t <- t[lapply(DischargeActivities, length) > 0]
+  dis_act_lst <- list()
+  for (i in t[, .I])
+    dis_act_lst[[i]] <- unlist(t[i, DischargeActivities]) |> as.list()
+  fmt <- "%Y-%m-%dT%H:%M:%S"
+  null_as_char <- function(x) if (is.null(x)) NA_character_ else x
+  base_df <- data.table(
+    Identifier = t[, Identifier],
+    LocationIdentifier = t[, LocationIdentifier],
+    MeasurementTime = fcoalesce(
+      sapply(dis_act_lst, "[[", "DischargeSummary.MeasurementTime") |>
+        substr(1, 19) |>
+        as.POSIXct(tz = "Etc/GMT-12", format = fmt),
+      sapply(dis_act_lst, "[[", "MeasurementTime") |>
+        substr(1, 19) |>
+        as.POSIXct(tz = "Etc/GMT-12", format = fmt)
+    ),
+    GradeCode = fcoalesce(
+      sapply(dis_act_lst, "[[", "DischargeSummary.GradeCode") |>
+        sapply(null_as_char),
+      sapply(dis_act_lst, "[[", "GradeCode") |>
+        sapply(null_as_char)
+    )
+  )
+  if (any(is.na(base_df[, MeasurementTime]))) {
+    fill_values_mt <- base_df[
+      !is.na(MeasurementTime),
+      .(fill_mt = unique(MeasurementTime)),
+      by = .(Identifier, LocationIdentifier)
+    ]
+    base_df[fill_values_mt, MeasurementTime := fifelse(
+      is.na(MeasurementTime),
+      i.fill_mt,
+      MeasurementTime
+    ), on = .(Identifier, LocationIdentifier)]
+  }
+  if (any(is.na(base_df[, GradeCode]))) {
+    fill_values_gc <- base_df[
+      !is.na(GradeCode),
+      .(fill_gc = unique(GradeCode)),
+      by = .(Identifier, LocationIdentifier, MeasurementTime)
+    ]
+    base_df[fill_values_gc, GradeCode := fifelse(
+      is.na(GradeCode),
+      i.fill_gc,
+      GradeCode
+    ), on = .(Identifier, LocationIdentifier, MeasurementTime)]
+  }
+  extract_value_char <- function(name_part)
+    return(sapply(dis_act_lst, "[[", name_part) |> sapply(null_as_char) |> unname())
+  flo_unit <- fcoalesce(
+    extract_value_char("DischargeSummary.Discharge.Unit"),
+    extract_value_char("Discharge.Unit")
+  )
+  flo_v <- fcoalesce(
+    extract_value_char("DischargeSummary.Discharge.Numeric"),
+    extract_value_char("Discharge.Numeric")
+  )
+  discharge_df <- copy(base_df)
+  discharge_df[, let(Measurement = "Discharge", Unit = flo_unit, Numeric = flo_v)]
+  mgh_unit <- fcoalesce(
+    extract_value_char("DischargeSummary.MeanGageHeight.Unit"),
+    extract_value_char("MeanGageHeight.Unit")
+  )
+  mgh_v <- fcoalesce(
+    extract_value_char("DischargeSummary.MeanGageHeight.Numeric"),
+    extract_value_char("MeanGageHeight.Numeric")
+  )
+  mgh_df <- copy(base_df)
+  mgh_df[, let(Measurement = "MeanGageHeight", Unit = mgh_unit, Numeric = mgh_v)]
+  width_unit <- fcoalesce(
+    extract_value_char("AdcpDischargeActivities.Width.Unit"),
+    extract_value_char("PointVelocityDischargeActivities.Width.Unit"),
+    extract_value_char("Width.Unit")
+  )
+  width_v <- fcoalesce(
+    extract_value_char("AdcpDischargeActivities.Width.Numeric"),
+    extract_value_char("PointVelocityDischargeActivities.Width.Numeric"),
+    extract_value_char("Width.Numeric")
+  )
+  width_df <- copy(base_df)
+  width_df[, let(Measurement = "Width", Unit = width_unit, Numeric = width_v)]
+  area_unit <- fcoalesce(
+    extract_value_char("AdcpDischargeActivities.Area.Unit"),
+    extract_value_char("PointVelocityDischargeActivities.Area.Unit"),
+    extract_value_char("Area.Unit")
+  )
+  area_v <- fcoalesce(
+    extract_value_char("AdcpDischargeActivities.Area.Numeric"),
+    extract_value_char("PointVelocityDischargeActivities.Area.Numeric"),
+    extract_value_char("Area.Numeric")
+  )
+  area_df <- copy(base_df)
+  area_df[, let(Measurement = "Area", Unit = area_unit, Numeric = area_v)]
+  vel_unit <- fcoalesce(
+    extract_value_char("AdcpDischargeActivities.VelocityAverage.Unit"),
+    extract_value_char("PointVelocityDischargeActivities.VelocityAverage.Unit"),
+    extract_value_char("VelocityAverage.Unit")
+  )
+  vel_v <- fcoalesce(
+    extract_value_char("AdcpDischargeActivities.VelocityAverage.Numeric"),
+    extract_value_char("PointVelocityDischargeActivities.VelocityAverage.Numeric"),
+    extract_value_char("VelocityAverage.Numeric")
+  )
+  velocity_df <- copy(base_df)
+  velocity_df[, let(Measurement = "VelocityAverage", Unit = vel_unit, Numeric = vel_v)]
+  hydro_df <- rbind(discharge_df, mgh_df, width_df, area_df, velocity_df)
+  hydro_df[, Numeric := as.numeric(Numeric)]
+  hydro_df[Numeric == -1, Numeric := NA_real_]
+  hydro_df <- hydro_df[!is.na(Numeric)][order(Measurement, MeasurementTime)]
+  hydro_df[, MeasurementTime := format(MeasurementTime, format = fmt)]
+  return(hydro_df[])
+}
+
+
+get_field_hydro_AQ <- function(site_list) {
+  # Get the field spot gauging data for multiple plates.
+  #
+  # Args:
+  #   site_list: a character (vector)
+  #     Plate numbers in a character vector
+  #
+  # Returns:
+  #   A data.table of the field data for the following:
+  #     * Discharge: "DischargeSummary"
+  #     * MeanGageHeight: "DischargeSummary"
+  #     * Width: "AdcpDischargeActivities" -> "PointVelocityDischargeActivities"
+  #     * Area: "AdcpDischargeActivities" -> "PointVelocityDischargeActivities"
+  #     * VelocityAverage: "AdcpDischargeActivities" -> "PointVelocityDischargeActivities"
+  # Notes:
+  #   This experimental function focuses on flow/stage/width/area/velocity ONLY.
+  #     * Aquarius API: "/GetFieldVisitDataByLocation".
+  #     * Data is retrieved with priorities presented as above.
+  #     * The returned data.table is empty if no field data is available.
+  site_list <- unique(site_list)
+  hydro_df <- data.table(
+    Identifier = character(),
+    LocationIdentifier = character(),
+    MeasurementTime = character(),
+    GradeCode = character(),
+    Measurement = character(),
+    Unit = character(),
+    Numeric = numeric()
+  )
+  for (plate in site_list) {
+    cat("Getting the field visit hydro data for - ", "[", plate, "]...\n", sep = "")
+    tmp_df <- .get_field_hydro_s(plate)
+    if (!tmp_df[, .N]) {
+      cat("\t-> No field hydro data for - ", "[", plate, "]!\n", sep = "")
+      next
+    }
+    hydro_df <- rbind(hydro_df, tmp_df)
+  }
+  return(hydro_df)
+}
