@@ -2,6 +2,9 @@
 # https://adv-r.hadley.nz/functions.html
 # https://r-pkgs.org/index.html
 
+if (getRversion() < "4.3.0")
+  stop("R version should be no older than 4.3.0! Upgrade R from https://cran.r-project.org")
+
 library(data.table)  # Fast operations on large data frames
 library(httr)  # Useful tools for working with HTTP organised by HTTP verbs
 
@@ -376,7 +379,7 @@ get_url_AQ <- function(measurement, site, date_start = NA, date_end = NA) {
     QueryTo = dt_e,
     GetParts = "PointsOnly"
   )
-  return(build_url(url_part))
+  return(URLencode(build_url(url_part)))
 }
 
 
@@ -642,7 +645,7 @@ get_stage_flow_AQ <- function(plates) {
   # A helper function for `get_field_hydro_AQ()`
   end_point <- "https://aquarius.orc.govt.nz/AQUARIUS/Publish/v2"
   url_ <- paste0(end_point, "/GetFieldVisitDataByLocation?LocationIdentifier=", plate)
-  url_ <- build_url(parse_url(url_))
+  url_ <- URLencode(url_)
   r <- get_AQ(url_)
   data_list <- content(r)$FieldVisitData
   empty_df <- data.table(

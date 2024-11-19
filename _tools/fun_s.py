@@ -285,7 +285,7 @@ def get_AQ(
         url: str,
         basic_auth: str = 'api-read:PR98U3SKOczINoPHo7WM',
         **kwargs
-    ) -> urllib3.response.HTTPResponse:
+    ) -> urllib3.response.BaseHTTPResponse:
     """Connect ORC's AQ using 'GET' verb"""
     http = urllib3.PoolManager()
     hdr = urllib3.util.make_headers(basic_auth=basic_auth)
