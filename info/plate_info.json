@@ -1770,7 +1770,7 @@
     "H42/0192": "H42/0192",
     "H42/0190": "H42/0190",
     "H42/0200": "H42/0200",
-    "H42/0213": "Maniototo Road Gimmerburn",
+    "H42/0213": "Maniototo Road (shallow)",
     "H43/0108": "H43/0108",
     "H42/0214": "Greer Road Patearoa",
     "H43/0113": "H43/0113",
@@ -9767,5 +9767,10 @@
     "CE17-0125": "CE17-0125",
     "Marine_GV_2018": "Marine_GV_2018",
     "Drinking Water Standard": "Drinking Water Standard",
-    "Freshwater_GV_2018": "Freshwater_GV_2018"
+    "Freshwater_GV_2018": "Freshwater_GV_2018",
+    "RM23.543.01": "RM23.543.01",
+    "RM23.713.01": "RM23.713.01",
+    "RM23.713.02": "RM23.713.02",
+    "RM23.713.03": "RM23.713.03",
+    "RM23.713.04": "RM23.713.04"
 }
