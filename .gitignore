@@ -21,6 +21,7 @@ scripts/python/0_run_before_pwsh_script - NOT WORKING.py
 scripts/python/1_run_after_pwsh_script_pl.py
 scripts/R/0_run_before_pwsh_script - NOT WORKING.R
 scripts/R/1_run_after_pwsh_script_df.R
+scripts/read_duckdb_file.py
 scripts/taieri_dflo.ps1
 scripts/taieri_hflo.ps1
 scripts/tmp.ps1

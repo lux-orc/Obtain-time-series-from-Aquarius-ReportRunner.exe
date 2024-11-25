@@ -112,12 +112,14 @@ with (FORMAT CSV, DELIMITER '\t', HEADER);
 -- show tables;
 
 
--- Export the obtained data to a PARQUET file
-copy (
-    -- CAST the [TimeStamp] from TIMESTAMP to VARCHAR (optional)
+-- Use varchar for the TimeStamp column
+create or replace table ts_long as
     select * replace (strftime(TimeStamp, '%Y-%m-%d %H:%M:%S') as TimeStamp)
-    from ts_long
-) to 'out/df_long.parquet';
+    from ts_long;
+-- Export the obtained data to a PARQUET file
+copy ts_long to 'out/df_long.parquet';
+
+
 
 
 -- EXPORT DATABASE 'out/long_duckdb' (FORMAT PARQUET);
