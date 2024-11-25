@@ -112,7 +112,7 @@ with (FORMAT CSV, DELIMITER '\t', HEADER);
 -- show tables;
 
 
--- Use varchar for the TimeStamp column
+-- Use varchar for the TimeStamp column (this takes up more disc space)
 create or replace table ts_long as
     select * replace (strftime(TimeStamp, '%Y-%m-%d %H:%M:%S') as TimeStamp)
     from ts_long;
