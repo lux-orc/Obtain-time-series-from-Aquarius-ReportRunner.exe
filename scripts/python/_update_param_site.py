@@ -42,10 +42,6 @@ param_dict = {i.get('Identifier'): i.get('UnitIdentifier') for i in param_list}
 # ===================================
 if not (path_info := Path('info')).exists():
     path_info.mkdir()
-# with Path(path_info / 'plate_info.json').open('w') as fo:
-#     json.dump(plate_dict, fo, indent=4)
-# with Path(path_info / 'param_info.json').open('w') as fo:
-#     json.dump(param_dict, fo, indent=4)
 with (
     Path(path_info / 'plate_info.json').open('w') as w1,
     Path(path_info / 'param_info.json').open('w') as w2,
