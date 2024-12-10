@@ -8,7 +8,7 @@ To download the time series data from Aquarius and organise the data in `DataFra
 - Download the [ReportRunner](https://github.com/AquaticInformatics/getting-started/releases/ReportRunner) executable file and save it into folder `_tools`
 - To process the downloaded CSV files (in folder `out/csv/`). Note: You don't have to download/install DuckDB/Python/R at the same time. Just pick one as each of them will achieve the same goal (described in the scripts).
 
-    - To use [DuckDB](https://duckdb.org) as an optional to process the CSV files downloaded from Aquarius:
+    - To use [DuckDB](https://duckdb.org) to process the CSV files downloaded from Aquarius:
       ```powershell
       # Install DuckDB CLI on Windows
       > winget install DuckDB.cli
