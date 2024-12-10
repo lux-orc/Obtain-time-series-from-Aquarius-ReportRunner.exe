@@ -6,7 +6,6 @@ _tools/__pycache__/
 .idea/
 .Rproj.user/
 _ts_AQ.Rproj
-_tools/fun_s_pl.py
 _tools/ReportRunner.exe
 _tools/ReportRunner.Readme.html
 out/*.*
@@ -18,7 +17,6 @@ scripts/duckdb/_steps_limitations.sql
 scripts/duckdb/_steps_in_general.sql
 scripts/duckdb/1_run_after_pwsh_script_duckdb_limitations.sql
 scripts/python/0_run_before_pwsh_script - NOT WORKING.py
-scripts/python/1_run_after_pwsh_script_pl.py
 scripts/R/0_run_before_pwsh_script - NOT WORKING.R
 scripts/R/1_run_after_pwsh_script_df.R
 scripts/read_duckdb_file.py
