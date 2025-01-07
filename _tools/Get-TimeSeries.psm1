@@ -15,7 +15,7 @@ function Get-TimeSeries {
         New-Item -ItemType Directory -Force -Path $out_folder | Out-Null
         Write-Host "`n`nFolder [$out_folder] has been created!" -ForegroundColor Yellow
     }
-    $dec_str = '===='
+    $dec_str = '==='
     $fo_name = @($site.Replace('/', '$'), $format) -join, '.'  # Updated on 2024-05-08
     $fo_path = @($out_folder, $fo_name) -join, '/'
     $msg = "`n" + @($dec_str, $site, $dec_str) -join, ' '
