@@ -217,7 +217,7 @@ def ts_pl2pd(ts: pl.DataFrame) -> pd.DataFrame:
 
 def na_ts_insert(ts: pl.DataFrame) -> pl.DataFrame:
     """
-    Pad Null value into a Polars DataFrame of a valid time series
+    Pad Null value into a valid time series (Polars DataFrame)
 
     Parameters
     ----------
@@ -235,10 +235,17 @@ def na_ts_insert(ts: pl.DataFrame) -> pl.DataFrame:
     """
     col_dt = ts.select(cs.temporal()).columns[0]
     col_v = ts.select(cs.numeric()).columns
-    r = ts.fill_nan(None).filter(~pl.all_horizontal(pl.col(col_v).is_null()))
+    r = ts.lazy().fill_nan(None).filter(~pl.all_horizontal(pl.col(col_v).is_null()))
     if (step := ts_step(ts)) in {-1, None}:
-        return r
-    return r.sort(col_dt).upsample(time_column=col_dt, every=f'{step}s')
+        return r.sort(col_dt).collect()
+    s, e = ts.get_column(col_dt).min(), ts.get_column(col_dt).max()
+    dt_col: pl.Expr = (
+        pl.date_range(s, e, f'{int(step / 86400)}d')
+        if pl.Date.is_(ts[col_dt].dtype) else
+        pl.datetime_range(s, e, f'{step}s')
+    )
+    dt: pl.LazyFrame = pl.LazyFrame().with_columns(dt_col.alias(col_dt))
+    return dt.join(r, on=col_dt, how='left').sort(col_dt).collect()
 
 
 def hourly_2_daily(
@@ -507,39 +514,20 @@ def _HWU_AQ(
         site: str,
         date_start: int = None,
         date_end: int = None,
-        raw_data: bool = False
-    ) -> pl.DataFrame:
-    """Get hourly rate for a single water meter (from Aquarius)"""
-    ts_raw = get_ts_AQ('Flow.WMHourlyMean', site, date_start, date_end)
-    if raw_data:
-        return ts_raw
-    return ts_raw.select(
-        pl.col('Timestamp')
-        .map_elements(clean_24h_datetime, return_dtype=pl.Utf8)
-        .str.strptime(pl.Datetime, '%Y-%m-%dT%H:%M:%S')
-        .alias('Time'),
-        pl.col('Value').truediv(1e3).alias(site),
-    ).pipe(na_ts_insert)
+) -> pl.DataFrame:
+    """Get the raw hourly rate for a single water meter (from Aquarius)"""
+    df = get_ts_AQ('Flow.WMHourlyMean', site, date_start, date_end)
+    return df.with_columns(pl.lit(site).alias('Site')).select('Site', 'Timestamp', 'Value')
 
 
 def _DWU_AQ(
         site: str,
         date_start: int = None,
         date_end: int = None,
-        raw_data: bool = False
-    ) -> pl.DataFrame:
-    """Get daily rate for a single water meter (from Aquarius)"""
-    ts_raw = get_ts_AQ('Abstraction Volume.WMDaily', site, date_start, date_end)
-    if raw_data:
-        return ts_raw
-    return ts_raw.select(
-        pl.col('Timestamp')
-        .map_elements(clean_24h_datetime, return_dtype=pl.Utf8)
-        .str.slice(0, 10)
-        .str.strptime(pl.Date, '%Y-%m-%d')
-        .alias('Date'),
-        pl.col('Value').truediv(86400).alias(site),
-    ).pipe(na_ts_insert)
+) -> pl.DataFrame:
+    """Get the raw daily rate for a single water meter (from Aquarius)"""
+    df = get_ts_AQ('Abstraction Volume.WMDaily', site, date_start, date_end)
+    return df.with_columns(pl.lit(site).alias('Site')).select('Site', 'Timestamp', 'Value')
 
 
 def hourly_WU_AQ(
@@ -547,7 +535,7 @@ def hourly_WU_AQ(
         date_start: int = None,
         date_end: int = None,
         raw_data: bool = False,
-    ) -> pl.DataFrame:
+) -> pl.DataFrame:
     """
     A wrapper of getting hourly rate for multiple water meters (from Aquarius)
 
@@ -562,7 +550,7 @@ def hourly_WU_AQ(
         End date of the request data date. It follows '%Y%m%d' When specified.
         Otherwise, request the data till its end.
     raw_data : bool, optional, default=False
-        Raw data (hourly volume in m^3) from Aquarius (extra info). Default is `False`
+        Whether return the raw data (in l/s) or not (in m^3/s) from Aquarius.
 
     Returns
     -------
@@ -572,18 +560,20 @@ def hourly_WU_AQ(
     if isinstance(site_list, str):
         site_list = [site_list]
     site_list = list(dict.fromkeys(site_list))
+    ts_l = pl.concat([_HWU_AQ(i, date_start, date_end) for i in site_list], how='vertical')
     if raw_data:
-        d = {
-            site: _HWU_AQ(site, date_start, date_end, True).with_columns(
-                pl.lit(site).alias('Site')
-            ) for site in site_list
-        }
-        return pl.concat(d.values(), how='vertical').select('Site', 'Timestamp', 'Value')
-    lst = [_HWU_AQ(site, date_start, date_end, False) for site in site_list]
-    return na_ts_insert(
-        reduce(lambda a, b: a.join(b, on='Time', how='full', coalesce=True), lst)
-        .sort('Time')
-    )
+        print('\nNote: The (raw) hourly rate of take is in L/s!!!!\n')
+        return ts_l
+    ts_e = pl.DataFrame(schema={'Time': pl.Datetime} | {i: pl.Float64 for i in site_list})
+    ts_w = ts_l.with_columns(
+        pl.col('Timestamp')
+        .map_elements(clean_24h_datetime, return_dtype=pl.String)
+        .str.to_datetime('%Y-%m-%dT%H:%M:%S')
+        .alias('Time'),
+        pl.col('Value').cast(pl.Float64).truediv(1e3).name.keep(),
+    ).pivot(on='Site', index='Time', values='Value')
+    print('\nNote: The hourly rate of take is in m^3/s!!!!\n')
+    return pl.concat([ts_e, ts_w], how='diagonal').sort('Time').pipe(na_ts_insert)
 
 
 def daily_WU_AQ(
@@ -591,7 +581,7 @@ def daily_WU_AQ(
         date_start: int = None,
         date_end: int = None,
         raw_data: bool = False,
-    ) -> pl.DataFrame:
+) -> pl.DataFrame:
     """
     A wrapper of getting daily rate for multiple water meters (from Aquarius)
 
@@ -606,7 +596,7 @@ def daily_WU_AQ(
         End date of the request data date. It follows '%Y%m%d' When specified.
         Otherwise, request the data till its end.
     raw_data : bool, optional, default=False
-        Raw data (daily volume in m^3) from Aquarius (extra info). Default is `False`
+        Whether return the raw data (daily volume in m^3) or not (in m^3/s) from Aquarius.
 
     Returns
     -------
@@ -616,18 +606,21 @@ def daily_WU_AQ(
     if isinstance(site_list, str):
         site_list = [site_list]
     site_list = list(dict.fromkeys(site_list))
+    ts_l = pl.concat([_DWU_AQ(i, date_start, date_end) for i in site_list], how='vertical')
     if raw_data:
-        d = {
-            site: _DWU_AQ(site, date_start, date_end, True).with_columns(
-                pl.lit(site).alias('Site')
-            ) for site in site_list
-        }
-        return pl.concat(d.values(), how='vertical').select('Site', 'Timestamp', 'Value')
-    lst = [_DWU_AQ(site, date_start, date_end, False) for site in site_list]
-    return na_ts_insert(
-        reduce(lambda a, b: a.join(b, on='Date', how='full', coalesce=True), lst)
-        .sort('Date')
-    )
+        print('\nNote: The (raw) daily take volume is in m^3!!!!\n')
+        return ts_l
+    ts_e = pl.DataFrame(schema={'Date': pl.Date} | {i: pl.Float64 for i in site_list})
+    ts_w = ts_l.with_columns(
+        pl.col('Timestamp')
+        .map_elements(clean_24h_datetime, return_dtype=pl.String)
+        .str.slice(0, 10)
+        .str.to_date('%Y-%m-%d')
+        .alias('Date'),
+        pl.col('Value').cast(pl.Float64).truediv(86400).name.keep(),
+    ).pivot(on='Site', index='Date', values='Value')
+    print('\nNote: The daily rate of take is in m^3/s!!!!\n')
+    return pl.concat([ts_e, ts_w], how='diagonal').sort('Date').pipe(na_ts_insert)
 
 
 def _field_data_AQ_s(
