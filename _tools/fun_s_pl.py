@@ -235,11 +235,24 @@ def na_ts_insert(ts: pl.DataFrame) -> pl.DataFrame:
     """
     col_dt = ts.select(cs.temporal()).columns[0]
     col_v = ts.select(cs.numeric()).columns
-    r = ts.fill_nan(None).filter(~pl.all_horizontal(pl.col(col_v).is_null()))
+    r = ts.lazy().fill_nan(None).filter(~pl.all_horizontal(pl.col(col_v).is_null()))
     if (step := ts_step(ts)) in {-1, None}:
-        return r.sort(col_dt)
-    freq = f'{int(step / 86400)}d' if pl.Date.is_(ts[col_dt].dtype) else f'{step}s'
-    return r.sort(col_dt).upsample(time_column=col_dt, every=freq)
+        return r.sort(col_dt).collect()
+    s, e = (
+        r.select(
+            pl.col(col_dt).min().alias('s'),
+            pl.col(col_dt).max().alias('e'),
+        )
+        .collect()
+        .row(0)
+    )
+    dt_col: pl.Expr = (
+        pl.date_range(s, e, f'{int(step / 86400)}d')
+        if pl.Date.is_(ts[col_dt].dtype) else
+        pl.datetime_range(s, e, f'{step}s')
+    )
+    dt: pl.LazyFrame = pl.LazyFrame().with_columns(dt_col.alias(col_dt))
+    return dt.join(r, on=col_dt, how='left').sort(col_dt).collect()
 
 
 def hourly_2_daily(
