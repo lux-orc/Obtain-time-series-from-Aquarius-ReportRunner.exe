@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 import json
-from functools import partial, reduce
+from functools import partial
 from typing import Any, Callable
 from urllib import parse
 
@@ -109,8 +109,8 @@ def _ts_valid_pd(ts: Any, /) -> 'str | None':
     if not isinstance(ts, (pd.Series, pd.DataFrame)):
         return '`ts` must be either pandas.Series or pandas.DataFrame!'
     if not (
-        all(isinstance(i, (datetime.datetime, datetime.date)) for i in ts.index)
-        or pd.api.types.is_datetime64_any_dtype(ts.index)
+            all(isinstance(i, (datetime.datetime, datetime.date)) for i in ts.index)
+            or pd.api.types.is_datetime64_any_dtype(ts.index)
     ):
         return f'Wrong dtype in the index: `{ts.index.dtype}` detected!'
     if not (ts.index.size == ts.index.unique().size):
@@ -260,7 +260,7 @@ def hourly_2_daily(
         day_starts_at: int = 0,
         agg: Callable = pl.mean,
         prop: float = 1.,
-    ) -> pl.DataFrame:
+) -> pl.DataFrame:
     """
     Aggregate the hourly time series to daily time series using customised function
 
@@ -296,11 +296,11 @@ def hourly_2_daily(
     col_v = hts.select(cs.numeric()).columns[0]
     r = (
         hts.lazy()
-        .select([col_dt, col_v])
+        .select(col_dt, col_v)
         .fill_nan(None)
         .select(
             pl.col(col_dt)
-            .sub(datetime.timedelta(seconds=3600 * (1+day_starts_at)))
+            .sub(datetime.timedelta(seconds=3600 * (1 + day_starts_at)))
             .dt.date()
             .alias('Date'),
             pl.col(col_v),
@@ -377,7 +377,7 @@ def get_AQ(
         url: str,
         basic_auth: str = 'api-read:PR98U3SKOczINoPHo7WM',
         **kwargs
-    ) -> urllib3.response.BaseHTTPResponse:
+) -> urllib3.response.BaseHTTPResponse:
     """Connect ORC's AQ using 'GET' verb"""
     http = urllib3.PoolManager()
     hdr = urllib3.util.make_headers(basic_auth=basic_auth)
@@ -419,12 +419,25 @@ def get_uid(measurement: str, site: str) -> 'str | None':
     return ld[j_list[0]].get('UniqueId', None) if j_list else None
 
 
+def get_site_name(site) -> 'str | None':
+    """Get the site name from Aquarius (for a plate specified as a string in `site`)"""
+    if not site.strip():
+        raise ValueError("Provide a correct string value for 'Site'!\n")
+    end_point = 'https://aquarius.orc.govt.nz/AQUARIUS/Publish/v2'
+    url_ldl = f'{end_point}/GetLocationDescriptionList'
+    query_dict = {'LocationIdentifier': site}
+    r = get_AQ(url=url_ldl, fields=query_dict)
+    if not (ld := json.loads(r.data.decode('utf-8')).get('LocationDescriptions')):
+        return print(f'\nThe site name for plate [{site}] is NOT found!!!!\n')
+    return ld[0].get('Name')
+
+
 def get_url_AQ(
         measurement: str,
         site: str,
         date_start: int = None,
         date_end: int = None
-    ) -> 'str | None':
+) -> 'str | None':
     """
     Generate the url for requesting time series
 
@@ -475,20 +488,33 @@ def get_ts_AQ(
         site: str,
         date_start: int = None,
         date_end: int = None
-    ) -> pl.DataFrame:
+) -> pl.DataFrame:
     """Get the time series for a single site specified by those defined in `get_url_AQ`"""
-    empty_df = pl.DataFrame(schema={'Timestamp': str, 'Value': float})
+    empty_df = pl.DataFrame(schema={'Site': str, 'Timestamp': str, 'Value': float})
     if (url := get_url_AQ(measurement, site, date_start, date_end)) is None:
-        print(f'\n[{measurement}@{site}] -> No data! An empty column [{site}] added!\n')
+        print(f'\n[{measurement}@{site}] -> No data available for [{site}]!\n')
         return empty_df
     r = get_AQ(url=url)
     if not (ld := json.loads(r.data.decode('utf-8')).get('Points', None)):
         print(f'[{measurement}@{site}] -> No data over the chosen period!\n')
         return empty_df
-    return pl.DataFrame(ld).unnest('Value').rename({'Numeric': 'Value'}).with_columns([
-        pl.col('Timestamp').cast(str),
-        pl.col('Value').cast(float),
-    ])
+    return pl.DataFrame(
+        {'Site': site} | (
+            pl.DataFrame(ld)
+            .unnest('Value')
+            .rename({'Numeric': 'Value'})
+            .with_columns(
+                pl.col('Timestamp').cast(str),
+                pl.col('Value').cast(float),
+            )
+            .to_dict()
+        )
+    )
+
+
+_HWU_AQ = partial(get_ts_AQ, 'Flow.WMHourlyMean')
+_DWU_AQ = partial(get_ts_AQ, 'Abstraction Volume.WMDaily')
+_DFlo_AQ = partial(get_ts_AQ, 'Discharge.MasterDailyMean')
 
 
 def clean_24h_datetime(shit_datetime: str) -> str:
@@ -512,29 +538,9 @@ def clean_24h_datetime(shit_datetime: str) -> str:
     date_str, time_str = (s19 := shit_datetime[:19]).split('T')
     *Ymd, H, M, S = [int(i) for i in (date_str.split('-') + time_str.split(':'))]
     return (
-        datetime.datetime(*Ymd, H-1, M, S)
-        + datetime.timedelta(hours=1)
+            datetime.datetime(*Ymd, H - 1, M, S)
+            + datetime.timedelta(hours=1)
     ).strftime('%Y-%m-%dT%H:%M:%S') if H > 23 else s19
-
-
-def _HWU_AQ(
-        site: str,
-        date_start: int = None,
-        date_end: int = None,
-) -> pl.DataFrame:
-    """Get the raw hourly rate for a single water meter (from Aquarius)"""
-    df = get_ts_AQ('Flow.WMHourlyMean', site, date_start, date_end)
-    return df.with_columns(pl.lit(site).alias('Site')).select('Site', 'Timestamp', 'Value')
-
-
-def _DWU_AQ(
-        site: str,
-        date_start: int = None,
-        date_end: int = None,
-) -> pl.DataFrame:
-    """Get the raw daily rate for a single water meter (from Aquarius)"""
-    df = get_ts_AQ('Abstraction Volume.WMDaily', site, date_start, date_end)
-    return df.with_columns(pl.lit(site).alias('Site')).select('Site', 'Timestamp', 'Value')
 
 
 def hourly_WU_AQ(
@@ -628,6 +634,55 @@ def daily_WU_AQ(
     ).pivot(on='Site', index='Date', values='Value')
     print('\nNote: The daily rate of take is in m^3/s!!!!\n')
     return pl.concat([ts_e, ts_w], how='diagonal').sort('Date').pipe(na_ts_insert)
+
+
+def daily_Flo_AQ(
+        site_list: 'str | list[str]',
+        date_start: int = None,
+        date_end: int = None,
+        raw_data: bool = False,
+) -> pl.DataFrame:
+    """
+    A wrapper of getting daily flow rate for multiple recorders (from Aquarius)
+
+    Parameters
+    ----------
+    site_list : str | list[str]
+        A list of plate numbers (for the flow recorders)
+    date_start : int, optional, default=None
+        Start date of the requested data. It follows '%Y%m%d' When specified.
+        Otherwise, request the data from its very beginning.
+    date_end : int, optional, default=None
+        End date of the request data date. It follows '%Y%m%d' When specified.
+        Otherwise, request the data till its end.
+    raw_data : bool, optional, default=False
+        Whether return the raw data (Timestamp in string) from Aquarius.
+
+    Returns
+    -------
+    pl.DataFrame
+        A DataFrame of daily flow rate
+    """
+    if isinstance(site_list, str):
+        site_list = [site_list]
+    site_list = list(dict.fromkeys(site_list))
+    ts_l = pl.concat([_DFlo_AQ(i, date_start, date_end) for i in site_list], how='vertical')
+    if raw_data:
+        print('\nNote: The (raw) daily flow is in m^3!!!!\n')
+        return ts_l
+    ts_e = pl.DataFrame(schema={'Date': pl.Date} | {i: pl.Float64 for i in site_list})
+    ts_w = ts_l.with_columns(
+        pl.col('Timestamp')
+        .map_elements(clean_24h_datetime, return_dtype=pl.String)
+        .str.slice(0, 10)
+        .str.to_date('%Y-%m-%d')
+        .alias('Date'),
+        pl.col('Value').cast(pl.Float64).name.keep(),
+    ).pivot(on='Site', index='Date', values='Value')
+    print('\nNote: The daily flow rate is in m^3/s!!!!\n')
+    ts = pl.concat([ts_e, ts_w], how='diagonal').sort('Date')
+    sn = {i: get_site_name(i) for i in site_list}
+    return ts.rename({k: v for k, v in sn.items() if v is not None}).pipe(na_ts_insert)
 
 
 def _field_data_AQ_s(

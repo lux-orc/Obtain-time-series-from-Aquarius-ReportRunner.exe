@@ -35,7 +35,7 @@ ok_comma <- function(FUN) {
 
 
 cp <- function(s = "", display = 0, fg = 39, bg = 48) {
-  # Colour print in the (RStudio) console for an object.
+  # Colour print in the (RStudio) console for a string or frame-like object.
   #
   # Args:
   #   s: An object, default is an empty character ("").
@@ -77,10 +77,22 @@ cp <- function(s = "", display = 0, fg = 39, bg = 48) {
   #   A string for color print in the console.
   #
   # Notes:
-  #   stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal
+  #   https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal
   x <- paste(utils::capture.output(s), "\n", sep = "")
   x[1] <- paste0(" ", x[1])
   return(paste0("\033[", display, ";", fg, ";", bg, "m", x, "\033[0m"))
+}
+
+
+is_datetime <- function(x) {
+  # Checks if an object is a date/datetime class
+  #
+  # Args:
+  #   x: An object.
+  #
+  # Returns:
+  #   A single logical value.
+  return(any(class(x) %in% c("Date", "POSIXct", "POSIXt")))
 }
 
 
@@ -105,20 +117,23 @@ xts_2_dt <- function(xts_obj) {
 
 
 .trim_ts <- function(TS) {
-  # Remove the complete empty rows for a time series (TS) data.frame.
+  # Remove the complete empty rows for a time series (TS).
   #
   # Args:
   #   TS: A time series (this can be time series of regular or irregular time step).
   #
   # Returns:
-  #   A time series (TS) data.frame with all completely empty rows removed.
-  if (xts::is.xts(TS)) TS <- xts_2_dt(TS)
-  n <- dim(TS)[2] - 1
-  rm_L <- rowSums(is.na(TS[, -1, drop = FALSE])) == n
-  ts_rmd <- if (length(which(rm_L))) TS[-which(rm_L), ] else TS
-  res <- as.data.frame(ts_rmd)
-  row.names(res) <- NULL
-  return(.as_df(TS)(res))
+  #   The time series (TS) with all completely empty rows removed.
+  if (xts::is.xts(TS))
+    TS <- xts_2_dt(TS)
+  x <- as.data.table(TS)
+  col_dt <- x[, names(.SD), .SDcols = is_datetime]
+  col_v <- x[, names(.SD), .SDcols = !is_datetime]
+  n <- length(col_v)
+  row_rm <- which(rowSums(is.na(x[, .SD, .SDcols = col_v])) == n)
+  x_rmd <- if (length(row_rm)) x[-row_rm] else x
+  r <- x_rmd[, .SD, .SDcols = c(col_dt, col_v)][order(i), env = list(i = col_dt)]
+  return(.as_df(TS)(r))
 }
 
 
@@ -157,7 +172,8 @@ na_ts_insert <- function(TS) {
   # Returns:
   #   Padded time series for regular time-step TS;
   #   empty-row-removed time series for irregular time-step TS.
-  if (xts::is.xts(TS)) TS <- xts_2_dt(TS)
+  if (xts::is.xts(TS))
+    TS <- xts_2_dt(TS)
   x <- .trim_ts(data.table(TS))
   if (dim(x)[1]) {
     con <- ts_step(x)
@@ -256,18 +272,6 @@ ts_2_list <- function(TS) {
 }
 
 
-is_datetime <- function(x) {
-  # Checks if an object is a date/datetime class
-  #
-  # Args:
-  #   x: An object.
-  #
-  # Returns:
-  #   A single logical value.
-  return(all(class(x) %in% c("Date", "POSIXct", "POSIXt")))
-}
-
-
 ts_melt <- function(TS, value_name = "Value") {
   # Get the long format of the time series.
   #
@@ -329,7 +333,8 @@ get_uid <- function(measurement, site) {
     query = list(LocationIdentifier = site)
   )
   ts_desc <- content(r)$TimeSeriesDescriptions
-  if (is.null(ts_desc)) return(NULL)
+  if (is.null(ts_desc))
+    return(NULL)
   chk <- data.table(
     Identifier = sapply(ts_desc, "[[", 1),
     UniqueId = sapply(ts_desc, "[[", 2)
@@ -337,6 +342,31 @@ get_uid <- function(measurement, site) {
   uid <- chk[Identifier == ts_id_site, UniqueId]
   return(if (length(uid)) uid else NULL)
 }
+
+
+.get_site_name <- function(site) {
+  # Get the site name from Aquarius (for a plate number).
+  #
+  # Args:
+  #   site: char
+  #     The plate number of a site.
+  #
+  # Returns:
+  #   A character of the site name (for a plate number).
+  end_point <- "https://aquarius.orc.govt.nz/AQUARIUS/Publish/v2"
+  url_part <- parse_url(paste0(end_point, "/GetLocationDescriptionList"))
+  url_part$query <- list(LocationIdentifier = site)
+  url_c <- URLencode(build_url(url_part))
+  r <- get_AQ(url_c)
+  tmp <- content(r)$LocationDescriptions
+  if (length(tmp)) {
+    return(tmp[[1]]$Name)
+  } else {
+    cat("\nThe site name for plate [", site, "] is NOT found!!!!\n\n", sep = "")
+    return(NA_character_)
+  }
+}
+get_site_name <- Vectorize(.get_site_name, SIMPLIFY = TRUE, USE.NAMES = FALSE)
 
 
 get_url_AQ <- function(measurement, site, date_start = NA, date_end = NA) {
@@ -385,21 +415,20 @@ get_url_AQ <- function(measurement, site, date_start = NA, date_end = NA) {
 
 get_ts_AQ <- function(measurement, site, date_start = NA, date_end = NA) {
   # Get the time series for a single site specified by those defined in `get_url_AQ`
-  url_c <- get_url_AQ(measurement, site, date_start = NA, date_end = NA)
+  url_c <- get_url_AQ(measurement, site, date_start, date_end)
   if (is.null(url_c)) {
     cat(
-      "\n[", measurement, "@", site, "] -> No data! An empty column [",
-      site, "] added!\n", sep = ""
+      "\n[", measurement, "@", site, "] -> No data available for [", site, "]!\n", sep = ""
     )
-    return(data.table(Timestamp = character(), Value = numeric()))
+    return(data.table(Site = character(), Timestamp = character(), Value = numeric()))
   }
   r <- get_AQ(url_c)
   point_list <- content(r)$Points
   if (length(point_list)) {
-    ts_raw <- rbindlist(point_list)
+    ts_raw <- data.table(Site = site, rbindlist(point_list))
     ts_raw[, Value := unlist(Value, use.names = FALSE)]
   } else {
-    ts_raw <- data.table(Timestamp = character(), Value = numeric())
+    ts_raw <- data.table(Site = character(), Timestamp = character(), Value = numeric())
   }
   return(ts_raw[])
 }
@@ -445,74 +474,49 @@ get_ts_AQ <- function(measurement, site, date_start = NA, date_end = NA) {
 clean_24h_datetime <- Vectorize(.clean_24h_datetime, SIMPLIFY = TRUE, USE.NAMES = FALSE)
 
 
-.HWU_AQ <- function(site, date_start = NA, date_end = NA, raw_data = FALSE) {
-  # Getting hourly rate for a single water meter (from Aquarius)
-  ts_raw <- get_ts_AQ("Flow.WMHourlyMean", site, date_start, date_end)
-  if (raw_data) return(ts_raw[])
-  if (ts_raw[, .N]) {
-    ts_dt <- ts_raw[, .(
-      Time = as.POSIXct(
-        clean_24h_datetime(Timestamp),
-        format = "%Y-%m-%dT%H:%M:%S",
-        tz = "Etc/GMT-12"),
-      V = Value / 1e3)]
-    setnames(ts_dt, "V", site)
-    return(na_ts_insert(ts_dt))
-  }
-  empty_dt <- data.table(
-    Time = as.POSIXct(as.character(), tz = "Etc/GMT-12"),
-    V = as.numeric()
-  )
-  setnames(empty_dt, old = "V", new = site)
-  return(empty_dt[])
-}
-
-
-.DWU_AQ <- function(site, date_start = NA, date_end = NA, raw_data = FALSE) {
-  # Getting daily rate for a single water meter (from Aquarius)
-  ts_raw <- get_ts_AQ("Abstraction Volume.WMDaily", site, date_start, date_end)
-  if (raw_data) return(ts_raw[])
-  if (ts_raw[, .N]) {
-    ts_dt <- ts_raw[, .(
-      Date = as.Date(clean_24h_datetime(Timestamp), format = "%Y-%m-%d"),
-      V = Value / (24 * 60 * 60))]
-    setnames(ts_dt, "V", site)
-    return(na_ts_insert(ts_dt))
-  }
-  empty_dt <- data.table(Date = as.Date(as.character()), V = as.numeric())
-  setnames(empty_dt, old = "V", new = site)
-  return(empty_dt[])
-}
-
-
 hourly_WU_AQ <- function(site_list, date_start = NA, date_end = NA, raw_data = FALSE) {
   # A wrapper of getting hourly rate for multiple water meters (from Aquarius).
   #
   # Args:
   #   site_list: char. A list of water meters' names.
-  #   date_start: int, optional (default as NA)
+  #   date_start: int, optional (default as `NA`)
   #     Start date of the requested data. It follows '%Y%m%d' When specified.
   #     Otherwise, request the data from its very beginning. The default is NA.
-  #   date_end: int, optional (default as NA)
+  #   date_end: int, optional (default as `NA`)
   #     End date of the request data date. It follows '%Y%m%d' When specified.
   #     Otherwise, request the data till its end (4 days from current date on).
-  #   raw_data: bool, optional
-  #     Raw data (hourly volume in m^3) from Aquarius (extra info). Default is `FALSE`
+  #   raw_data: bool, optional (default as `FALSE`)
+  #     Whether return the raw data (in l/s) or not (in m^3/s) from Aquarius.
   #
   # Returns:
   #   A data.table of hourly abstraction
   site_list <- unique(site_list)
+  ts_raw_list <- lapply(
+    site_list,
+    FUN = get_ts_AQ,
+    measurement = "Flow.WMHourlyMean",
+    date_start = date_start,
+    date_end = date_end
+  )
+  ts_raw <- rbindlist(ts_raw_list)
   if (raw_data) {
-    ts_raw_list <- lapply(
-      site_list, .HWU_AQ, date_start = date_start, date_end = date_end, raw_data = TRUE)
-    names(ts_raw_list) <- site_list
-    ts_raw <- rbindlist(ts_raw_list, idcol = TRUE)
-    setnames(ts_raw, ".id", "Site")
+    cat("\n\n", "Note: The (raw) hourly rate of take is in L/s!!!!", "\n\n", sep = "")
     return(ts_raw[])
   }
-  ts_list <- lapply(site_list, .HWU_AQ, date_start = date_start, date_end = date_end)
-  ts_dt <- Reduce(function(a, b) merge.data.table(a, b, by = "Time", all = TRUE), ts_list)
-  return(na_ts_insert(ts_dt))
+  cat("\n\n", "Note: The hourly rate of take is in m^3/s!!!!", "\n\n", sep = "")
+  ts_raw[, let(
+    Time = as.POSIXct(
+      clean_24h_datetime(Timestamp),
+      format = "%Y-%m-%dT%H:%M:%S",
+      tz = "Etc/GMT-12"
+    ),
+    Value = Value / 1e3
+  )]
+  ts_w <- dcast(ts_raw, Time ~ Site, value.var = "Value")
+  ts_e <- data.table(Time = as.POSIXct(character(), tz = "Etc/GMT-12"))
+  ts_e[, (site_list) := NA_real_]
+  ts_dt <- na_ts_insert(rbind(ts_e, ts_w, fill = TRUE)[order(Time)])
+  return(ts_dt[])
 }
 
 
@@ -521,29 +525,82 @@ daily_WU_AQ <- function(site_list, date_start = NA, date_end = NA, raw_data = FA
   #
   # Args:
   #   site_list: char. A list of water meters' names.
-  #   date_start: int, optional (default as NA)
+  #   date_start: int, optional (default as `NA`)
   #     Start date of the requested data. It follows '%Y%m%d' When specified.
   #     Otherwise, request the data from its very beginning. The default is NA.
-  #   date_end: int, optional (default as NA)
+  #   date_end: int, optional (default as `NA`)
   #     End date of the request data date. It follows '%Y%m%d' When specified.
   #     Otherwise, request the data till its end.
-  #   raw_data: bool, optional
-  #     Raw data (daily volume in m^3) from Aquarius (extra info). Default is `FALSE`
+  #   raw_data: bool, optional (default as `FALSE`)
+  #     Whether return the raw data (daily volume in m^3) or not (in m^3/s) from Aquarius.
   #
   # Returns:
   #   A data.table of daily abstraction
   site_list <- unique(site_list)
+  ts_raw_list <- lapply(
+    site_list,
+    FUN = get_ts_AQ,
+    measurement = "Abstraction Volume.WMDaily",
+    date_start = date_start,
+    date_end = date_end
+  )
+  ts_raw <- rbindlist(ts_raw_list)
   if (raw_data) {
-    ts_raw_list <- lapply(
-      site_list, .DWU_AQ, date_start = date_start, date_end = date_end, raw_data = TRUE)
-    names(ts_raw_list) <- site_list
-    ts_raw <- rbindlist(ts_raw_list, idcol = TRUE)
-    setnames(ts_raw, ".id", "Site")
+    cat("\n\n", "Note: The (raw) daily take volume is in m^3!!!!", "\n\n", sep = "")
     return(ts_raw[])
   }
-  ts_list <- lapply(site_list, .DWU_AQ, date_start = date_start, date_end = date_end)
-  ts_dt <- Reduce(function(a, b) merge.data.table(a, b, by = "Date", all = TRUE), ts_list)
-  return(na_ts_insert(ts_dt))
+  cat("\n\n", "Note: The daily rate of take is in m^3/s!!!!", "\n\n", sep = "")
+  ts_raw[, let(
+    Date = as.Date(substr(Timestamp, 1, 10), format = "%Y-%m-%d"),
+    Value = Value / 86400
+  )]
+  ts_w <- dcast(ts_raw, Date ~ Site, value.var = "Value")
+  ts_e <- data.table(Date = as.Date(character()))
+  ts_e[, (site_list) := NA_real_]
+  ts_dt <- na_ts_insert(rbind(ts_e, ts_w, fill = TRUE)[order(Date)])
+  return(ts_dt[])
+}
+
+
+daily_Flo_AQ <- function(site_list, date_start = NA, date_end = NA, raw_data = FALSE) {
+  # A wrapper of getting daily flow rate for multiple flow recorders (from Aquarius).
+  #
+  # Args:
+  #   site_list: char. A list of plate numbers (of flow recorders).
+  #   date_start: int, optional (default as `NA`)
+  #     Start date of the requested data. It follows '%Y%m%d' When specified.
+  #     Otherwise, request the data from its very beginning. The default is NA.
+  #   date_end: int, optional (default as `NA`)
+  #     End date of the request data date. It follows '%Y%m%d' When specified.
+  #     Otherwise, request the data till its end.
+  #   raw_data: bool, optional (default as `FALSE`)
+  #     Whether return the raw data (Timestamp in string) from Aquarius.
+  #
+  # Returns:
+  #   A data.table of daily flow rate.
+  site_list <- unique(site_list)
+  ts_raw_list <- lapply(
+    site_list,
+    FUN = get_ts_AQ,
+    measurement = "Discharge.MasterDailyMean",
+    date_start = date_start,
+    date_end = date_end
+  )
+  ts_raw <- rbindlist(ts_raw_list)
+  if (raw_data) {
+    cat("\n\n", "Note: The (raw) daily flow is in m^3!!!!", "\n\n", sep = "")
+    return(ts_raw[])
+  }
+  cat("\n\n", "Note: The daily flow rate is in m^3/s!!!!", "\n\n", sep = "")
+  ts_raw[, Date := as.Date(substr(Timestamp, 1, 10), format = "%Y-%m-%d")]
+  ts_w <- dcast(ts_raw, Date ~ Site, value.var = "Value")
+  ts_e <- data.table(Date = as.Date(character()))
+  ts_e[, (site_list) := NA_real_]
+  ts_dt <- na_ts_insert(rbind(ts_e, ts_w, fill = TRUE)[order(Date)])
+  sn <- get_site_name(site_list)
+  sn[which(is.na(sn))] <- site_list[which(is.na(sn))]
+  setnames(ts_dt, old = site_list, new = sn)
+  return(ts_dt[])
 }
 
 
@@ -554,6 +611,7 @@ daily_WU_AQ <- function(site_list, date_start = NA, date_end = NA, raw_data = FA
   if (!is.null(parameters))
     for (p in parameters)
       url_ <- paste(url_, p, sep = "&Parameters=")
+  url_ <- URLencode(url_)
   r <- get_AQ(url = url_)
   reading_list <- content(r)$FieldVisitReadings
   if (!length(reading_list))
@@ -588,34 +646,34 @@ get_field_data_AQ <- function(plates, parameters = NULL) {
   # Args:
   #   plates: char. The list of plate(s).
   #   parameters: char.
-  #     - 'Air Temp'
-  #     - 'Cond'
-  #     - 'Dis Oxygen Sat'
-  #     * 'Discharge'
-  #     - 'Dissolved Oxygen'
-  #     - 'GZF'
-  #     - 'Gas Pressure'
-  #     - 'Groundwater Level'
-  #     - 'Hydraulic Radius'
-  #     - 'Maximum Gauged Depth'
-  #     - 'NO3 (Dis)'
-  #     - 'O2 (Dis)'
-  #     - 'PM 10'
-  #     - 'Rainfall'
-  #     - 'Rainfall Depth'
-  #     - 'Sp Cond'
-  #     * 'Stage'
-  #     - 'Stage Change'
-  #     - 'Stage Offset'
-  #     - 'Tot Susp Sed'
-  #     - 'Turbidity (Form Neph)'
-  #     - 'Voltage'
-  #     - 'Water Surface Slope'
-  #     - 'Water Temp'
-  #     - 'Water Velocity'
-  #     - 'Wetted Perimeter'
-  #     - 'pH'
-  #     - 'pH Voltage'
+  #     - Air Temp
+  #     - Cond
+  #     - Dis Oxygen Sat
+  #     * Discharge
+  #     - Dissolved Oxygen
+  #     - GZF
+  #     - Gas Pressure
+  #     - Groundwater Level
+  #     - Hydraulic Radius
+  #     - Maximum Gauged Depth
+  #     - NO3 (Dis)
+  #     - O2 (Dis)
+  #     - PM 10
+  #     - Rainfall
+  #     - Rainfall Depth
+  #     - Sp Cond
+  #     * Stage
+  #     - Stage Change
+  #     - Stage Offset
+  #     - Tot Susp Sed
+  #     - Turbidity (Form Neph)
+  #     - Voltage
+  #     - Water Surface Slope
+  #     - Water Temp
+  #     - Water Velocity
+  #     - Wetted Perimeter
+  #     - pH
+  #     - pH Voltage
   #
   # Returns:
   #   A data.table of file measurements.

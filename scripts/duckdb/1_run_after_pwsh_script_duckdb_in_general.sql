@@ -105,7 +105,7 @@ copy (
     from ts_long
     group by folder, Site
     order by folder, Site
-) to 'out/data_summary.tsv'
+) to 'out/data_summary_db.tsv'
 with (FORMAT CSV, DELIMITER '\t', HEADER);
 
 

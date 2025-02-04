@@ -2,6 +2,7 @@
 rm(list = ls(all.names = TRUE))
 
 library(data.table)  # Fast operations on large data frames
+library(duckdb)
 
 # https://rdatatable.gitlab.io/data.table/articles/datatable-faq.html
 # 
@@ -30,6 +31,8 @@ param_info <- fread(file.path(path_info, "param_info.csv"), key = "Param")
 # Detect the folders in '/out/csv' folder
 path_folders <- list.dirs(path_csv, recursive = FALSE, full.names = TRUE)
 
+# Make a frame to store the long-format frame fro each folder inside the csv folder
+ts_l <- data.table()
 
 # For each folder, read the csv data files
 for (path_folder in path_folders) {
@@ -69,6 +72,10 @@ for (path_folder in path_folders) {
     setnames(ts_i, old = names(ts_i)[2], new = "Value")
     ts_df <- rbindlist(list(ts_df, na.omit(ts_i, cols = "Value")))
   }
+
+  # Store the time series from each folder inside the csv filder
+  ts_l <- rbind(ts_l, data.table(ts_df, folder = folder_name))
+
   # Save the data from this folder
   parquet_2_save <- file.path(path_out, paste0(folder_name, ".parquet"))
   arrow::write_parquet(as.data.frame(ts_df), parquet_2_save)
@@ -140,6 +147,34 @@ for (path_folder in path_folders) {
     fg = 32
   ), "\n", sep = "")
 }
+
+
+# Make a spreadsheet output for data chaecking purposes
+con <- dbConnect(duckdb())
+duckdb_register(con, "ts_l", ts_l)
+q_str <- '
+  select
+      any_value(Location) as Location,
+      Site,
+      folder,
+      any_value(Unit) as Unit,
+      min(TimeStamp) as Start,
+      max(TimeStamp) as End,
+      avg(Value).round(3) as Mean,
+      stddev_samp(Value).round(3) as Std,
+      min(Value).round(3) as Min,
+      arg_min(TimeStamp, Value) as Time_min,
+      quantile_cont(Value, .25).round(3) as "25%",
+      median(Value).round(3) as Median,
+      quantile_cont(Value, .75).round(3) as "75%",
+      max(Value).round(3) as Max,
+      arg_max(TimeStamp, Value) as Time_max,
+  from ts_l
+  group by folder, Site
+  order by folder, Site
+'
+tsv_2_save <- file.path(path_out, "data_summary_dt.tsv")
+dbGetQuery(con, q_str) |> fwrite(tsv_2_save, sep = "\t", dateTimeAs = "write.csv")
 
 
 cat(

@@ -10,6 +10,7 @@ import json
 import time
 from pathlib import Path
 
+import duckdb
 import polars as pl
 import _tools.fun_s_pl as fpl
 
@@ -45,6 +46,9 @@ path_folders = [i for i in path_csv.iterdir() if i.is_dir()]
 # Get a quick idea of how many of all the csv data file(s) are stored in `path_csv` folder
 csv_files = [i for i in path_csv.rglob('*.csv') if i.is_file()]
 
+
+# Make a frame to store the long-format frame fro each folder inside the csv folder
+ts_l = pl.DataFrame()
 
 # For each folder, read the csv data files
 for path_folder in path_folders:
@@ -89,6 +93,19 @@ for path_folder in path_folders:
             pl.lit(f'{csv_path.name}').alias('CSV'),
         )
         ts = pl.concat([ts, tmp], how='diagonal')
+
+    # Store the time series from each folder inside the csv filder
+    ts_l = pl.concat(
+        [
+            ts_l,
+            ts.with_columns(
+                pl.col.TimeStamp.str.to_datetime('%Y-%m-%d %H:%M:%S').name.keep(),
+                pl.lit(folder_name).alias('folder'),
+            )
+        ],
+        how='vertical',
+    )
+
 
     # Save the data as a parquet (for data sharing purpose) from this folder
     parquet_2_save = path_out / f'{folder_name}.parquet'
@@ -186,6 +203,32 @@ for path_folder in path_folders:
         + fpl.cp(f'{parquet_2_save_wide.relative_to(path)}', fg=35),
         end='\n\n',
     )
+
+
+# Make a spreadsheet output for data chaecking purposes
+tsv_2_save = path_out / 'data_summary_pl.tsv'
+q_str = """
+    select
+        any_value(Location) as Location,
+        Site,
+        folder,
+        any_value(Unit) as Unit,
+        min(TimeStamp) as Start,
+        max(TimeStamp) as End,
+        avg(Value).round(3) as Mean,
+        stddev_samp(Value).round(3) as Std,
+        min(Value).round(3) as Min,
+        arg_min(TimeStamp, Value) as Time_min,
+        quantile_cont(Value, .25).round(3) as "25%",
+        median(Value).round(3) as Median,
+        quantile_cont(Value, .75).round(3) as "75%",
+        max(Value).round(3) as Max,
+        arg_max(TimeStamp, Value) as Time_max,
+    from ts_l
+    group by folder, Site
+    order by folder, Site
+"""
+duckdb.sql(q_str).write_csv(file_name=f'{tsv_2_save}', sep='\t')
 
 
 # Print out something showing it runs properly
