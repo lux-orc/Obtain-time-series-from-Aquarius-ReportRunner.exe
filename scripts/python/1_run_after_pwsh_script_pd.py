@@ -173,7 +173,7 @@ for path_folder in path_folders:
 
 
 # Make a spreadsheet output for data chaecking purposes
-tsv_2_save = path_out / 'data_summary_pd.tsv'
+tsv_2_save = path_out / 'data_range_pd.tsv'
 ts_l['TimeStamp'] = pd.to_datetime(ts_l['TimeStamp'], format='%Y-%m-%d %H:%M:%S')
 q_str = """
     select
@@ -183,13 +183,13 @@ q_str = """
         any_value(Unit) as Unit,
         min(TimeStamp) as Start,
         max(TimeStamp) as End,
-        avg(Value).round(3) as Mean,
-        stddev_samp(Value).round(3) as Std,
+        -- avg(Value).round(3) as Mean,
+        -- stddev_samp(Value).round(3) as Std,
         min(Value).round(3) as Min,
         arg_min(TimeStamp, Value) as Time_min,
-        quantile_cont(Value, .25).round(3) as "25%",
-        median(Value).round(3) as Median,
-        quantile_cont(Value, .75).round(3) as "75%",
+        -- quantile_cont(Value, .25).round(3) as "25%",
+        -- median(Value).round(3) as Median,
+        -- quantile_cont(Value, .75).round(3) as "75%",
         max(Value).round(3) as Max,
         arg_max(TimeStamp, Value) as Time_max,
     from ts_l
