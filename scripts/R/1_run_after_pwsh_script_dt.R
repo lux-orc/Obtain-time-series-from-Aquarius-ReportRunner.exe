@@ -175,7 +175,7 @@ q_str <- '
 '
 tsv_2_save <- file.path(path_out, "data_range_dt.tsv")
 dbGetQuery(con, q_str) |> fwrite(tsv_2_save, sep = "\t", dateTimeAs = "write.csv")
-
+dbDisconnect(con)
 
 cat(
   "Time elapsed:\t",
