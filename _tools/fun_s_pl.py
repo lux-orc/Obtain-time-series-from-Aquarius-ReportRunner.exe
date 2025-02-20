@@ -935,22 +935,28 @@ def get_ts(*args, **kwargs) -> pl.DataFrame:
     """Obtains the time series for a plate using the UniqueId"""
     r = get_AQ(get_url_uid(*args, **kwargs))
     d = json.loads(r.data.decode('utf-8'))
-    empty_df = pl.DataFrame(
-        schema={
-            'Timestamp': pl.String,
-            'Value': pl.Float64,
-            'Unit': pl.String,
-            'Identifier': pl.String,
-        }
-    )
     if not d.get('Points'):
-        err_msg = '\nNo time series is available\n'
+        err_msg = 'No time series is available\n'
         print(cp(f'\n{err_msg}', fg=35, display=1))
-        return empty_df
+        return pl.DataFrame(
+            schema={
+                'Timestamp': pl.String,
+                'Value': pl.Float64,
+                'Unit': pl.String,
+                'Identifier': pl.String,
+            }
+        )
     if r.reason != 'OK':
         err_msg = d.get('ResponseStatus').get('Errors')[0].get('Message')
         print(cp(f'\n{err_msg}', fg=35, display=1))
-        return empty_df
+        return pl.DataFrame(
+            schema={
+                'Timestamp': pl.String,
+                'Value': pl.Float64,
+                'Unit': pl.String,
+                'Identifier': pl.String,
+            }
+        )
     idfr = f"{d.get('Parameter')}.{d.get('Label')}@{d.get('LocationIdentifier')}"
     return (
         pl.DataFrame(d.get('Points'))
