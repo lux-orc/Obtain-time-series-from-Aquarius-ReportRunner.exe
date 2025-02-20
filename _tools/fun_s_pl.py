@@ -14,6 +14,7 @@ import urllib3
 # Some display settings for numpy Array, Pandas and Polars DataFrame
 np.set_printoptions(precision=4, linewidth=94, suppress=True)
 pd.set_option('display.max_columns', None)
+pl.Config.set_fmt_str_lengths(80)
 pl.Config.set_tbl_cols(-1)
 
 
