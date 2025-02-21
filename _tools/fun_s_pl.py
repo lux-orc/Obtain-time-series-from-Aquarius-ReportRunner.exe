@@ -433,6 +433,58 @@ def get_site_name(site) -> 'str | None':
     return ld[0].get('Name')
 
 
+def get_url_uid(uid: str, date_start: int = None, date_end: int = None) -> str:
+    """Makes the URL for getting the time series for a plate through UniqueId"""
+    end_point = 'https://aquarius.orc.govt.nz/AQUARIUS/Publish/v2'
+    q_dict = {'TimeSeriesUniqueId': uid}
+    if date_start is not None:
+        ds = datetime.datetime.strptime(f'{date_start}', '%Y%m%d')
+        q_dict['QueryFrom'] = ds.strftime('%Y-%m-%dT00:00:00.0000000+12:00')
+    if date_end is not None:
+        de = datetime.datetime.strptime(f'{date_end}', '%Y%m%d') + datetime.timedelta(days=1)
+        q_dict['QueryTo'] = de.strftime('%Y-%m-%dT00:00:00.0000000+12:00')
+    q_str = parse.urlencode(q_dict)
+    return f'{end_point}/GetTimeSeriesCorrectedData?{q_str}'
+
+
+def get_ts(*args, **kwargs) -> pl.DataFrame:
+    """Obtains the time series for a plate using the UniqueId"""
+    r = get_AQ(get_url_uid(*args, **kwargs))
+    d = json.loads(r.data.decode('utf-8'))
+    if not d.get('Points'):
+        err_msg = 'No time series is available\n'
+        print(cp(f'\n{err_msg}', fg=35, display=1))
+        return pl.DataFrame(
+            schema={
+                'Timestamp': pl.String,
+                'Value': pl.Float64,
+                'Unit': pl.String,
+                'Identifier': pl.String,
+            }
+        )
+    if r.reason != 'OK':
+        err_msg = d.get('ResponseStatus').get('Errors')[0].get('Message')
+        print(cp(f'\n{err_msg}', fg=35, display=1))
+        return pl.DataFrame(
+            schema={
+                'Timestamp': pl.String,
+                'Value': pl.Float64,
+                'Unit': pl.String,
+                'Identifier': pl.String,
+            }
+        )
+    idfr = f"{d.get('Parameter')}.{d.get('Label')}@{d.get('LocationIdentifier')}"
+    return (
+        pl.DataFrame(d.get('Points'))
+        .with_columns(
+            pl.col('Timestamp').str.head(19).alias('Timestamp'),
+            pl.col('Value').struct.unnest().alias('Value'),
+            pl.lit(d.get('Unit')).alias('Unit'),
+            pl.lit(idfr).alias('Identifier'),
+        )
+    )
+
+
 def get_url_AQ(
         measurement: str,
         site: str,
@@ -466,22 +518,7 @@ def get_url_AQ(
     """
     if (uid := get_uid(measurement, site)) is None:
         return None
-    fmt = '%Y-%m-%dT00:00:00.0000000+12:00'
-    ds = '1800-01-01T00:00:00.0000000+12:00' if date_start is None else (
-        datetime.datetime.strptime(f'{date_start}', '%Y%m%d').strftime(fmt))
-    de = (
-        datetime.datetime.now() + datetime.timedelta(days=1) if date_end is None else
-        datetime.datetime.strptime(f'{date_end}', '%Y%m%d') + datetime.timedelta(days=1)
-    ).strftime(fmt)
-    end_point = 'https://aquarius.orc.govt.nz/AQUARIUS/Publish/v2'
-    query_dict = {
-        'TimeSeriesUniqueId': uid,
-        'QueryFrom': ds,
-        'QueryTo': de,
-        'GetParts': 'PointsOnly',
-    }
-    q_str = parse.urlencode(query_dict)
-    return f'{end_point}/GetTimeSeriesCorrectedData?{q_str}'
+    return get_url_uid(uid, date_start, date_end)
 
 
 def get_ts_AQ(
@@ -912,58 +949,6 @@ def get_field_hydro_AQ(site_list: 'str | list[str]') -> pl.DataFrame:
     return ts
 
 
-def get_url_uid(uid: str, date_start: int = None, date_end: int = None) -> str:
-    """Makes the URL for getting the time series for a plate through UniqueId"""
-    end_point = 'https://aquarius.orc.govt.nz/AQUARIUS/Publish/v2'
-    q_dict = {'TimeSeriesUniqueId': uid}
-    if date_start is not None:
-        ds = datetime.datetime.strptime(f'{date_start}', '%Y%m%d')
-        q_dict['QueryFrom'] = ds.strftime('%Y-%m-%dT00:00:00.0000000+12:00')
-    if date_end is not None:
-        de = datetime.datetime.strptime(f'{date_end}', '%Y%m%d') + datetime.timedelta(days=1)
-        q_dict['QueryTo'] = de.strftime('%Y-%m-%dT00:00:00.0000000+12:00')
-    q_str = parse.urlencode(q_dict)
-    return f'{end_point}/GetTimeSeriesCorrectedData?{q_str}'
-
-
-def get_ts(*args, **kwargs) -> pl.DataFrame:
-    """Obtains the time series for a plate using the UniqueId"""
-    r = get_AQ(get_url_uid(*args, **kwargs))
-    d = json.loads(r.data.decode('utf-8'))
-    if not d.get('Points'):
-        err_msg = 'No time series is available\n'
-        print(cp(f'\n{err_msg}', fg=35, display=1))
-        return pl.DataFrame(
-            schema={
-                'Timestamp': pl.String,
-                'Value': pl.Float64,
-                'Unit': pl.String,
-                'Identifier': pl.String,
-            }
-        )
-    if r.reason != 'OK':
-        err_msg = d.get('ResponseStatus').get('Errors')[0].get('Message')
-        print(cp(f'\n{err_msg}', fg=35, display=1))
-        return pl.DataFrame(
-            schema={
-                'Timestamp': pl.String,
-                'Value': pl.Float64,
-                'Unit': pl.String,
-                'Identifier': pl.String,
-            }
-        )
-    idfr = f"{d.get('Parameter')}.{d.get('Label')}@{d.get('LocationIdentifier')}"
-    return (
-        pl.DataFrame(d.get('Points'))
-        .with_columns(
-            pl.col('Timestamp').str.head(19).alias('Timestamp'),
-            pl.col('Value').struct.unnest().alias('Value'),
-            pl.lit(d.get('Unit')).alias('Unit'),
-            pl.lit(idfr).alias('Identifier'),
-        )
-    )
-
-
 class PlateType(type):
     def __repr__(self):
         return self.__name__
@@ -1039,7 +1024,7 @@ class Plate(metaclass=PlateType):
             cfg.set_tbl_rows(-1)
             cfg.set_tbl_hide_dataframe_shape(True)
             cfg.set_tbl_hide_column_data_types(True)
-            print(cp(self.get_ts_info(), fg=self._fg_color.get('ts_info')))
+            print(cp(self.get_ts_info(), fg=self._fg_color.get('ts_info'), display=1))
 
     def get_location(self) -> 'pl.DataFrame | None':
         """Gets a frame having spatial details for a plate"""
@@ -1079,7 +1064,7 @@ class Plate(metaclass=PlateType):
             cfg.set_tbl_rows(-1)
             cfg.set_tbl_hide_dataframe_shape(True)
             cfg.set_tbl_hide_column_data_types(True)
-            print(cp(self.get_location(), fg=self._fg_color.get('location')))
+            print(cp(self.get_location(), fg=self._fg_color.get('location'), display=1))
 
     def get_tag(self) -> 'pl.DataFrame | None':
         """Gets the frame having all tag info for a plate"""
@@ -1099,7 +1084,7 @@ class Plate(metaclass=PlateType):
             cfg.set_tbl_rows(-1)
             cfg.set_tbl_hide_dataframe_shape(True)
             cfg.set_tbl_hide_column_data_types(True)
-            print(cp(self.get_tag(), fg=self._fg_color.get('tag')))
+            print(cp(self.get_tag(), fg=self._fg_color.get('tag'), display=1))
 
     def get_info(self) -> dict[str, pl.DataFrame]:
         """Gets a dictionary of three frames having all possible metadata for a plate"""
@@ -1119,5 +1104,5 @@ class Plate(metaclass=PlateType):
             for fg, (k, v) in zip(self._fg_color.values(), self.get_info().items()):
                 print(
                     cp(cp(f'\n{k}:\n', fg=39, display=4), display=1)
-                    + cp(f'\n{v}\n', fg=fg)
+                    + cp(f'\n{v}\n', fg=fg, display=1)
                 )
