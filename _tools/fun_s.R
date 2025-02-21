@@ -893,3 +893,48 @@ get_field_hydro_AQ <- function(site_list) {
   }
   return(hydro_df)
 }
+
+
+get_url_uid <- function(uid, date_start = NA, date_end = NA) {
+  # Makes the URL for getting the time series for a plate through UniqueId.
+  q_list <- list(TimeSeriesUniqueId = uid)
+  if (!is.na(date_start))
+    q_list$QueryFrom <- paste0(
+      as.Date(as.character(date_start), format = "%Y%m%d"),
+      "T00:00:00.0000000+12:00"
+    )
+  if (!is.na(date_end))
+    q_list$QueryTo <- paste0(
+      as.Date(as.character(date_end), format = "%Y%m%d") + 1L,
+      "T00:00:00.0000000+12:00"
+    )
+  end_point <- "https://aquarius.orc.govt.nz/AQUARIUS/Publish/v2"
+  url_r <- parse_url(paste0(end_point, "/GetTimeSeriesCorrectedData"))
+  url_r$query <- q_list
+  return(URLencode(build_url(url_r)))
+}
+
+
+get_ts <- function(...) {
+  # Obtains the time series for a plate using the UniqueId.
+  r <- get_AQ(get_url_uid(...))
+  L <- content(r)
+  point_list <- content(r)$Points
+  if (!length(point_list)) {
+    message("\nNo time series is available\n")
+    empty_df <- data.table(
+      Timestamp = character(),
+      Value = numeric(),
+      Unit = character(),
+      Identifier = character()
+    )
+    return(empty_df)
+  }
+  ts_df <- data.table(
+    Timestamp = substr(sapply(L$Points, "[[", "Timestamp"), 1, 19),
+    Value = unlist(sapply(L$Points, "[[", "Value"), use.names = FALSE),
+    Unit = L$Unit,
+    Identifier = paste0(L$Parameter, ".", L$Label, "@", L$LocationIdentifier)
+  )
+  return(ts_df)
+}

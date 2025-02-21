@@ -915,18 +915,13 @@ def get_field_hydro_AQ(site_list: 'str | list[str]') -> pl.DataFrame:
 def get_url_uid(uid: str, date_start: int = None, date_end: int = None) -> str:
     """Makes the URL for getting the time series for a plate through UniqueId"""
     end_point = 'https://aquarius.orc.govt.nz/AQUARIUS/Publish/v2'
-    fmt = '%Y-%m-%dT00:00:00.0000000+12:00'
-    ds = '1800-01-01T00:00:00.0000000+12:00' if date_start is None else (
-        datetime.datetime.strptime(f'{date_start}', '%Y%m%d').strftime(fmt))
-    de = (
-        datetime.datetime.now() + datetime.timedelta(days=1) if date_end is None else
-        datetime.datetime.strptime(f'{date_end}', '%Y%m%d') + datetime.timedelta(days=1)
-    ).strftime(fmt)
-    q_dict = {
-        'TimeSeriesUniqueId': uid,
-        'QueryFrom': ds,
-        'QueryTo': de,
-    }
+    q_dict = {'TimeSeriesUniqueId': uid}
+    if date_start is not None:
+        ds = datetime.datetime.strptime(f'{date_start}', '%Y%m%d')
+        q_dict['QueryFrom'] = ds.strftime('%Y-%m-%dT00:00:00.0000000+12:00')
+    if date_end is not None:
+        de = datetime.datetime.strptime(f'{date_end}', '%Y%m%d') + datetime.timedelta(days=1)
+        q_dict['QueryTo'] = de.strftime('%Y-%m-%dT00:00:00.0000000+12:00')
     q_str = parse.urlencode(q_dict)
     return f'{end_point}/GetTimeSeriesCorrectedData?{q_str}'
 

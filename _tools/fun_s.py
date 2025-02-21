@@ -809,3 +809,38 @@ def get_field_hydro_AQ(site_list: 'str | list[str]') -> pd.DataFrame:
         ts = pd.concat([ts, tmp], axis=0)
     ts['GradeCode'] = ts['GradeCode'].map(lambda s: None if s == 'None' else s)
     return ts.reset_index(drop=True)
+
+
+def get_url_uid(uid: str, date_start: int = None, date_end: int = None) -> str:
+    """Makes the URL for getting the time series for a plate through UniqueId"""
+    end_point = 'https://aquarius.orc.govt.nz/AQUARIUS/Publish/v2'
+    q_dict = {'TimeSeriesUniqueId': uid}
+    if date_start is not None:
+        ds = datetime.datetime.strptime(f'{date_start}', '%Y%m%d')
+        q_dict['QueryFrom'] = ds.strftime('%Y-%m-%dT00:00:00.0000000+12:00')
+    if date_end is not None:
+        de = datetime.datetime.strptime(f'{date_end}', '%Y%m%d') + datetime.timedelta(days=1)
+        q_dict['QueryTo'] = de.strftime('%Y-%m-%dT00:00:00.0000000+12:00')
+    q_str = parse.urlencode(q_dict)
+    return f'{end_point}/GetTimeSeriesCorrectedData?{q_str}'
+
+
+def get_ts(*args, **kwargs) -> pd.DataFrame:
+    """Obtains the time series for a plate using the UniqueId"""
+    r = get_AQ(get_url_uid(*args, **kwargs))
+    d = json.loads(r.data.decode('utf-8'))
+    if not d.get('Points'):
+        err_msg = 'No time series is available\n'
+        print(cp(f'\n{err_msg}', fg=35, display=1))
+        schema = {'Timestamp': str, 'Value': float, 'Unit': str, 'Identifier': str}
+        return pd.DataFrame(columns=schema.keys()).astype(schema)
+    if r.reason != 'OK':
+        err_msg = d.get('ResponseStatus').get('Errors')[0].get('Message')
+        print(cp(f'\n{err_msg}', fg=35, display=1))
+        schema = {'Timestamp': str, 'Value': float, 'Unit': str, 'Identifier': str}
+        return pd.DataFrame(columns=schema.keys()).astype(schema)
+    idfr = f"{d.get('Parameter')}.{d.get('Label')}@{d.get('LocationIdentifier')}"
+    tmp = pd.DataFrame(d.get('Points'))
+    tmp['Timestamp'] = tmp['Timestamp'].str[:19]
+    tmp['Value'] = tmp['Value'].map(lambda d: d.get('Numeric'))
+    return tmp.assign(Unit=d.get('Unit'), Identifier=idfr)
