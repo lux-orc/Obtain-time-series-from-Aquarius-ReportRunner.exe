@@ -1,13 +1,9 @@
 
 import datetime
-import json
-from functools import partial
 from typing import Any, Callable
-from urllib import parse
 
 import numpy as np
 import pandas as pd
-import urllib3
 
 # Some display settings for numpy Array, Pandas DataFrame
 np.set_printoptions(precision=4, linewidth=94, suppress=True)
@@ -15,55 +11,7 @@ pd.set_option('display.max_columns', None)
 
 
 def cp(s: Any = '', /, display: int = 0, fg: int = 39, bg: int = 48) -> str:
-    """
-    Return the string for color print in the (IPython) console
-
-    Parameters
-    ----------
-    s : Any, default=''
-    display (显示方式) : int, default=0
-        - 0: 默认值
-        - 1: 高亮
-        - 2: 模糊效果
-        - 3: 斜体
-        - 4: 下划线
-        - 5: 闪烁
-        - 7: 反显
-        - 8: 不显示（隐藏效果）
-        - 9: 划掉字体
-        - 22: 非粗体
-        - 24: 非下划线
-        - 25: 非闪烁
-        - 27: 非反显
-    fg (前景色) : int, default=39
-        - 30: 黑色
-        - 31: 红色
-        - 32: 绿色
-        - 33: 黄色
-        - 34: 蓝色
-        - 35: 洋红
-        - 36: 青色
-        - 37: 白色
-        - 38: 删除效果并终止
-    bg (背景色) : int, default=48
-        - 40: 黑色
-        - 41: 红色
-        - 42: 绿色
-        - 43: 黄色
-        - 44: 蓝色
-        - 45: 洋红
-        - 46: 青色
-        - 47: 白色
-
-    Returns
-    -------
-    str
-        A string for color print in the console
-
-    Notes
-    -----
-    stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal
-    """
+    """Return the string for color print in the (IPython) console"""
     return f'\033[{display};{fg};{bg}m{s}\033[0m'
 
 
