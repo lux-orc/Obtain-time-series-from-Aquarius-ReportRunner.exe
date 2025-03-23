@@ -46,9 +46,9 @@ for (path_folder in path_folders) {
   }
   ts_df <- NULL
   for (csv_path in csv_paths) {
-    tmp <-
-      fread(csv_path, nrows = 1, sep = ":", sep2 = "#", skip = 6)[[1, 1]] |>
-      sub(replacement = "", pattern = "# ", fixed = TRUE)
+    desc_df <- fread(csv_path, nrows = 1, sep = ":", sep2 = "#", skip = 6)
+    desc <- desc_df[[1, 2]]
+    tmp <- sub(x = desc_df[[1, 1]], replacement = "", pattern = "# ", fixed = TRUE)
     ts_i <- fread(csv_path, skip = 11, colClasses = list(character = "TimeStamp"))
     tmp_1 <- tstrsplit(names(ts_i)[2], "@", fixed = TRUE) |> unlist()
     plate <- rev(tmp_1)[1]
@@ -67,7 +67,8 @@ for (path_folder in path_folders) {
       Location = plate,
       Site = plate_info[plate, Site],
       uid = tmp_2[1] |> gsub(replacement = "", pattern = "-", fixed = TRUE),
-      CSV = tstrsplit(csv_path, "/", fixed = TRUE) |> rev() |> _[[1]]
+      CSV = tstrsplit(csv_path, "/", fixed = TRUE) |> rev() |> _[[1]],
+      Description = desc
     )]
     setnames(ts_i, old = names(ts_i)[2], new = "Value")
     ts_df <- rbindlist(list(ts_df, na.omit(ts_i, cols = "Value")))
@@ -134,8 +135,9 @@ for (path_folder in path_folders) {
     ts_w[, Date := substr(as.character(Date), 1, 10)]
   } else {
     setnames(ts_w, old = "TimeStamp", new = "Time")
-    ts_w[, Time := as.character(Time)]
+    ts_w[, Time := format(Time, format = "%Y-%m-%d %H:%M:%S")]
   }
+
   # Save the data in wide format
   parquet_2_save_wide <- file.path(path_out, paste0(folder_name, "_wide.parquet"))
   arrow::write_parquet(as.data.frame(ts_w), parquet_2_save_wide)

@@ -64,10 +64,10 @@ for path_folder in path_folders:
         tmp = pd.read_csv(csv_path, header=11)
         *param_part, plate = tmp.columns[-1].split('@')
         param = '@'.join(param_part)
+        desc_list = pd.read_csv(csv_path, nrows=1, skiprows=6).iat[0, 0].split(': ')
+        desc = desc_list[-1]
         uid_hyphen, lab = (
-            pd.read_csv(csv_path, nrows=1, skiprows=6)
-            .iat[0, 0]
-            .split(': ')[0]
+            desc_list[0]
             .replace('# ', '')
             .replace(f'@{plate}', '')
             .replace(f'{param}.', '')
@@ -83,6 +83,7 @@ for path_folder in path_folders:
             Site=plate_dict.get(plate),
             uid=uid_hyphen.replace('-', ''),
             CSV=f'{csv_path.name}',
+            Description=desc,
         )
         ts = pd.concat([ts, tmp], axis=0, sort=False, ignore_index=True)
 

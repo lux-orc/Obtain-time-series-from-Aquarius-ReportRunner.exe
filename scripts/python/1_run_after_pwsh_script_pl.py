@@ -72,10 +72,19 @@ for path_folder in path_folders:
         tmp = pl.read_csv(csv_path, skip_rows=11, schema_overrides=[pl.String, pl.Float64])
         *param_part, plate = tmp.columns[-1].split('@')
         param = '@'.join(param_part)
-        uid_hyphen, lab = (
-            pl.read_csv(csv_path, n_rows=1, skip_rows=6, truncate_ragged_lines=True)
+        desc_list = (
+            pl.read_csv(
+                csv_path,
+                n_rows=1,
+                skip_rows=6,
+                truncate_ragged_lines=True,
+            )
             .item(0, 0)
-            .split(': ')[0]
+            .split(': ')
+        )
+        desc = desc_list[-1]
+        uid_hyphen, lab = (
+            desc_list[0]
             .replace('# ', '')
             .replace(f'@{plate}', '')
             .replace(f'{param}.', '')
@@ -91,6 +100,7 @@ for path_folder in path_folders:
             pl.lit(plate_dict.get(plate)).alias('Site'),
             pl.lit(uid_hyphen.replace('-', '')).alias('uid'),
             pl.lit(f'{csv_path.name}').alias('CSV'),
+            pl.lit(desc).alias('Description'),
         )
         ts = pl.concat([ts, tmp], how='diagonal')
 
