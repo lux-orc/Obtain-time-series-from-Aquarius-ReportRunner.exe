@@ -75,7 +75,7 @@ create or replace table ts_long as
             parse_filename(filename, true, 'system') as uid
         from cte
     )
-    -- Add the extra information - Unit, and Site names
+    -- Add the extra information - Unit, and Name
     select
         t.TimeStamp, t.Value, pa.Unit, t.Parameter, pl.*, t.folder, t.uid
     from tmp_long t
