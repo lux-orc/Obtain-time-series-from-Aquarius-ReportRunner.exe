@@ -26,3 +26,4 @@ scripts/tmp.ps1
 scripts/tmp.py
 scripts/tmp.R
 scripts/tmp.sql
+bak/*.*

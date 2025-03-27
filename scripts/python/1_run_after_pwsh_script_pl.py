@@ -96,8 +96,8 @@ for path_folder in path_folders:
             pl.lit(f'{param}.{lab}@{plate}').alias('ts_id'),
             pl.lit(param).alias('Parameter'),
             pl.lit(lab).alias('Label'),
-            pl.lit(plate).alias('Location'),
-            pl.lit(plate_dict.get(plate)).alias('Site'),
+            pl.lit(plate).alias('Plate'),
+            pl.lit(plate_dict.get(plate)).alias('Name'),
             pl.lit(uid_hyphen.replace('-', '')).alias('uid'),
             pl.lit(f'{csv_path.name}').alias('CSV'),
             pl.lit(desc).alias('Description'),
@@ -133,11 +133,11 @@ for path_folder in path_folders:
 
     # To convert the 'tidy' data to the wide Frame:
     # - Ensure that the Site/Plate is unique (for the wide format conversion)
-    if ts['Location'].n_unique() < len(csv_paths):
+    if ts['Plate'].n_unique() < len(csv_paths):
         loc_dup = (
-            ts.select(pl.col('Location', 'CSV'))
+            ts.select(pl.col('Plate', 'CSV'))
             .unique()
-            .filter(pl.col('CSV').n_unique().over('Location').gt(1))
+            .filter(pl.col('CSV').n_unique().over('Plate').gt(1))
             .get_column('CSV')
             .to_list()
         )
@@ -182,7 +182,7 @@ for path_folder in path_folders:
 
     # When all criteria being met, make a wide Frame
     w = (
-        ts.pivot(on='Site', index='TimeStamp', values='Value')
+        ts.pivot(on='Name', index='TimeStamp', values='Value')
         .with_columns(pl.col('TimeStamp').str.to_datetime('%Y-%m-%d %H:%M:%S'))
         .sort(by='TimeStamp')
     )
@@ -219,9 +219,11 @@ for path_folder in path_folders:
 tsv_2_save = path_out / 'data_range_pl.tsv'
 q_str = """
     select
-        any_value(Location) as Location,
-        Site,
+        any_value(Plate) as Plate,
+        Name,
         folder,
+        ts_id,
+        any_value(Description) as Description,
         any_value(Unit) as Unit,
         min(TimeStamp) as Start,
         max(TimeStamp) as End,
@@ -234,9 +236,10 @@ q_str = """
         -- quantile_cont(Value, .75).round(3) as "75%",
         max(Value).round(3) as Max,
         arg_max(TimeStamp, Value) as Time_max,
+        CSV,
     from ts_l
-    group by folder, Site
-    order by folder, Site
+    group by folder, Name, ts_id, CSV
+    order by folder, Name, ts_id
 """
 duckdb.sql(q_str).write_csv(file_name=f'{tsv_2_save}', sep='\t')
 

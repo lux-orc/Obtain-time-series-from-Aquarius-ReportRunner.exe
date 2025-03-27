@@ -1,804 +1,804 @@
-"Param","Unit"
-"1,4-dichlorobenzene","mg/m^3"
-"1,4-Dioxane","mg/m^3"
-"12 Month Average","g/m^3"
-"12 month mean","g/m^3"
-"2 Chlorophenol","mg/m^3"
-"2,3,4,6-Tetrachlorophenol","mg/m^3"
-"2,4,5 Trichlorophenol","mg/m^3"
-"2,4,6 Trichlorophenol","mg/m^3"
-"2,4-DB","mg/m^3"
-"2,4-Dichlorophenol","mg/m^3"
-"2,4-Dichlorophenoxyacetic acid","mg/m^3"
-"2,6-Dichlorophenol","mg/m^3"
-"245trichlorophenoxyacetic acid","mg/m^3"
-"3,4,5-Trichlorophenol","mg/m^3"
-"75 Percentile Aluminium Acid Soluble","g/m^3"
-"75 Percentile BOD","g/m^3"
-"75 Percentile E-Coli","cfu/100ml"
-"75 Percentile Total Nitrogen","g/m^3"
-"75 Percentile Total Suspended Solids","g/m^3"
-"80 Percentile BOD","g/m^3"
-"80 Percentile BOD5","g/m^3"
-"80 Percentile E-Coli","g/m^3"
-"80 Percentile Total Nitrogen","g/m^3"
-"80 Percentile Total Phosphorus","g/m^3"
-"80 Percentile Total Suspended Solids","g/m^3"
-"90 Percentile Aluminum Acid Soluble","mg/l"
-"90 Percentile Ammoniacal Nitrogen","g/m^3"
-"90 Percentile BOD Mass Loading","kg/d"
-"90 Percentile BOD5","g/m^3"
-"90 Percentile CBOD","g/m^3"
-"90 Percentile Daily Flow","m^3/d"
-"90 Percentile DRP","g/m^3"
-"90 Percentile E-Coli","cfu/100ml"
-"90 Percentile Enterococci","cfu/100ml"
-"90 Percentile Faecal Coliforms","cfu/100ml"
-"90 Percentile Grease","g/m^3"
-"90 Percentile pH","s.u."
-"90 Percentile Temperature","degC"
-"90 Percentile Total Nitrogen","g/m^3"
-"90 Percentile Total Phosphorus","g/m^3"
-"90 Percentile Total Residual Chlorine","mg/l"
-"90 Percentile Total Suspended Solids","g/m^3"
-"95 Percentile Aluminium Total","g/m^3"
-"95 Percentile Ammoniacal Nitrogen","g/m^3"
-"95 Percentile Arsenic","g/m^3"
-"95 Percentile BOD5","g/m^3"
-"95 Percentile Cadmium","g/m^3"
-"95 Percentile Chloride","g/m^3"
-"95 Percentile Chromium 3","g/m^3"
-"95 Percentile Chromium 6","g/m^3"
-"95 Percentile Copper","g/m^3"
-"95 Percentile Cyanide","g/m^3"
-"95 Percentile Daily Flow","m^3/d"
-"95 Percentile Dissolved Oxygen","mg/l"
-"95 Percentile E-Coli","cfu/100ml"
-"95 Percentile Enterococci","MPN/100ml"
-"95 Percentile Faecal Coliforms","cfu/100ml"
-"95 Percentile Grease and Oil","g/m^3"
-"95 Percentile Lead","g/m^3"
-"95 Percentile Mercury","g/m^3"
-"95 Percentile Nickel","g/m^3"
-"95 Percentile Nitrate Nitrogen","mg/l"
-"95 Percentile pH","s.u."
-"95 Percentile Silver","g/m^3"
-"95 Percentile Sulphide","g/m^3"
-"95 Percentile Total Chromium","g/m^3"
-"95 Percentile Total Kjeldahl Nitrogen","g/m^3"
-"95 Percentile Total Nitrogen","g/m^3"
-"95 Percentile Total Phosphorus","g/m^3"
-"95 Percentile Total Residual Chlorine","g/m^3"
-"95 Percentile Total Suspended Solids","g/m^3"
-"95 Percentile Zinc","g/m^3"
-"Abs210","au"
-"Abs360","au"
-"Absorbance @ 254nm Filtered","#/cm"
-"Absorbance @ 270nm Filtered","#/cm"
-"Absorbance @ 270nm Unfiltered","#/cm"
-"Absorbance @ 400nm Filtered","#/cm"
-"Absorbance @ 400nm Unfiltered","#/cm"
-"Absorbance @ 440nm Filtered","#/cm"
-"Absorbance @ 440nm Unfiltered","#/cm"
-"Absorbance @ 740nm Filtered","#/cm"
-"Absorbance @ 740nm Unfiltered","#/cm"
-"Abstraction Volume","m^3"
-"Acenaphthene","mg/m^3"
-"Acenaphthylene","mg/m^3"
-"Acidity","g/m^3 CaCO3"
-"Acidity to pH 8-3 (as CO2)","g/m^3"
-"Air Flow","l/s"
-"Air Nitrogen Dioxide Monthly Composite","ug/m^3"
-"Air Sulphur Dioxide Monthly Composite","ug/m^3"
-"Alachlor","mg/m^3"
-"Aldrin","mg/m^3"
-"Algal cover","Score"
-"Alkalinity  Hydroxide","mg/l"
-"Alkalinity (HCO3)","g/m^3"
-"Alkalinity Bicarbonate (CaCO3)","g/m^3"
-"Alkalinity Phenolpthalein","g/m^3 CaCO3"
-"Alkalinity to pH 8-3 (as CO3)","g/m^3"
-"Alkalinity Total","g/m^3"
-"Alkalinity Total to pH 4-5","g/m^3"
-"alpha - BHC","g/m^3"
-"alpha-Chlordane","mg/m^3"
-"Aluminium","g/m^3"
-"Aluminium Acid Soluble","g/m^3"
-"Aluminium Dissolved","g/m^3"
-"Aluminium Reactive","g/m^3"
-"Aluminium Total","g/m^3"
-"Aluminium Total digested","g/m^3"
-"Aluminium Total Recoverable","g/m^3"
-"Ambient Pressure","kPa"
-"Ammonia","g/m^3"
-"Ammoniacal Nitrogen","g/m^3"
-"Ammoniacal Nitrogen (pH adjusted)","g/m^3"
-"Anaerobically mineralisable nitrogen","kg/ha"
-"Anion (landfill)","mEq/l"
-"Annual Mean Ammoniacal Nitrogen","g/m^3"
-"Annual Mean BOD","g/m^3"
-"Annual Mean Faecal Coliforms","cfu/100ml"
-"Annual Mean Suspended Solids","g/m^3"
-"Annual Mean Total Phosphorus","g/m^3"
-"Anthracene","mg/m^3"
-"Antimony","g/m^3"
-"Antimony Total","g/m^3"
-"ARAD Rock Type","%"
-"Arsenic Acid Soluble","g/m^3"
-"Arsenic Dissolved","g/m^3"
-"Arsenic Total","g/m^3"
-"Arsenic Total Recoverable","g/m^3"
-"Ash in Suspended Solids","%"
-"Ashed Solids","g/m^3"
-"ASPM","ASPM"
-"Atrazine","mg/m^3"
-"Avaliable Phosphorus","ug/ml"
-"Average Biochemical Oxgyen Demand","g/m^3"
-"Average Suspended Solids","g/m^3"
-"Average Total Nitrogen","g/m^3"
-"Average Total Phosphorus","g/m^3"
-"Barium","g/m^3"
-"Barium Total","g/m^3"
-"Barometric Pressure","mmHg"
-"Base Saturation","%"
-"Bentazone","mg/m^3"
-"Benzene","mg/l"
-"Benzo-a-anthracene","g/m^3"
-"Benzo-a-fluorathene","g/m^3"
-"Benzo-a-fluorathene-Benzo-j-fluorathene","g/m^3"
-"Benzo-a-pyrene","g/m^3"
-"Benzo-b-fluoranthene","mg/m^3"
-"Benzo-ghi-perylene","mg/m^3"
-"Benzo-j-fluorathene","g/m^3"
-"Benzo-k-fluoranthene","g/m^3"
-"Benzyl Butyl Phthalate","mg/m^3"
-"beta - BHC","g/m^3"
-"BGA PC","RFU"
-"Bicarbonate","g/m^3"
-"Biochem ox demand filtered 5d","g/m^3"
-"Biochem ox demand in kg/d","kg/d"
-"Biochemical Oxygen Demand 5d","g/m^3"
-"Biochemical Oxygen Demand 5d Loading","kg/ha"
-"bis-2-ethylhexyl-Adipate","mg/m^3"
-"bis-2-ethylhexyl-Phthalate","mg/m^3"
-"Black Disk Horizontal","m"
-"Black Disk Vertical","m"
-"Boron Dissolved","g/m^3"
-"Boron Total","g/m^3"
-"Boron Total Recoverable","g/m^3"
-"BPL Rock Type","%"
-"Bromide","g/m^3"
-"Bromine","g/m^3"
-"Bucraa Rock Type","%"
-"Cadmium","g/m^3"
-"Cadmium Acid Soluble","g/m^3"
-"Cadmium Dissolved","g/m^3"
-"Cadmium Total","g/m^3"
-"Cadmium Total Recoverable","g/m^3"
-"Caesium Acid Soluble","g/m^3"
-"Caesium Dissolved","g/m^3"
-"Caesium Total","g/m^3"
-"Calcium Base Saturation","%"
-"Calcium Dissolved","g/m^3"
-"Calcium Hardness","g/m^3 CaCO3"
-"Calcium Total","g/m^3"
-"Campylobacter","MPN/100ml"
-"Carbon dioxide","%"
-"Carbon Monoxide (Landfill)","ppm"
-"Carbon-13","delta per mille"
-"Carbonaceous Biochemical Oxygen Demand","g/m^3"
-"Carbonate Alkalinity","g/m^3"
-"Cation (landfill)","mEq/l"
-"Cation Anion Ratio","Ratio"
-"Cation Exchange Capacity","meq/100g"
-"Cd (Dis)","mg/l"
-"Ceratium","cells/ml"
-"Chemical Oxygen Demand","g/m^3"
-"Chemical Oxygen Demand in kg/d","kg/d"
-"Chinese Rock Type","%"
-"Chlorella","g/m^3"
-"Chloride","g/m^3"
-"Chlorine Total","g/m^3"
-"Chlorite","g/m^3"
-"Chlorobenzene","mg/m^3"
-"Chlorophenol","mg/m^3"
-"Chlorophyll a","mg/m^3"
-"Chlorophyll a per area","mg/m^2"
-"Chlorpyrifos","mg/m^3"
-"Chromium","g/m^3"
-"Chromium 3","g/m^3"
-"Chromium 6","g/m^3"
-"Chromium Acid Soluble","g/m^3"
-"Chromium Dissolved","g/m^3"
-"Chromium Total","g/m^3"
-"Chromium Total Recoverable","g/m^3"
-"Chrysene","mg/m^3"
-"cis-Chlordane","g/m^3"
-"cis-Permethrin","mg/m^3"
-"Cl (Dis)","mg/l"
-"Clarity Calculated","m"
-"Coal Dust","mg/m^2/30d"
-"Coal Fraction","%"
-"Cobalt Total","g/m^3"
-"Cobalt Total Recoverable","g/m^3"
-"COD-filtered","g/m^3"
-"Combined Available Chlorine","g/m^3"
-"Combined Metals","g/hr"
-"Conductivity 1st Volume","uS/cm"
-"Conductivity 2nd Volume","uS/cm"
-"Copper Acid Soluble","g/m^3"
-"Copper Dissolved","g/m^3"
-"Copper Total","g/m^3"
-"Count","None"
-"Cryptosporidium","#/l"
-"Current","A"
-"Cyanide Total","g/m^3"
-"Cyanide WAD","g/m^3"
-"DCP bad characters","None"
-"DCP DelivryDelayTime","s"
-"DCP frequency drift","Hz"
-"DCP signal mod index","None"
-"DCP Sig/Noise ratio","None"
-"DCP TransmittedPower","dBm"
-"delta - BHC","g/m^3"
-"Depth","m"
-"Hydrogen 2","ppt"
-"Diazinon","mg/m^3"
-"Dibenz-ah-anthracene","mg/m^3"
-"Dichlorprop","mg/m^3"
-"Dieldrin","mg/m^3"
-"Diethyl Phthalate","mg/m^3"
-"Dimethyl Phthalate","mg/m^3"
-"Di-n-butyl Phthalate","mg/m^3"
-"Dioxans and Furans","pg/m^3"
-"Diquat","g/m^3"
-"Discharge Volume","m^3"
-"Dissolved Inorganic Carbon","mg/l"
-"Dissolved Inorganic Nitrogen","g/m^3"
-"Dissolved Kjeldahl Nitrogen","g/m^3"
-"Dissolved Non-Purgeable Organic Carbon","g/m^3"
-"Dissolved Organic Carbon","g/m^3"
-"Dissolved organic nitrogen","g/m^3"
-"Dissolved organic phosphorus","g/m^3"
-"Dissolved Oxygen","mg/l"
-"Dissolved Oxygen 1st Volume","mg/l"
-"Dissolved Oxygen 2nd Volume","mg/l"
-"Dissolved oxygen 5 week average","g/m^3"
-"Dissolved Oxygen Saturation","%"
-"Dissolved Oxygen Saturation 1st Volume","%"
-"Dissolved Oxygen Saturation 2nd Volume","%"
-"Dissolved Reactive Phosphorus","g/m^3"
-"Distance","m"
-"Distance from Left True Bank","m"
-"Carbon (Dis)","mg/l"
-"DRGS error code","None"
-"DRGS source node","None"
-"Dry Bulk Density","g/cm^3"
-"Duration","s"
-"Dust Compliance Level","g/m^2/30d"
-"Dustfall Insolubles","g/m^2/30d"
-"E-Coli","cfu/100ml"
-"E-Coli MPN","MPN/100ml"
-"Evapotrans","mm"
-"Emulsifiable Oil","g/m^3"
-"Endosulfan 2","mg/m^3"
-"Endosulfan I","g/m^3"
-"Endosulfan sulphate","g/m^3"
-"Endrin","g/m^3"
-"Endrin aldehyde","g/m^3"
-"Endrin Ketone","g/m^3"
-"Energy","kWh"
-"Enterococci","cfu/100ml"
-"Enterococci MPN","MPN/100ml"
-"Enterovirus","cfu/100ml"
-"Epilimnion 1/4 depth","m"
-"Epilimnion 3/4 depth","m"
-"Epilimnion Bottom Depth","m"
-"EPT Taxa Count","#"
-"Evapo Rate","mm/hr"
-"Est Chemical Oxygen Demand","kg/d"
-"Estimated BOD","kg/d"
-"Ethanol Extraction","g/m^3"
-"Ethylbenzene","mg/l"
-"Exceedence Count","None"
-"Exceedence Rate","%"
-"Exchangeable calcium","meq/100g"
-"Exchangeable % Sodium","%"
-"Exchangeable sodium","meq/100g"
-"Extended Metal Suite","g/m^3"
-"Faecal Coliforms","cfu/100ml"
-"Faecal Coliforms MPN","MPN/100ml"
-"fDOM","RFU"
-"Fenoprop","mg/m^3"
-"Filtered Suspended Solids","g/m^3"
-"Fine Sediment Cover (%)","%"
-"Floatable Fat","g/m^3"
-"Florida Rock Type","%"
-"Fluoranthene","mg/m^3"
-"Fluorene","mg/m^3"
-"Fluorescent Whitening Agent","ug/l"
-"Fluoride","g/m^3"
-"Fluoride (Kg/Hour)","kg/hr"
-"Fluoride Total Daily","kg/d"
-"Fluorine","g/m^3"
-"Flushing Volume","l"
-"Forecast Rainfall","mm"
-"Formaldehyde","g/m^3"
-"Fragilaria","cells/ml"
-"Free Available Chlorine","g/m^3"
-"Free carbon dioxide","g/m^3"
-"Free Cl","mg/l"
-"Frequency","Hz"
-"Fuel","l"
-"Fuel weight","kg"
-"gamma-BHC","g/m^3"
-"Gas Pressure","kPa"
-"Gate Position","mm"
-"Geo Mean Ammoniacal Nitrogen","g/m^3"
-"Geo Mean BOD","g/m^3"
-"Geo Mean BOD5","g/m^3"
-"Geo Mean CBOD5","g/m^3"
-"Geo Mean Dissolved Oxygen","mg/l"
-"Geo Mean DRP","g/m^3"
-"Geo Mean E-Coli","cfu/100ml"
-"Geo Mean Faecal Coliforms","cfu/100ml"
-"Geo Mean Nitrate Nitrite Nitrogen","g/m^3"
-"Geo Mean Nitrate Nitrogen","g/m^3"
-"Geo Mean pH","s.u."
-"Geo Mean Total Nitrogen","g/m^3"
-"Geo Mean Total Phosphorus","g/m^3"
-"Geo Mean Total Suspended Solids","g/m^3"
-"Giardia","#/l"
-"Gravel_Abstraction","m^3"
-"Grease and Oil","g/m^3"
-"Groundwater Level","m"
-"GZF","m"
-"Halogenated Phenols","mg/m^3"
-"Hardness Calcium","g/m^3 CaCO3"
-"Hardness Magnesium","g/m^3 CaCO3"
-"Hazen colour Filtered","Hazen"
-"Hazen colour unfiltered","Hazen"
-"Heptachlor","mg/m^3"
-"Heptachlor epoxide","mg/m^3"
-"Heterotrophic Plate Count 20'C","#/100ml"
-"Heterotrophic Plate Count 35'C","#/100ml"
-"Hexachlorobenzene","mg/m^3"
-"Stage","m"
-"Stage Offset","m"
-"High Ammoniacal Nitrogen","g/m^3"
-"Tide Height","m"
-"Hydraulic Conductivity","m/d"
-"Hydraulic Radius","m"
-"Hydrocarbons - Total Petroleum","g/m^3"
-"Hydrocarbons Polycyclic Aroma","mg/m^3"
-"Hydrogen Chloride","ppm"
-"Hydrogen Fluoride","ppm"
-"Hydrogen Sulphide","ppm"
-"Hydrogen-2","delta per mille"
-"Hypo Anoxic Sample Depth","m"
-"Hypolimnion Sampling Depth","m"
-"Hypolimnion Top Depth","m"
-"Imbalance","%"
-"Indeno-123-cd-pyrene","g/m^3"
-"Inflow","m^3"
-"Inorganic Carbon","mg/l"
-"Inorganic Suspended Solids","g/m^3"
-"Insoluble Solids","g/m^2/30d"
-"Internal Temp","degC"
-"Iodide","g/m^3"
-"Iodine","g/m^3"
-"Ion Balance","%"
-"Iron","g/m^3"
-"Iron Acid Soluble","g/m^3"
-"Iron Dissolved","g/m^3"
-"Iron Total","g/m^3"
-"Iron Total Recoverable","g/m^3"
-"ISO-B Depth","m"
-"ISO-T Depth","m"
-"Ice Thickness","cm"
-"J Rock type","%"
-"K12 Rock Type","%"
-"K20 Rock Type","%"
-"Kaiyang Rock Type","%"
-"Lake Level","m"
-"Lake Level - Regulatory","m"
-"Lake/res elevation","m"
-"Lead","g/m^3"
-"Lead Acid Soluble","g/m^3"
-"Lead Dissolved","g/m^3"
-"Lead Total","g/m^3"
-"Lead Total Recoverable","g/m^3"
-"Length of Purge Time","min"
-"Length of Purge Time 1st Volume","min"
-"Length of Purge Time 2nd Volume","min"
-"Level Survey Result","m"
-"Lindane","mg/m^3"
-"Lithium Total","g/m^3"
-"Lithium Total Recoverable","g/m^3"
-"Location Elevation","m"
-"Total Storage","m^3"
-"Magnesium Base Saturation","%"
-"Magnesium Dissolved","g/m^3"
-"Magnesium Hardness","g/m^3"
-"Magnesium Total","g/m^3"
-"Manganese","g/m^3"
-"Manganese Acid Soluble","g/m^3"
-"Manganese Dissolved","g/m^3"
-"Manganese Total","g/m^3"
-"Manganese Total Recoverable","g/m^3"
-"Maximum Depth","m"
-"Maximum Gauged Depth","m"
-"MCI","MCI Score"
-"MCPA","mg/m^3"
-"MCPB","mg/m^3"
-"Mean Aluminium Acid Soluble","g/m^3"
-"Mean Ammoniacal Nitrogen","g/m^3"
-"Mean Antimony Total","g/m^3"
-"Mean Arsenic Total","g/m^3"
-"Mean Biochemical Oxygen Demand","g/m^3"
-"Mean BOD5","g/m^3"
-"Mean Cadmium Total","g/m^3"
-"Mean CBOD","g/m^3"
-"Mean Cobalt Total","g/m^3"
-"Mean Copper Total","g/m^3"
-"Mean Dissolved Oxygen","g/m^3"
-"Mean E-Coli","cfu/100ml"
-"Mean Faecal Coliforms","cfu/100ml"
-"Mean Grease Oil","g/m^3"
-"Mean Hydrogen Chloride","ppm"
-"Mean Hydrogen Fluoride","ppm"
-"Mean Inflow","m^3"
-"Mean Lead Total","g/m^3"
-"Mean Manganese Total","g/m^3"
-"Mean Mercury Total","g/m^3"
-"Mean Nickel Total","g/m^3"
-"Mean Nitrate Nitrogen","g/m^3"
-"Mean Nitrogen Dioxide","mg/m^3"
-"Mean pH","s.u."
-"Mean PM10","ug/m^3"
-"Mean Rate of Application","mm/d"
-"Mean Sulphur Dioxide","mg/m^3"
-"Mean Thallium Total","g/m^3"
-"Mean Total Chromium","g/m^3"
-"Mean Total Kjeldahl Nitrogen","g/m^3"
-"Mean Total Nitrogen","g/m^3"
-"Mean Total Phosphorus","g/m^3"
-"Mean Total Residual Chlorine","g/m^3"
-"Mean Total Sulphide","g/m^3"
-"Mean Total Suspended Solids","g/m^3"
-"Mean Vanadium Total","g/m^3"
-"Mean Head","ft"
-"Mecoprop","mg/m^3"
-"Median Aluminium Acid Soluble","g/m^3"
-"Median Aluminium Dissolved","g/m^3"
-"Median Ammoniacal Nitrogen","g/m^3"
-"Median Arsenic","g/m^3"
-"Median BOD","g/m^3"
-"Median BOD5","g/m^3"
-"Median Cadmium","g/m^3"
-"Median Chromium 3","g/m^3"
-"Median Chromium 6","g/m^3"
-"Median Copper","g/m^3"
-"Median E-Coli","cfu/100ml"
-"Median Enterococci","MPN/100ml"
-"Median Faecal Coliforms","cfu/100ml"
-"Median Grease and Oil","g/m^3"
-"Median Lead","g/m^3"
-"Median Mercury","g/m^3"
-"Median Nickel","g/m^3"
-"Median Nitrate Nitrogen","g/m^3"
-"Median pH","s.u."
-"Median Sodium Absorption Ratio","Ratio"
-"Median Suspended Solids","g/m^3"
-"Median Total Nitrogen","g/m^3"
-"Median Total Phosphorus","g/m^3"
-"Median Zinc","g/m^3"
-"meq/L Difference","mEq/l"
-"Mercury","g/m^3"
-"Mercury Acid Soluble","g/m^3"
-"Mercury Dissolved","g/m^3"
-"Mercury Total","g/m^3"
-"Meter Reading","m^3"
-"Methane","%"
-"Methoxychlor","mg/m^3"
-"Methylene Blue Active Substances","mg/ml"
-"Metolachlor","mg/m^3"
-"Moisture Content","%"
-"Molinate","mg/m^3"
-"Molybdenum Total","g/m^3"
-"Soil Moisture","%"
-"Soil Moisture Content","mm/m"
-"Naphthalene","mg/m^3"
-"Nauru Rock Type","%"
-"Navicula","g/m^3"
-"NH4+ NH3 (Dis)","mg/l"
-"Nickel","g/m^3"
-"Nickel Acid Soluble","g/m^3"
-"Nickel Dissolved","g/m^3"
-"Nickel Total","g/m^3"
-"Nickel Total Recoverable","g/m^3"
-"Nitrate Concentration","g/m^3"
-"Nitrate Nitrogen","g/m^3"
-"Nitrate Nitrogen Check","g/m^3"
-"Nitrite Nitrogen","g/m^3"
-"Nitrite/Nitrate Nitrogen","g/m^3"
-"Nitrogen Dioxide","mg/m^3"
-"Nitrogen Dioxide (Air)","ug/m^3"
-"Nitrogen Loading","kg/ha"
-"Nitrogen-15","delta per mille"
-"Nitrogen-15 (in Ammonium)","delta per mille"
-"Nitrogen-15 (in Nitrate)","delta per mille"
-"NO3 (Dis)","mg/l"
-"Non Vol Suspended Solids","mg/m^3"
-"Non Vol. Suspended Solids","mg/m^3"
-"Non-Purgeable Organic Carbon (NPOC)","g/m^3"
-"Nth Carolina Rock Type","%"
-"o,p-DDD","g/m^3"
-"o,p-DDE","g/m^3"
-"o,p-DDT","g/m^3"
-"Oxygen 18","ppt"
-"Olsen Phosphorus","g/m^3"
-"Opacity Percentage","%"
-"Organic Fraction","%"
-"Organic Solvent","l"
-"Organochlorine Pesticides","mg/m^3"
-"Organonitrogen herbicides","mg/m^3"
-"Organophosphorus pesticides","mg/m^3"
-"Organotin","g/m^3"
-"ORP","mV"
-"Other Fractions","%"
-"Oxidation Reduction Potential","mV"
-"Oxygen","%"
-"oxygen-18","delta per mille"
-"p,p-DDD","mg/m^3"
-"p,p-DDE","mg/m^3"
-"p,p-DDT","mg/m^3"
-"P3 Value","None"
-"Atmos Pres","kPa"
-"PAR","W/m^2"
-"PAR Flux","umol/m^2/s"
-"Particulate Emission Rate","kg/hr"
-"Particulate matter <10um","ug/m^3"
-"Particulate nitrogen","g/m^3"
-"Particulate phosphorus","g/m^3"
-"Precip Cumul","mm"
-"PCB Congener #101","mg/m^3"
-"PCB Congener #138","mg/m^3"
-"PCB Congener #183","mg/m^3"
-"PCB Congener #28","mg/m^3"
-"PCB Congener #8","mg/m^3"
-"%EPT Taxa","%"
-"% Grease and oils","%"
-"Pendimethalin","mg/m^3"
-"Pentachlorophenol","mg/m^3"
-"Peridinium","cells/ml"
-"Permanganate Value (240 min)","g/m^3"
-"Permanganate Value (30 min)","g/m^3"
-"pH","pH Units"
-"pH Voltage","mV"
-"Phaeophytin","g/m^3"
-"Phenanthrene","mg/m^3"
-"Phenol","g/m^3"
-"Phorate","mg/m^3"
-"Phormidium Cover (%)","%"
-"Phosphate","g/m^3"
-"Phosphate Dust Emissions","kg/hr"
-"Phosphorus Load","kg/ha"
-"Photosynthesis (BOD5 light)","g/m^3"
-"Phycocyanin","cells/ml"
-"Phytoplankton","#/ml"
-"Pirimiphos methyl","mg/m^3"
-"Plasticisers","mg/m^3"
-"PM 10","ug/m^3"
-"PM 2.5","ug/m^3"
-"PMT Voltage","V"
-"Polychlorinated Bipenyls","g/m^3"
-"PolycyclicAromatic Hydrocarbon","g/m^3"
-"Polyphosphate Dissolved","g/m^3"
-"Potassium","g/m^3"
-"Potassium Base Saturation","%"
-"Potassium Dissolved","g/m^3"
-"Power","kW"
-"Power Factor","None"
-"Rainfall","mm"
-"Precip Rate","mm/hr"
-"Precip Bucket Weight","g"
-"Pressure","mm H2O"
-"Presumptive Coliforms","MPN/100ml"
-"Procymidone","mg/m^3"
-"Propanil","mg/m^3"
-"Propiconazole","mg/kg"
-"Purge Rate","l/min"
-"Purge Time","min"
-"Purge Volume","l"
-"PWM","%"
-"Pyrene","mg/m^3"
-"QMCI","Score"
-"Discharge","m^3/s"
-"Discharge - Regulatory","m^3/s"
-"Discharge Total","m^3"
-"Rainfall Depth","m"
-"Rate Of Application","mm/d"
-"Relative Chlorophyll","RCFU"
-"Relative Phycocyanin","RPFU"
-"Resist","KOhm.cm"
-"Rhod Conc","ug/l"
-"River X Area","m^2"
-"River X Width","m"
-"Rubidium Total","g/m^3"
-"Solar Rad","W/m^2"
-"Salmonella","MPN/100ml"
-"Snow Depth","cm"
-"Snow Temp","degC"
-"Sea Level","m"
-"Sea Temperature","degC"
-"Secchi depth","m"
-"Sechura Rock Type","%"
-"Selenium Acid Soluble","g/m^3"
-"Selenium Dissolved","g/m^3"
-"Selenium Total","g/m^3"
-"Semi quant metals scan","Yes"
-"Semi VOC","g/m^3"
-"Sensor Velocity","m/s"
-"Settleable Solids","g/m^3"
-"SF6","g/l"
-"ShortWaveRadiation","W/m^2"
-"Sidi Chennane Rock Type","%"
-"Signal Strength","dBm"
-"Silica Reactive","g/m^3"
-"Silica Total","g/m^3"
-"Silicon","g/m^3"
-"Silicon as Silica Total","mg/l"
-"Silver Total","g/m^3"
-"Simazine","mg/m^3"
-"Sodium Adsorption Ratio","Ratio"
-"Sodium Base Saturation","%"
-"Sodium Dissolved","g/m^3"
-"Sodium Total","g/m^3"
-"Soluble BOD","g/m^3"
-"Soluble Phosphate","g/m^3"
-"Soluble Solids","g/m^3"
-"Sp Cond","uS/cm"
-"SQMCI","SQMCI Score"
-"Stage Change","mm/hr"
-"Static Water Level","m"
-"Static Water Level (mBTOC)","m"
-"Status","None"
-"Staurastrum","cells/ml"
-"Sulphate","mg/l"
-"Sulphide Sulphur","g/m^3"
-"Sulphide Total","g/m^3"
-"Sulphur","%"
-"Sulphur Dioxide","mg/m^3"
-"Sulphur Dioxide (Air)","ug/m^3"
-"Sulphur Dioxide Emission","kg/hr"
-"Sulphur Dissolved","g/m^3"
-"Sulphur Trioxide Emission","kg/d"
-"Sum of Anions + Cations","mEq/l"
-"Sunshine Hours","hr"
-"Surfactants (MBAS Detergent)","g/m^3"
-"Air Temp","degC"
-"Tannin","g/m^3"
-"TaxaRichness","#"
-"TDS","mg/l"
-"Temperature","degC"
-"Terbuthylazine","mg/m^3"
-"Thallium","g/m^3"
-"Thiocyanate","g/m^3"
-"Tin","g/m^3"
-"Tin Total","g/m^3"
-"Tin Total Recoverable","g/m^3"
-"TKN measured","mg/l"
-"Toluene","mg/l"
-"Tonnage","tonne"
-"Tonnage Annual","tonne"
-"Total Algae","cells/ml"
-"Total Ammoniacal Nitrogen","g/m^3"
-"Total Anions","mEq/l"
-"Total Antimony","g/m^3"
-"Total Available Chlorine","g/m^3"
-"Total Carbon","g/m^3"
-"Total carbon dioxide","g/m^3"
-"Total Cations","mEq/l"
-"Total Chlordane","g/m^3"
-"Total Chlorophyta (GA)","cells/ml"
-"Total Coliforms","MPN/100ml"
-"Total Coliforms MPN","MPN/100ml"
-"Total Cyanophyta (BGA)","cells/ml"
-"Total Depth","m"
-"Total Dissolved Carbon","g/m^3"
-"Total Dissolved Nitrogen (CTL)","g/m^3"
-"Total Dissolved Phosphorus","g/m^3"
-"Total Dissolved Phosphorus (Trace)","g/m^3"
-"Total Dustfall","g/m^2/30d"
-"Total Halogens","g/m^3"
-"Total Hardness","g/m^3"
-"Total Inorganic Nitrogen","g/m^3"
-"Total Kjeldahl Nitrogen","g/m^3"
-"Total Nitrogen","g/m^3"
-"Total Nitrogen Calculated","g/m^3"
-"Total Organic Carbon","g/m^3"
-"Total Organic Nitrogen","g/m^3"
-"Total Oxidised Nitrogen","g/m^3"
-"Total Particulate Emmission Rate","kg/hr"
-"Total Persulphate Nitrogen","g/m^3"
-"Total Petrol Hydrocarbons","g/m^3"
-"Total Petrol Hydrocarbons C10-C14","g/m^3"
-"Total Petrol Hydrocarbons C7-C9","g/m^3"
-"Total Phosphorus","g/m^3"
-"Total Phosphorus (Trace)","g/m^3"
-"Total Reactive Phosphorus","g/m^3"
-"Total Residual Chlorine","g/m^3"
-"Total Solids","g/m^3"
-"Total Suspended Particulates","g/m^3"
-"Total Xylenes","mg/l"
-"trans-Chlordane","g/m^3"
-"trans-Permethrin","mg/m^3"
-"Triclopyr","mg/m^3"
-"Trifluralin","mg/m^3"
-"Soil Temp","degC"
-"TSP 24 hour total","g/m^3"
-"Total Suspended Solids","g/m^3"
-"Water Temp","degC"
-"Wind Dir","deg"
-"Wind Gust Vel","m/s"
-"Unchlorinated Phenols","mg/m^3"
-"Undissociated Sulphide","g/m^3"
-"Unionized ammoniacal nitrogen","g/m^3"
-"Peak Wind Dir","deg"
-"UreaN_gm3","g/m^3"
-"Wind Vel","m/s"
-"Value","None"
-"Valve Opening","%"
-"Vanadium Total","mg/m^3"
-"Voltage","V"
-"Vibration","mm/s"
-"Vietnamese Rock Type","%"
-"Visual Clarity","%"
-"Volatile Fatty Acids","g/m^3"
-"Volatile Solids","mg/l"
-"Volatile Suspended Solids","g/m^3"
-"Waste Oil Volume","m^3"
-"Water Level BLSD","m"
-"Water Depth","m"
-"Water Temperature 1st Volume","degC"
-"Water Temperature 2nd Volume","degC"
-"Water Level","m"
-"Cond","uS/cm"
-"RiverXDepth","m"
-"Weng Fu Rock Type","%"
-"Wetted Perimeter","m"
-"Whey Flow","l/d"
-"Tot Susp Sed","mg/l"
-"Flow","l/s"
-"O2 (Dis)","mg/l"
-"Salinity","ppt"
-"Water Surface Slope","m/km"
-"Attenuation turbidity","_ATU"
-"Backscatter turbidity","_BU"
-"Turbidity, FormAttenu","_FAU"
-"Turbidity, 90&0_45 d","_FBRU"
-"Turbidity, FormBksctr","_FBU"
-"Turbidity, FormMulti","_FNMU"
-"Turbidity, FormRatio","_FNRU"
-"Turbidity (Form Neph)","_FNU"
-"Turbidity (ISO)","_FNU"
-"Turbidity (Jackson)","_JTU"
-"Turbidity (NephMulti)","_NTMU"
-"Turbidity (NephRatio)","_NTRU"
-"Turbidity","_NTU"
-"Water Velocity","m/s"
-"Dis Oxygen Sat","%"
-"Chlorophyll","ug/l"
-"Xanthates","g/m^3"
-"Xanthates IBX","g/m^3"
-"Xanthates SEX","g/m^3"
-"Xifeng Rock Type","%"
-"Xmas Island Rock Type","%"
-"Rel Humidity","%"
-"Xylene","g/m^3"
-"Zinc","g/m^3"
-"Zinc Acid Soluble","g/m^3"
-"Zinc Dissolved","g/m^3"
-"Zinc Total","g/m^3"
-"Zinc Total Recoverable","g/m^3"
+Param,Unit
+"1,4-dichlorobenzene",mg/m^3
+"1,4-Dioxane",mg/m^3
+12 Month Average,g/m^3
+12 month mean,g/m^3
+2 Chlorophenol,mg/m^3
+"2,3,4,6-Tetrachlorophenol",mg/m^3
+"2,4,5 Trichlorophenol",mg/m^3
+"2,4,6 Trichlorophenol",mg/m^3
+"2,4-DB",mg/m^3
+"2,4-Dichlorophenol",mg/m^3
+"2,4-Dichlorophenoxyacetic acid",mg/m^3
+"2,6-Dichlorophenol",mg/m^3
+245trichlorophenoxyacetic acid,mg/m^3
+"3,4,5-Trichlorophenol",mg/m^3
+75 Percentile Aluminium Acid Soluble,g/m^3
+75 Percentile BOD,g/m^3
+75 Percentile E-Coli,cfu/100ml
+75 Percentile Total Nitrogen,g/m^3
+75 Percentile Total Suspended Solids,g/m^3
+80 Percentile BOD,g/m^3
+80 Percentile BOD5,g/m^3
+80 Percentile E-Coli,g/m^3
+80 Percentile Total Nitrogen,g/m^3
+80 Percentile Total Phosphorus,g/m^3
+80 Percentile Total Suspended Solids,g/m^3
+90 Percentile Aluminum Acid Soluble,mg/l
+90 Percentile Ammoniacal Nitrogen,g/m^3
+90 Percentile BOD Mass Loading,kg/d
+90 Percentile BOD5,g/m^3
+90 Percentile CBOD,g/m^3
+90 Percentile Daily Flow,m^3/d
+90 Percentile DRP,g/m^3
+90 Percentile E-Coli,cfu/100ml
+90 Percentile Enterococci,cfu/100ml
+90 Percentile Faecal Coliforms,cfu/100ml
+90 Percentile Grease,g/m^3
+90 Percentile pH,s.u.
+90 Percentile Temperature,degC
+90 Percentile Total Nitrogen,g/m^3
+90 Percentile Total Phosphorus,g/m^3
+90 Percentile Total Residual Chlorine,mg/l
+90 Percentile Total Suspended Solids,g/m^3
+95 Percentile Aluminium Total,g/m^3
+95 Percentile Ammoniacal Nitrogen,g/m^3
+95 Percentile Arsenic,g/m^3
+95 Percentile BOD5,g/m^3
+95 Percentile Cadmium,g/m^3
+95 Percentile Chloride,g/m^3
+95 Percentile Chromium 3,g/m^3
+95 Percentile Chromium 6,g/m^3
+95 Percentile Copper,g/m^3
+95 Percentile Cyanide,g/m^3
+95 Percentile Daily Flow,m^3/d
+95 Percentile Dissolved Oxygen,mg/l
+95 Percentile E-Coli,cfu/100ml
+95 Percentile Enterococci,MPN/100ml
+95 Percentile Faecal Coliforms,cfu/100ml
+95 Percentile Grease and Oil,g/m^3
+95 Percentile Lead,g/m^3
+95 Percentile Mercury,g/m^3
+95 Percentile Nickel,g/m^3
+95 Percentile Nitrate Nitrogen,mg/l
+95 Percentile pH,s.u.
+95 Percentile Silver,g/m^3
+95 Percentile Sulphide,g/m^3
+95 Percentile Total Chromium,g/m^3
+95 Percentile Total Kjeldahl Nitrogen,g/m^3
+95 Percentile Total Nitrogen,g/m^3
+95 Percentile Total Phosphorus,g/m^3
+95 Percentile Total Residual Chlorine,g/m^3
+95 Percentile Total Suspended Solids,g/m^3
+95 Percentile Zinc,g/m^3
+Abs210,au
+Abs360,au
+Absorbance @ 254nm Filtered,#/cm
+Absorbance @ 270nm Filtered,#/cm
+Absorbance @ 270nm Unfiltered,#/cm
+Absorbance @ 400nm Filtered,#/cm
+Absorbance @ 400nm Unfiltered,#/cm
+Absorbance @ 440nm Filtered,#/cm
+Absorbance @ 440nm Unfiltered,#/cm
+Absorbance @ 740nm Filtered,#/cm
+Absorbance @ 740nm Unfiltered,#/cm
+Abstraction Volume,m^3
+Acenaphthene,mg/m^3
+Acenaphthylene,mg/m^3
+Acidity,g/m^3 CaCO3
+Acidity to pH 8-3 (as CO2),g/m^3
+Air Flow,l/s
+Air Nitrogen Dioxide Monthly Composite,ug/m^3
+Air Sulphur Dioxide Monthly Composite,ug/m^3
+Alachlor,mg/m^3
+Aldrin,mg/m^3
+Algal cover,Score
+Alkalinity  Hydroxide,mg/l
+Alkalinity (HCO3),g/m^3
+Alkalinity Bicarbonate (CaCO3),g/m^3
+Alkalinity Phenolpthalein,g/m^3 CaCO3
+Alkalinity to pH 8-3 (as CO3),g/m^3
+Alkalinity Total,g/m^3
+Alkalinity Total to pH 4-5,g/m^3
+alpha - BHC,g/m^3
+alpha-Chlordane,mg/m^3
+Aluminium,g/m^3
+Aluminium Acid Soluble,g/m^3
+Aluminium Dissolved,g/m^3
+Aluminium Reactive,g/m^3
+Aluminium Total,g/m^3
+Aluminium Total digested,g/m^3
+Aluminium Total Recoverable,g/m^3
+Ambient Pressure,kPa
+Ammonia,g/m^3
+Ammoniacal Nitrogen,g/m^3
+Ammoniacal Nitrogen (pH adjusted),g/m^3
+Anaerobically mineralisable nitrogen,kg/ha
+Anion (landfill),mEq/l
+Annual Mean Ammoniacal Nitrogen,g/m^3
+Annual Mean BOD,g/m^3
+Annual Mean Faecal Coliforms,cfu/100ml
+Annual Mean Suspended Solids,g/m^3
+Annual Mean Total Phosphorus,g/m^3
+Anthracene,mg/m^3
+Antimony,g/m^3
+Antimony Total,g/m^3
+ARAD Rock Type,%
+Arsenic Acid Soluble,g/m^3
+Arsenic Dissolved,g/m^3
+Arsenic Total,g/m^3
+Arsenic Total Recoverable,g/m^3
+Ash in Suspended Solids,%
+Ashed Solids,g/m^3
+ASPM,ASPM
+Atrazine,mg/m^3
+Avaliable Phosphorus,ug/ml
+Average Biochemical Oxgyen Demand,g/m^3
+Average Suspended Solids,g/m^3
+Average Total Nitrogen,g/m^3
+Average Total Phosphorus,g/m^3
+Barium,g/m^3
+Barium Total,g/m^3
+Barometric Pressure,mmHg
+Base Saturation,%
+Bentazone,mg/m^3
+Benzene,mg/l
+Benzo-a-anthracene,g/m^3
+Benzo-a-fluorathene,g/m^3
+Benzo-a-fluorathene-Benzo-j-fluorathene,g/m^3
+Benzo-a-pyrene,g/m^3
+Benzo-b-fluoranthene,mg/m^3
+Benzo-ghi-perylene,mg/m^3
+Benzo-j-fluorathene,g/m^3
+Benzo-k-fluoranthene,g/m^3
+Benzyl Butyl Phthalate,mg/m^3
+beta - BHC,g/m^3
+BGA PC,RFU
+Bicarbonate,g/m^3
+Biochem ox demand filtered 5d,g/m^3
+Biochem ox demand in kg/d,kg/d
+Biochemical Oxygen Demand 5d,g/m^3
+Biochemical Oxygen Demand 5d Loading,kg/ha
+bis-2-ethylhexyl-Adipate,mg/m^3
+bis-2-ethylhexyl-Phthalate,mg/m^3
+Black Disk Horizontal,m
+Black Disk Vertical,m
+Boron Dissolved,g/m^3
+Boron Total,g/m^3
+Boron Total Recoverable,g/m^3
+BPL Rock Type,%
+Bromide,g/m^3
+Bromine,g/m^3
+Bucraa Rock Type,%
+Cadmium,g/m^3
+Cadmium Acid Soluble,g/m^3
+Cadmium Dissolved,g/m^3
+Cadmium Total,g/m^3
+Cadmium Total Recoverable,g/m^3
+Caesium Acid Soluble,g/m^3
+Caesium Dissolved,g/m^3
+Caesium Total,g/m^3
+Calcium Base Saturation,%
+Calcium Dissolved,g/m^3
+Calcium Hardness,g/m^3 CaCO3
+Calcium Total,g/m^3
+Campylobacter,MPN/100ml
+Carbon dioxide,%
+Carbon Monoxide (Landfill),ppm
+Carbon-13,delta per mille
+Carbonaceous Biochemical Oxygen Demand,g/m^3
+Carbonate Alkalinity,g/m^3
+Cation (landfill),mEq/l
+Cation Anion Ratio,Ratio
+Cation Exchange Capacity,meq/100g
+Cd (Dis),mg/l
+Ceratium,cells/ml
+Chemical Oxygen Demand,g/m^3
+Chemical Oxygen Demand in kg/d,kg/d
+Chinese Rock Type,%
+Chlorella,g/m^3
+Chloride,g/m^3
+Chlorine Total,g/m^3
+Chlorite,g/m^3
+Chlorobenzene,mg/m^3
+Chlorophenol,mg/m^3
+Chlorophyll a,mg/m^3
+Chlorophyll a per area,mg/m^2
+Chlorpyrifos,mg/m^3
+Chromium,g/m^3
+Chromium 3,g/m^3
+Chromium 6,g/m^3
+Chromium Acid Soluble,g/m^3
+Chromium Dissolved,g/m^3
+Chromium Total,g/m^3
+Chromium Total Recoverable,g/m^3
+Chrysene,mg/m^3
+cis-Chlordane,g/m^3
+cis-Permethrin,mg/m^3
+Cl (Dis),mg/l
+Clarity Calculated,m
+Coal Dust,mg/m^2/30d
+Coal Fraction,%
+Cobalt Total,g/m^3
+Cobalt Total Recoverable,g/m^3
+COD-filtered,g/m^3
+Combined Available Chlorine,g/m^3
+Combined Metals,g/hr
+Conductivity 1st Volume,uS/cm
+Conductivity 2nd Volume,uS/cm
+Copper Acid Soluble,g/m^3
+Copper Dissolved,g/m^3
+Copper Total,g/m^3
+Count,None
+Cryptosporidium,#/l
+Current,A
+Cyanide Total,g/m^3
+Cyanide WAD,g/m^3
+DCP bad characters,None
+DCP DelivryDelayTime,s
+DCP frequency drift,Hz
+DCP signal mod index,None
+DCP Sig/Noise ratio,None
+DCP TransmittedPower,dBm
+delta - BHC,g/m^3
+Depth,m
+Hydrogen 2,ppt
+Diazinon,mg/m^3
+Dibenz-ah-anthracene,mg/m^3
+Dichlorprop,mg/m^3
+Dieldrin,mg/m^3
+Diethyl Phthalate,mg/m^3
+Dimethyl Phthalate,mg/m^3
+Di-n-butyl Phthalate,mg/m^3
+Dioxans and Furans,pg/m^3
+Diquat,g/m^3
+Discharge Volume,m^3
+Dissolved Inorganic Carbon,mg/l
+Dissolved Inorganic Nitrogen,g/m^3
+Dissolved Kjeldahl Nitrogen,g/m^3
+Dissolved Non-Purgeable Organic Carbon,g/m^3
+Dissolved Organic Carbon,g/m^3
+Dissolved organic nitrogen,g/m^3
+Dissolved organic phosphorus,g/m^3
+Dissolved Oxygen,mg/l
+Dissolved Oxygen 1st Volume,mg/l
+Dissolved Oxygen 2nd Volume,mg/l
+Dissolved oxygen 5 week average,g/m^3
+Dissolved Oxygen Saturation,%
+Dissolved Oxygen Saturation 1st Volume,%
+Dissolved Oxygen Saturation 2nd Volume,%
+Dissolved Reactive Phosphorus,g/m^3
+Distance,m
+Distance from Left True Bank,m
+Carbon (Dis),mg/l
+DRGS error code,None
+DRGS source node,None
+Dry Bulk Density,g/cm^3
+Duration,s
+Dust Compliance Level,g/m^2/30d
+Dustfall Insolubles,g/m^2/30d
+E-Coli,cfu/100ml
+E-Coli MPN,MPN/100ml
+Evapotrans,mm
+Emulsifiable Oil,g/m^3
+Endosulfan 2,mg/m^3
+Endosulfan I,g/m^3
+Endosulfan sulphate,g/m^3
+Endrin,g/m^3
+Endrin aldehyde,g/m^3
+Endrin Ketone,g/m^3
+Energy,kWh
+Enterococci,cfu/100ml
+Enterococci MPN,MPN/100ml
+Enterovirus,cfu/100ml
+Epilimnion 1/4 depth,m
+Epilimnion 3/4 depth,m
+Epilimnion Bottom Depth,m
+EPT Taxa Count,#
+Evapo Rate,mm/hr
+Est Chemical Oxygen Demand,kg/d
+Estimated BOD,kg/d
+Ethanol Extraction,g/m^3
+Ethylbenzene,mg/l
+Exceedence Count,None
+Exceedence Rate,%
+Exchangeable calcium,meq/100g
+Exchangeable % Sodium,%
+Exchangeable sodium,meq/100g
+Extended Metal Suite,g/m^3
+Faecal Coliforms,cfu/100ml
+Faecal Coliforms MPN,MPN/100ml
+fDOM,RFU
+Fenoprop,mg/m^3
+Filtered Suspended Solids,g/m^3
+Fine Sediment Cover (%),%
+Floatable Fat,g/m^3
+Florida Rock Type,%
+Fluoranthene,mg/m^3
+Fluorene,mg/m^3
+Fluorescent Whitening Agent,ug/l
+Fluoride,g/m^3
+Fluoride (Kg/Hour),kg/hr
+Fluoride Total Daily,kg/d
+Fluorine,g/m^3
+Flushing Volume,l
+Forecast Rainfall,mm
+Formaldehyde,g/m^3
+Fragilaria,cells/ml
+Free Available Chlorine,g/m^3
+Free carbon dioxide,g/m^3
+Free Cl,mg/l
+Frequency,Hz
+Fuel,l
+Fuel weight,kg
+gamma-BHC,g/m^3
+Gas Pressure,kPa
+Gate Position,mm
+Geo Mean Ammoniacal Nitrogen,g/m^3
+Geo Mean BOD,g/m^3
+Geo Mean BOD5,g/m^3
+Geo Mean CBOD5,g/m^3
+Geo Mean Dissolved Oxygen,mg/l
+Geo Mean DRP,g/m^3
+Geo Mean E-Coli,cfu/100ml
+Geo Mean Faecal Coliforms,cfu/100ml
+Geo Mean Nitrate Nitrite Nitrogen,g/m^3
+Geo Mean Nitrate Nitrogen,g/m^3
+Geo Mean pH,s.u.
+Geo Mean Total Nitrogen,g/m^3
+Geo Mean Total Phosphorus,g/m^3
+Geo Mean Total Suspended Solids,g/m^3
+Giardia,#/l
+Gravel_Abstraction,m^3
+Grease and Oil,g/m^3
+Groundwater Level,m
+GZF,m
+Halogenated Phenols,mg/m^3
+Hardness Calcium,g/m^3 CaCO3
+Hardness Magnesium,g/m^3 CaCO3
+Hazen colour Filtered,Hazen
+Hazen colour unfiltered,Hazen
+Heptachlor,mg/m^3
+Heptachlor epoxide,mg/m^3
+Heterotrophic Plate Count 20'C,#/100ml
+Heterotrophic Plate Count 35'C,#/100ml
+Hexachlorobenzene,mg/m^3
+Stage,m
+Stage Offset,m
+High Ammoniacal Nitrogen,g/m^3
+Tide Height,m
+Hydraulic Conductivity,m/d
+Hydraulic Radius,m
+Hydrocarbons - Total Petroleum,g/m^3
+Hydrocarbons Polycyclic Aroma,mg/m^3
+Hydrogen Chloride,ppm
+Hydrogen Fluoride,ppm
+Hydrogen Sulphide,ppm
+Hydrogen-2,delta per mille
+Hypo Anoxic Sample Depth,m
+Hypolimnion Sampling Depth,m
+Hypolimnion Top Depth,m
+Imbalance,%
+Indeno-123-cd-pyrene,g/m^3
+Inflow,m^3
+Inorganic Carbon,mg/l
+Inorganic Suspended Solids,g/m^3
+Insoluble Solids,g/m^2/30d
+Internal Temp,degC
+Iodide,g/m^3
+Iodine,g/m^3
+Ion Balance,%
+Iron,g/m^3
+Iron Acid Soluble,g/m^3
+Iron Dissolved,g/m^3
+Iron Total,g/m^3
+Iron Total Recoverable,g/m^3
+ISO-B Depth,m
+ISO-T Depth,m
+Ice Thickness,cm
+J Rock type,%
+K12 Rock Type,%
+K20 Rock Type,%
+Kaiyang Rock Type,%
+Lake Level,m
+Lake Level - Regulatory,m
+Lake/res elevation,m
+Lead,g/m^3
+Lead Acid Soluble,g/m^3
+Lead Dissolved,g/m^3
+Lead Total,g/m^3
+Lead Total Recoverable,g/m^3
+Length of Purge Time,min
+Length of Purge Time 1st Volume,min
+Length of Purge Time 2nd Volume,min
+Level Survey Result,m
+Lindane,mg/m^3
+Lithium Total,g/m^3
+Lithium Total Recoverable,g/m^3
+Location Elevation,m
+Total Storage,m^3
+Magnesium Base Saturation,%
+Magnesium Dissolved,g/m^3
+Magnesium Hardness,g/m^3
+Magnesium Total,g/m^3
+Manganese,g/m^3
+Manganese Acid Soluble,g/m^3
+Manganese Dissolved,g/m^3
+Manganese Total,g/m^3
+Manganese Total Recoverable,g/m^3
+Maximum Depth,m
+Maximum Gauged Depth,m
+MCI,MCI Score
+MCPA,mg/m^3
+MCPB,mg/m^3
+Mean Aluminium Acid Soluble,g/m^3
+Mean Ammoniacal Nitrogen,g/m^3
+Mean Antimony Total,g/m^3
+Mean Arsenic Total,g/m^3
+Mean Biochemical Oxygen Demand,g/m^3
+Mean BOD5,g/m^3
+Mean Cadmium Total,g/m^3
+Mean CBOD,g/m^3
+Mean Cobalt Total,g/m^3
+Mean Copper Total,g/m^3
+Mean Dissolved Oxygen,g/m^3
+Mean E-Coli,cfu/100ml
+Mean Faecal Coliforms,cfu/100ml
+Mean Grease Oil,g/m^3
+Mean Hydrogen Chloride,ppm
+Mean Hydrogen Fluoride,ppm
+Mean Inflow,m^3
+Mean Lead Total,g/m^3
+Mean Manganese Total,g/m^3
+Mean Mercury Total,g/m^3
+Mean Nickel Total,g/m^3
+Mean Nitrate Nitrogen,g/m^3
+Mean Nitrogen Dioxide,mg/m^3
+Mean pH,s.u.
+Mean PM10,ug/m^3
+Mean Rate of Application,mm/d
+Mean Sulphur Dioxide,mg/m^3
+Mean Thallium Total,g/m^3
+Mean Total Chromium,g/m^3
+Mean Total Kjeldahl Nitrogen,g/m^3
+Mean Total Nitrogen,g/m^3
+Mean Total Phosphorus,g/m^3
+Mean Total Residual Chlorine,g/m^3
+Mean Total Sulphide,g/m^3
+Mean Total Suspended Solids,g/m^3
+Mean Vanadium Total,g/m^3
+Mean Head,ft
+Mecoprop,mg/m^3
+Median Aluminium Acid Soluble,g/m^3
+Median Aluminium Dissolved,g/m^3
+Median Ammoniacal Nitrogen,g/m^3
+Median Arsenic,g/m^3
+Median BOD,g/m^3
+Median BOD5,g/m^3
+Median Cadmium,g/m^3
+Median Chromium 3,g/m^3
+Median Chromium 6,g/m^3
+Median Copper,g/m^3
+Median E-Coli,cfu/100ml
+Median Enterococci,MPN/100ml
+Median Faecal Coliforms,cfu/100ml
+Median Grease and Oil,g/m^3
+Median Lead,g/m^3
+Median Mercury,g/m^3
+Median Nickel,g/m^3
+Median Nitrate Nitrogen,g/m^3
+Median pH,s.u.
+Median Sodium Absorption Ratio,Ratio
+Median Suspended Solids,g/m^3
+Median Total Nitrogen,g/m^3
+Median Total Phosphorus,g/m^3
+Median Zinc,g/m^3
+meq/L Difference,mEq/l
+Mercury,g/m^3
+Mercury Acid Soluble,g/m^3
+Mercury Dissolved,g/m^3
+Mercury Total,g/m^3
+Meter Reading,m^3
+Methane,%
+Methoxychlor,mg/m^3
+Methylene Blue Active Substances,mg/ml
+Metolachlor,mg/m^3
+Moisture Content,%
+Molinate,mg/m^3
+Molybdenum Total,g/m^3
+Soil Moisture,%
+Soil Moisture Content,mm/m
+Naphthalene,mg/m^3
+Nauru Rock Type,%
+Navicula,g/m^3
+NH4+ NH3 (Dis),mg/l
+Nickel,g/m^3
+Nickel Acid Soluble,g/m^3
+Nickel Dissolved,g/m^3
+Nickel Total,g/m^3
+Nickel Total Recoverable,g/m^3
+Nitrate Concentration,g/m^3
+Nitrate Nitrogen,g/m^3
+Nitrate Nitrogen Check,g/m^3
+Nitrite Nitrogen,g/m^3
+Nitrite/Nitrate Nitrogen,g/m^3
+Nitrogen Dioxide,mg/m^3
+Nitrogen Dioxide (Air),ug/m^3
+Nitrogen Loading,kg/ha
+Nitrogen-15,delta per mille
+Nitrogen-15 (in Ammonium),delta per mille
+Nitrogen-15 (in Nitrate),delta per mille
+NO3 (Dis),mg/l
+Non Vol Suspended Solids,mg/m^3
+Non Vol. Suspended Solids,mg/m^3
+Non-Purgeable Organic Carbon (NPOC),g/m^3
+Nth Carolina Rock Type,%
+"o,p-DDD",g/m^3
+"o,p-DDE",g/m^3
+"o,p-DDT",g/m^3
+Oxygen 18,ppt
+Olsen Phosphorus,g/m^3
+Opacity Percentage,%
+Organic Fraction,%
+Organic Solvent,l
+Organochlorine Pesticides,mg/m^3
+Organonitrogen herbicides,mg/m^3
+Organophosphorus pesticides,mg/m^3
+Organotin,g/m^3
+ORP,mV
+Other Fractions,%
+Oxidation Reduction Potential,mV
+Oxygen,%
+oxygen-18,delta per mille
+"p,p-DDD",mg/m^3
+"p,p-DDE",mg/m^3
+"p,p-DDT",mg/m^3
+P3 Value,None
+Atmos Pres,kPa
+PAR,W/m^2
+PAR Flux,umol/m^2/s
+Particulate Emission Rate,kg/hr
+Particulate matter <10um,ug/m^3
+Particulate nitrogen,g/m^3
+Particulate phosphorus,g/m^3
+Precip Cumul,mm
+PCB Congener #101,mg/m^3
+PCB Congener #138,mg/m^3
+PCB Congener #183,mg/m^3
+PCB Congener #28,mg/m^3
+PCB Congener #8,mg/m^3
+%EPT Taxa,%
+% Grease and oils,%
+Pendimethalin,mg/m^3
+Pentachlorophenol,mg/m^3
+Peridinium,cells/ml
+Permanganate Value (240 min),g/m^3
+Permanganate Value (30 min),g/m^3
+pH,pH Units
+pH Voltage,mV
+Phaeophytin,g/m^3
+Phenanthrene,mg/m^3
+Phenol,g/m^3
+Phorate,mg/m^3
+Phormidium Cover (%),%
+Phosphate,g/m^3
+Phosphate Dust Emissions,kg/hr
+Phosphorus Load,kg/ha
+Photosynthesis (BOD5 light),g/m^3
+Phycocyanin,cells/ml
+Phytoplankton,#/ml
+Pirimiphos methyl,mg/m^3
+Plasticisers,mg/m^3
+PM 10,ug/m^3
+PM 2.5,ug/m^3
+PMT Voltage,V
+Polychlorinated Bipenyls,g/m^3
+PolycyclicAromatic Hydrocarbon,g/m^3
+Polyphosphate Dissolved,g/m^3
+Potassium,g/m^3
+Potassium Base Saturation,%
+Potassium Dissolved,g/m^3
+Power,kW
+Power Factor,None
+Rainfall,mm
+Precip Rate,mm/hr
+Precip Bucket Weight,g
+Pressure,mm H2O
+Presumptive Coliforms,MPN/100ml
+Procymidone,mg/m^3
+Propanil,mg/m^3
+Propiconazole,mg/kg
+Purge Rate,l/min
+Purge Time,min
+Purge Volume,l
+PWM,%
+Pyrene,mg/m^3
+QMCI,Score
+Discharge,m^3/s
+Discharge - Regulatory,m^3/s
+Discharge Total,m^3
+Rainfall Depth,m
+Rate Of Application,mm/d
+Relative Chlorophyll,RCFU
+Relative Phycocyanin,RPFU
+Resist,KOhm.cm
+Rhod Conc,ug/l
+River X Area,m^2
+River X Width,m
+Rubidium Total,g/m^3
+Solar Rad,W/m^2
+Salmonella,MPN/100ml
+Snow Depth,cm
+Snow Temp,degC
+Sea Level,m
+Sea Temperature,degC
+Secchi depth,m
+Sechura Rock Type,%
+Selenium Acid Soluble,g/m^3
+Selenium Dissolved,g/m^3
+Selenium Total,g/m^3
+Semi quant metals scan,Yes
+Semi VOC,g/m^3
+Sensor Velocity,m/s
+Settleable Solids,g/m^3
+SF6,g/l
+ShortWaveRadiation,W/m^2
+Sidi Chennane Rock Type,%
+Signal Strength,dBm
+Silica Reactive,g/m^3
+Silica Total,g/m^3
+Silicon,g/m^3
+Silicon as Silica Total,mg/l
+Silver Total,g/m^3
+Simazine,mg/m^3
+Sodium Adsorption Ratio,Ratio
+Sodium Base Saturation,%
+Sodium Dissolved,g/m^3
+Sodium Total,g/m^3
+Soluble BOD,g/m^3
+Soluble Phosphate,g/m^3
+Soluble Solids,g/m^3
+Sp Cond,uS/cm
+SQMCI,SQMCI Score
+Stage Change,mm/hr
+Static Water Level,m
+Static Water Level (mBTOC),m
+Status,None
+Staurastrum,cells/ml
+Sulphate,mg/l
+Sulphide Sulphur,g/m^3
+Sulphide Total,g/m^3
+Sulphur,%
+Sulphur Dioxide,mg/m^3
+Sulphur Dioxide (Air),ug/m^3
+Sulphur Dioxide Emission,kg/hr
+Sulphur Dissolved,g/m^3
+Sulphur Trioxide Emission,kg/d
+Sum of Anions + Cations,mEq/l
+Sunshine Hours,hr
+Surfactants (MBAS Detergent),g/m^3
+Air Temp,degC
+Tannin,g/m^3
+TaxaRichness,#
+TDS,mg/l
+Temperature,degC
+Terbuthylazine,mg/m^3
+Thallium,g/m^3
+Thiocyanate,g/m^3
+Tin,g/m^3
+Tin Total,g/m^3
+Tin Total Recoverable,g/m^3
+TKN measured,mg/l
+Toluene,mg/l
+Tonnage,tonne
+Tonnage Annual,tonne
+Total Algae,cells/ml
+Total Ammoniacal Nitrogen,g/m^3
+Total Anions,mEq/l
+Total Antimony,g/m^3
+Total Available Chlorine,g/m^3
+Total Carbon,g/m^3
+Total carbon dioxide,g/m^3
+Total Cations,mEq/l
+Total Chlordane,g/m^3
+Total Chlorophyta (GA),cells/ml
+Total Coliforms,MPN/100ml
+Total Coliforms MPN,MPN/100ml
+Total Cyanophyta (BGA),cells/ml
+Total Depth,m
+Total Dissolved Carbon,g/m^3
+Total Dissolved Nitrogen (CTL),g/m^3
+Total Dissolved Phosphorus,g/m^3
+Total Dissolved Phosphorus (Trace),g/m^3
+Total Dustfall,g/m^2/30d
+Total Halogens,g/m^3
+Total Hardness,g/m^3
+Total Inorganic Nitrogen,g/m^3
+Total Kjeldahl Nitrogen,g/m^3
+Total Nitrogen,g/m^3
+Total Nitrogen Calculated,g/m^3
+Total Organic Carbon,g/m^3
+Total Organic Nitrogen,g/m^3
+Total Oxidised Nitrogen,g/m^3
+Total Particulate Emmission Rate,kg/hr
+Total Persulphate Nitrogen,g/m^3
+Total Petrol Hydrocarbons,g/m^3
+Total Petrol Hydrocarbons C10-C14,g/m^3
+Total Petrol Hydrocarbons C7-C9,g/m^3
+Total Phosphorus,g/m^3
+Total Phosphorus (Trace),g/m^3
+Total Reactive Phosphorus,g/m^3
+Total Residual Chlorine,g/m^3
+Total Solids,g/m^3
+Total Suspended Particulates,g/m^3
+Total Xylenes,mg/l
+trans-Chlordane,g/m^3
+trans-Permethrin,mg/m^3
+Triclopyr,mg/m^3
+Trifluralin,mg/m^3
+Soil Temp,degC
+TSP 24 hour total,g/m^3
+Total Suspended Solids,g/m^3
+Water Temp,degC
+Wind Dir,deg
+Wind Gust Vel,m/s
+Unchlorinated Phenols,mg/m^3
+Undissociated Sulphide,g/m^3
+Unionized ammoniacal nitrogen,g/m^3
+Peak Wind Dir,deg
+UreaN_gm3,g/m^3
+Wind Vel,m/s
+Value,None
+Valve Opening,%
+Vanadium Total,mg/m^3
+Voltage,V
+Vibration,mm/s
+Vietnamese Rock Type,%
+Visual Clarity,%
+Volatile Fatty Acids,g/m^3
+Volatile Solids,mg/l
+Volatile Suspended Solids,g/m^3
+Waste Oil Volume,m^3
+Water Level BLSD,m
+Water Depth,m
+Water Temperature 1st Volume,degC
+Water Temperature 2nd Volume,degC
+Water Level,m
+Cond,uS/cm
+RiverXDepth,m
+Weng Fu Rock Type,%
+Wetted Perimeter,m
+Whey Flow,l/d
+Tot Susp Sed,mg/l
+Flow,l/s
+O2 (Dis),mg/l
+Salinity,ppt
+Water Surface Slope,m/km
+Attenuation turbidity,_ATU
+Backscatter turbidity,_BU
+"Turbidity, FormAttenu",_FAU
+"Turbidity, 90&0_45 d",_FBRU
+"Turbidity, FormBksctr",_FBU
+"Turbidity, FormMulti",_FNMU
+"Turbidity, FormRatio",_FNRU
+Turbidity (Form Neph),_FNU
+Turbidity (ISO),_FNU
+Turbidity (Jackson),_JTU
+Turbidity (NephMulti),_NTMU
+Turbidity (NephRatio),_NTRU
+Turbidity,_NTU
+Water Velocity,m/s
+Dis Oxygen Sat,%
+Chlorophyll,ug/l
+Xanthates,g/m^3
+Xanthates IBX,g/m^3
+Xanthates SEX,g/m^3
+Xifeng Rock Type,%
+Xmas Island Rock Type,%
+Rel Humidity,%
+Xylene,g/m^3
+Zinc,g/m^3
+Zinc Acid Soluble,g/m^3
+Zinc Dissolved,g/m^3
+Zinc Total,g/m^3
+Zinc Total Recoverable,g/m^3

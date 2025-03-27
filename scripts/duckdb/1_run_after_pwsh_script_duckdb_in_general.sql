@@ -12,15 +12,15 @@ set variable file_plate = 'info/plate_info.json';
 --     'info/plate_info.json'
 -- );
 create or replace table plates as
-    with id_site as (
-        select * as id_site
+    with cte_pn as (
+        select * as plate_name
         from read_json(getvariable('file_plate'))
         -- from 'info/plate_info.json'
     )
     select
-        unnest(map_keys(id_site)) as Location,
-        unnest(map_values(id_site)) as Site
-    from id_site
+        unnest(map_keys(plate_name)) as Plate,
+        unnest(map_values(plate_name)) as Name
+    from cte_pn
 ;
 set variable file_param = 'info/param_info.json';
 -- set variable file_param = (
@@ -59,17 +59,19 @@ create or replace table ts_long as
         unpivot tmp
         on columns(* exclude (TimeStamp, filename))
         into
-            name ID
+            name Parameter_Plate
             value Value
     ),
-    -- Split column [ID] into columns [Location] and [Parameter]
+    -- Split column [Parameter_Plate] into columns [Parameter] and [Plate]
     tmp_long as (
         select
             TimeStamp,
             Value,
             parse_path(filename, 'system')[-2] as folder,
-            split_part(ID, '@', -1) as Location,
-            split_part(ID, '@', 1) as Parameter,
+            split_part(Parameter_Plate, '@', -1) as Plate,
+            list_aggregate(
+                string_split(Parameter_Plate, '@')[:-2], 'string_agg', '@'
+            ) as Parameter,
             parse_filename(filename, true, 'system') as uid
         from cte
     )
@@ -77,18 +79,18 @@ create or replace table ts_long as
     select
         t.TimeStamp, t.Value, pa.Unit, t.Parameter, pl.*, t.folder, t.uid
     from tmp_long t
-    left join plates pl on t.Location = pl.Location
+    left join plates pl on t.Plate = pl.Plate
     left join params pa on t.Parameter = pa.Parameter
     -- Try not to use `order by` clause in CTE/subquery - use it in the main query instead!
-    order by folder, Site, TimeStamp
+    order by folder, Name, uid, TimeStamp
 ;
 
 
 -- Show some summary about the merged data
 copy (
     select
-        any_value(Location) as Location,
-        Site,
+        any_value(Plate) as Plate,
+        Name,
         folder,
         any_value(Unit) as Unit,
         min(TimeStamp) as Start,
@@ -101,10 +103,11 @@ copy (
         -- median(Value).round(3) as Median,
         -- quantile_cont(Value, .75).round(3) as "75%",
         max(Value).round(3) as Max,
-        arg_max(TimeStamp, Value) as Time_max
+        arg_max(TimeStamp, Value) as Time_max,
+        uid,
     from ts_long
-    group by folder, Site
-    order by folder, Site
+    group by folder, Name, uid
+    order by folder, Name
 ) to 'out/data_range_db.tsv'
 with (FORMAT CSV, DELIMITER '\t', HEADER);
 

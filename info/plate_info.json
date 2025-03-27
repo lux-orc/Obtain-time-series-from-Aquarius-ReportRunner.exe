@@ -7773,7 +7773,7 @@
     "RM21.054.01": "RM21.054.01",
     "CombinedRiverFlowsRegulatory": "CombinedRiverFlowsRegulatory",
     "WM1604": "WM1604",
-    "RM21.339.01": "RM21.339.01",
+    "RM21.339.01": "RM21.339.01.V1",
     "GT145": "Clutha Mata-Au at Tuapeka Mouth Ferry",
     "WM1605": "WM1605",
     "RM16.196.01": "RM16.196.01",
@@ -7895,11 +7895,11 @@
     "GT208": "Sow Burn at Taieri Confluence",
     "GT209": "Totara Creek at Culvert",
     "RM20.039.01": "RM20.039.01",
-    "RM20.039.02": "RM20.039.02",
+    "RM20.039.02": "RM20.039.02.V1",
     "RM20.039.03": "RM20.039.03",
     "RM20.039.04": "RM20.039.04",
     "RM20.039.05": "RM20.039.05",
-    "RM20.039.06": "RM20.039.06",
+    "RM20.039.06": "RM20.039.06.V2",
     "RM20.039.07": "RM20.039.07",
     "2001.393": "2001.393",
     "2001.385": "2001.385",
@@ -9893,5 +9893,8 @@
     "GT775": "Tokomairiro 30m downstream WWTP discharge",
     "GT776": "Tokomairiro East Branch 20m US confluence",
     "GT773": "Taieri 4000m downstream Waipiata Rail Trail Bridge",
-    "GT777": "Hopes Creek at Manorburn Confluence 200m Upstream"
+    "GT777": "Hopes Creek at Manorburn Confluence 200m Upstream",
+    "RM24.519.01": "RM24.519.01",
+    "WM1712": "WM1712",
+    "RM24.386.01": "RM24.386.01"
 }

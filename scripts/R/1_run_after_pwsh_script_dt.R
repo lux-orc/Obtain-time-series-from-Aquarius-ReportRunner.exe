@@ -24,7 +24,7 @@ if (!dir.exists(path_csv))
 
 # Load the reference list between the plate numbers and the site names
 path_info <- file.path(path, "info")
-plate_info <- fread(file.path(path_info, "plate_info.csv"), key = "ID")
+plate_info <- fread(file.path(path_info, "plate_info.csv"), key = "Plate")
 param_info <- fread(file.path(path_info, "param_info.csv"), key = "Param")
 
 
@@ -64,8 +64,8 @@ for (path_folder in path_folders) {
       ts_id = paste0(param, ".", lab, "@", plate),
       Parameter = param,
       Label = lab,
-      Location = plate,
-      Site = plate_info[plate, Site],
+      Plate = plate,
+      Name = plate_info[plate, Name],
       uid = tmp_2[1] |> gsub(replacement = "", pattern = "-", fixed = TRUE),
       CSV = tstrsplit(csv_path, "/", fixed = TRUE) |> rev() |> _[[1]],
       Description = desc
@@ -73,10 +73,10 @@ for (path_folder in path_folders) {
     setnames(ts_i, old = names(ts_i)[2], new = "Value")
     ts_df <- rbindlist(list(ts_df, na.omit(ts_i, cols = "Value")))
   }
-
-  # Store the time series from each folder inside the csv filder
+  
+  # Store the time series from each folder inside the csv folder
   ts_l <- rbind(ts_l, data.table(ts_df, folder = folder_name))
-
+  
   # Save the data from this folder
   parquet_2_save <- file.path(path_out, paste0(folder_name, ".parquet"))
   arrow::write_parquet(as.data.frame(ts_df), parquet_2_save)
@@ -86,10 +86,10 @@ for (path_folder in path_folders) {
   )
   message(msg)
   # Convert to wide format for the time series of a regular time step when:
-  if (ts_df[, length(unique(Location))] < length(csv_paths)) {
+  if (ts_df[, length(unique(Plate))] < length(csv_paths)) {
     loc_dup <-
-      ts_df[, .(Location = unique(Location)), CSV][
-        , .(CSV, C = .N), Location][
+      ts_df[, .(Plate = unique(Plate)), CSV][
+        , .(CSV, C = .N), Plate][
           C > 1, sort(CSV)]
     cat(cp(
       paste0(
@@ -127,9 +127,9 @@ for (path_folder in path_folders) {
     ), "\n", sep = "")
     next
   }
-  w <- dcast(ts_df, formula = TimeStamp ~ Site, value.var = "Value")
+  w <- dcast(ts_df, formula = TimeStamp ~ Name, value.var = "Value")
   w[, TimeStamp := as.POSIXct(TimeStamp, format = "%Y-%m-%d %H:%M:%S", tz = "Etc/GMT-12")]
-  ts_w <- na_ts_insert(w)[, c("TimeStamp", unique(ts_df$Site)), with = FALSE]
+  ts_w <- na_ts_insert(w)[, c("TimeStamp", unique(ts_df$Name)), with = FALSE]
   if (step_sec == 86400) {
     setnames(ts_w, old = "TimeStamp", new = "Date")
     ts_w[, Date := substr(as.character(Date), 1, 10)]
@@ -137,7 +137,7 @@ for (path_folder in path_folders) {
     setnames(ts_w, old = "TimeStamp", new = "Time")
     ts_w[, Time := format(Time, format = "%Y-%m-%d %H:%M:%S")]
   }
-
+  
   # Save the data in wide format
   parquet_2_save_wide <- file.path(path_out, paste0(folder_name, "_wide.parquet"))
   arrow::write_parquet(as.data.frame(ts_w), parquet_2_save_wide)
@@ -156,9 +156,11 @@ con <- dbConnect(duckdb())
 duckdb_register(con, "ts_l", ts_l)
 q_str <- '
   select
-      any_value(Location) as Location,
-      Site,
+      any_value(Plate) as Plate,
+      Name,
       folder,
+      ts_id,
+      any_value(Description) as Description,
       any_value(Unit) as Unit,
       min(TimeStamp) as Start,
       max(TimeStamp) as End,
@@ -171,10 +173,13 @@ q_str <- '
       -- quantile_cont(Value, .75).round(3) as "75%",
       max(Value).round(3) as Max,
       arg_max(TimeStamp, Value) as Time_max,
+      CSV,
   from ts_l
-  group by folder, Site
-  order by folder, Site
+  group by folder, Name, ts_id, CSV
+  order by folder, Name, ts_id
 '
+
+
 tsv_2_save <- file.path(path_out, "data_range_dt.tsv")
 dbGetQuery(con, q_str) |> fwrite(tsv_2_save, sep = "\t", dateTimeAs = "write.csv")
 dbDisconnect(con)
