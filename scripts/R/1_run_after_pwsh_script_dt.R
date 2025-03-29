@@ -5,9 +5,6 @@ library(data.table)  # Fast operations on large data frames
 library(duckdb)
 
 # https://rdatatable.gitlab.io/data.table/articles/datatable-faq.html
-# 
-#   When `with = FALSE`, the standard data.frame evaluation rules apply to
-#   all variables in j and you can no longer use column names directly.
 
 source("_tools/fun_s.R")
 
@@ -151,35 +148,33 @@ for (path_folder in path_folders) {
 }
 
 
-# Make a spreadsheet output for data chaecking purposes
+# Make a spreadsheet output for primitive data checking purposes
 con <- dbConnect(duckdb())
 duckdb_register(con, "ts_l", ts_l)
 q_str <- '
   select
-      any_value(Plate) as Plate,
-      Name,
-      folder,
-      ts_id,
-      any_value(Description) as Description,
-      any_value(Unit) as Unit,
-      min(TimeStamp) as Start,
-      max(TimeStamp) as End,
-      -- avg(Value).round(3) as Mean,
-      -- stddev_samp(Value).round(3) as Std,
-      min(Value).round(3) as Min,
-      arg_min(TimeStamp, Value) as Time_min,
-      -- quantile_cont(Value, .25).round(3) as "25%",
-      -- median(Value).round(3) as Median,
-      -- quantile_cont(Value, .75).round(3) as "75%",
-      max(Value).round(3) as Max,
-      arg_max(TimeStamp, Value) as Time_max,
-      CSV,
+    any_value(Plate) as Plate,
+    Name,
+    folder,
+    ts_id,
+    any_value(Description) as Description,
+    any_value(Unit) as Unit,
+    min(TimeStamp) as Start,
+    max(TimeStamp) as End,
+    -- avg(Value).round(3) as Mean,
+    -- stddev_samp(Value).round(3) as Std,
+    min(Value).round(3) as Min,
+    arg_min(TimeStamp, Value) as Time_min,
+    -- quantile_cont(Value, .25).round(3) as "25%",
+    -- median(Value).round(3) as Median,
+    -- quantile_cont(Value, .75).round(3) as "75%",
+    max(Value).round(3) as Max,
+    arg_max(TimeStamp, Value) as Time_max,
+    CSV,
   from ts_l
   group by folder, Name, ts_id, CSV
   order by folder, Name, ts_id
 '
-
-
 tsv_2_save <- file.path(path_out, "data_range_dt.tsv")
 dbGetQuery(con, q_str) |> fwrite(tsv_2_save, sep = "\t", dateTimeAs = "write.csv")
 dbDisconnect(con)
