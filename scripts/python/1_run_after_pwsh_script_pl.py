@@ -10,7 +10,6 @@ import json
 import time
 from pathlib import Path
 
-import duckdb
 import polars as pl
 import _tools.fun_s_pl as fpl
 
@@ -216,31 +215,20 @@ for path_folder in path_folders:
 
 # Make a spreadsheet output for data chaecking purposes
 tsv_2_save = path_out / 'data_range_pl.tsv'
-q_str = """
-    select
-        any_value(Plate) as Plate,
-        Name,
-        folder,
-        ts_id,
-        any_value(Description) as Description,
-        any_value(Unit) as Unit,
-        min(TimeStamp) as Start,
-        max(TimeStamp) as End,
-        -- avg(Value).round(3) as Mean,
-        -- stddev_samp(Value).round(3) as Std,
-        min(Value).round(3) as Min,
-        arg_min(TimeStamp, Value) as Time_min,
-        -- quantile_cont(Value, .25).round(3) as "25%",
-        -- median(Value).round(3) as Median,
-        -- quantile_cont(Value, .75).round(3) as "75%",
-        max(Value).round(3) as Max,
-        arg_max(TimeStamp, Value) as Time_max,
-        CSV,
-    from ts_l
-    group by folder, Name, ts_id, CSV
-    order by folder, Name, ts_id
-"""
-duckdb.sql(q_str).write_csv(file_name=f'{tsv_2_save}', sep='\t')
+ts_l.group_by(['folder', 'Name', 'ts_id', 'CSV']).agg(
+    pl.col('Plate').first().alias('Plate'),
+    pl.col('Description').first().alias('Description'),
+    pl.col('Unit').first().alias('Unit'),
+    pl.col('TimeStamp').min().dt.strftime(fmt).alias('Start'),
+    pl.col('TimeStamp').max().dt.strftime(fmt).alias('End'),
+    pl.col('Value').min().round(3).alias('Min'),
+    pl.col('TimeStamp').get(pl.col('Value').arg_min()).dt.strftime(fmt).alias('Time_min'),
+    pl.col('Value').max().round(3).alias('Max'),
+    pl.col('TimeStamp').get(pl.col('Value').arg_max()).dt.strftime(fmt).alias('Time_max'),
+).sort(['folder', 'Name', 'ts_id']).write_csv(
+    tsv_2_save,
+    separator='\t',
+)
 
 
 # Print out something showing it runs properly

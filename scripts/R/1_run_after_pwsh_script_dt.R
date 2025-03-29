@@ -2,7 +2,6 @@
 rm(list = ls(all.names = TRUE))
 
 library(data.table)  # Fast operations on large data frames
-library(duckdb)
 
 # https://rdatatable.gitlab.io/data.table/articles/datatable-faq.html
 
@@ -149,35 +148,19 @@ for (path_folder in path_folders) {
 
 
 # Make a spreadsheet output for primitive data checking purposes
-con <- dbConnect(duckdb())
-duckdb_register(con, "ts_l", ts_l)
-q_str <- '
-  select
-    any_value(Plate) as Plate,
-    Name,
-    folder,
-    ts_id,
-    any_value(Description) as Description,
-    any_value(Unit) as Unit,
-    min(TimeStamp) as Start,
-    max(TimeStamp) as End,
-    -- avg(Value).round(3) as Mean,
-    -- stddev_samp(Value).round(3) as Std,
-    min(Value).round(3) as Min,
-    arg_min(TimeStamp, Value) as Time_min,
-    -- quantile_cont(Value, .25).round(3) as "25%",
-    -- median(Value).round(3) as Median,
-    -- quantile_cont(Value, .75).round(3) as "75%",
-    max(Value).round(3) as Max,
-    arg_max(TimeStamp, Value) as Time_max,
-    CSV,
-  from ts_l
-  group by folder, Name, ts_id, CSV
-  order by folder, Name, ts_id
-'
-tsv_2_save <- file.path(path_out, "data_range_dt.tsv")
-dbGetQuery(con, q_str) |> fwrite(tsv_2_save, sep = "\t", dateTimeAs = "write.csv")
-dbDisconnect(con)
+ts_l[, .(
+  Plate = first(Plate),
+  Description = first(Description),
+  Unit = first(Unit),
+  Start = min(TimeStamp),
+  End = max(TimeStamp),
+  Min = min(Value) |> round(3),
+  Time_min = TimeStamp[which.min(Value)],
+  Max = max(Value) |> round(3),
+  Time_max = TimeStamp[which.max(Value)]
+), by = .(folder, Name, ts_id, CSV)][
+  order(folder, Name, ts_id)
+] |> fwrite(file.path(path_out, "data_range_dt.tsv"), sep = "\t")
 
 cat(
   "Time elapsed:\t",
