@@ -20,7 +20,7 @@ pl.Config.set_tbl_cols(-1)
 
 
 # Set up the path of the project
-path = Path.cwd()
+path = Path('.')
 path_out = path / 'out'
 path_csv = path_out / 'csv'
 path_info = path / 'info'

@@ -13,7 +13,7 @@ pd.set_option('display.max_columns', None)  # Show all columns
 
 
 # Set up the path of the project
-path = Path.cwd()
+path = Path('.')
 path_out = path / 'out'
 path_csv = path_out / 'csv'
 path_info = path / 'info'
