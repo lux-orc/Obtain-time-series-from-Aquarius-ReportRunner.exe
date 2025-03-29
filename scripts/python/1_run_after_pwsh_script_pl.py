@@ -16,8 +16,7 @@ import _tools.fun_s_pl as fpl
 
 time_start = time.perf_counter()
 
-pl.Config.set_tbl_cols(-1)  # Show all columns
-# pl.Config.set_tbl_rows(50)  # Show number of rows
+pl.Config.set_tbl_cols(-1)
 
 
 # Set up the path of the project
