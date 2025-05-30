@@ -27,7 +27,7 @@ param_info <- fread(file.path(path_info, "param_info.csv"), key = "Param")
 # Detect the folders in '/out/csv' folder
 path_folders <- list.dirs(path_csv, recursive = FALSE, full.names = TRUE)
 
-# Make a frame to store the long-format frame fro each folder inside the csv folder
+# Make a frame to store the long-format frame for each folder inside the csv folder
 ts_l <- data.table()
 
 # For each folder, read the csv data files
