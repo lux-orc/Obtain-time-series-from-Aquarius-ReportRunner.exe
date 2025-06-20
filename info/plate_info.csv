@@ -92,7 +92,7 @@ EM501,Kakanui at Glenrowan
 EM502,Kauru at The Dasher
 EM507,Lake Hawea at Dam (NIWA)
 EM509,Lake Wakatipu at Outflow (Flowphone)
-EM514,Calder Bore
+G43/0032,Calder Bore
 EM517,Clutha at Glen Finnan
 EM522,Chisholms Bore
 EM524,Fraser Dam
@@ -112,7 +112,7 @@ EM594,Lake Dunstan at Crippletown
 EM595,Lake Dunstan at Cromwell (NIWA)
 EM596,Lake Dunstan at Ripponvale (NIWA)
 EM600,Lake Wakatipu at Outflow
-EM610,Lake Wakatipu / Frankton Difference
+EM610,Lake Wakatipu/Frankton Difference
 EM608,Clutha below Roxburgh Dam (NIWA)
 EM619,Dart at Paradise
 EM617,Kakanui at McCones
@@ -6842,7 +6842,7 @@ RM19.351.01,RM19.351.01
 RM19.341.02,RM19.341.02
 RM19.372.01,RM19.372.01
 RM19.371.01,RM19.371.01
-RM19.384.01,RM19.384.01
+RM19.384.01,RM19.384.01.V1
 RM19.388.01,RM19.388.01
 RM19.400.01,RM19.400.01
 RM19.394.01,RM19.394.01
@@ -8780,7 +8780,7 @@ GT292,Gin Company Wastewater
 RM21.452.01,RM21.452.01
 RM21.637.01,RM21.637.01
 RM22.352.01,RM22.352.01
-GT293,Blackthorn Lodge Effluent
+GT293,Monitoring Bore
 RM20.038.01,RM20.038.01
 EW264ORC,Fonterra Dissolved Air Flotation (DAF)
 EW748ORC,Fonterra Waste Activated Sludge (WAS)
@@ -9901,3 +9901,60 @@ CE13/0134,School Road Millers Flat
 CD13/0166,Moa Flat Road Ettrick
 CD13/0165,Mt Benger Road Ettrick
 CD13/0164,Teviot Road Teviot
+GT778,Prior to Nitrogen Polisher
+GT782ORC,20 meters downstream - ORC Sampling
+GT779ORC,Final Discharge post UV - ORC Sampling
+GT783ORC,Any discharge from the disposal field - ORC Sampling
+GT781ORC,Discharge to the river - ORC Sampling
+GT785ORC,Downstream of Kawarau River - ORC Sampling
+GT780ORC,Upstream WWTP (before the SH6 bridge) - ORC Sampling
+GT784ORC,Upstream of Kawarau River - ORC Sampling
+RM24.083.01,RM24.083.01
+GT786,Waikouaiti WTP Discharge
+GT787,Frankton at Kawarau Falls Park Air Quality
+GT788,Albert Town at Rifleman Street Air Quality
+GT789,Hawea at Noema Terrace Air Quality
+RM24.744.01,RM24.744.01
+RM24.744.02,RM24.744.02
+WM1714,WM1714
+WM1715,WM1715
+J41/0273,Spring Hill Rd Papakaio
+GT790,George Street /SH88 Dry Weather Outfall 3 DCC31
+96489,96489
+WM1649,WM1649
+GT791,George Street /SH88 Dry Weather Outfall 3 DCC31
+GT792,Magnet Street Dry Weather Outfall 2 DCC29
+GT793,Magnet Street Dry Weather Outfall 1 DCC28
+GT794,Wickliffe Street Wet Weather Outfall 6 DCC27
+GT795,Halsey Street Dry Weather Outfall 5 DCC26
+GT796,Halsey Street Dry Weather Outfall 2 DCC25
+GT797,Halsey Street Wet Weather Outfall 1 DCC24
+GT798,Bauchop Street Wet Weather Outfall 4 DCC23
+GT799,Bauchop Street Dry Weather Outfall 3 DCC22
+GT800,Mason Street Dry Weather Outfall 1 DCC21
+GT801,Kitchener Street Wet Weather Outfall 1 DCC10
+GT802,Kitchener Street Dry Weather Outfall 10 DCC12
+GT803,French Street Dry Weather Outfall 11 DCC11
+GT804,Orari Street Dry Weather Outfall 2 DCC7
+GT805,Kitchener Street Dry Weather Outfall 1 DCC9
+GT806,Orari Street Wet Weather Outfall 1 DCC8
+GT807,Portobello Road Wet Weather Outfall 1 DCC4
+GT808,Second Beach Wet Weather Outfall 2 DCC1
+GT809,Shore Street Wet Weather Outfall 1 DCC3
+RM22.264.01,RM22.264.01
+WM1717,WM1717
+WM0826,WM0826
+RM21.024.01,RM21.024.01
+WM1701,WM1701
+RM25.070.01,RM25.070.01
+WM1713,WM1713
+RM23.801.01,RM23.801.01
+GT632,100 Springvale Road Winery Wastewater
+RM23.548.02,RM23.548.02
+RM19.121.01,RM19.121.01
+WM1722,WM1722
+RM23.433.01,RM23.433.01
+WM1719,John Bull Creek Residual Flow
+WM1720,Quartz Creek Residual Flow
+WM1719v,WM1719v
+WM1690,WM1690
