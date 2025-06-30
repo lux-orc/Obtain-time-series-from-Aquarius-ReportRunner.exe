@@ -74,7 +74,8 @@ for path_folder in path_folders:
             .split(' ', maxsplit=1)
         )
         # To make some column names the same as those from 'aquarius.orc.govt.nz/AQUARIUS'
-        tmp = tmp.rename(columns={tmp.columns[-1]: 'Value'}).dropna().assign(
+        tmp = tmp.rename(columns={tmp.columns[-1]: 'Value'}).assign(
+        # tmp = tmp.rename(columns={tmp.columns[-1]: 'Value'}).dropna().assign(
             Unit=param_dict.get(param),
             ts_id=f'{param}.{lab}@{plate}',
             Parameter=param,
@@ -197,6 +198,7 @@ q_str = """
         arg_max(TimeStamp, Value) as Time_max,
         CSV,
     from ts_l
+    where Value is not NULL  -- Ensures that both ends of a dataset is not NULL
     group by folder, Name, ts_id, CSV
     order by folder, Name, ts_id
 """

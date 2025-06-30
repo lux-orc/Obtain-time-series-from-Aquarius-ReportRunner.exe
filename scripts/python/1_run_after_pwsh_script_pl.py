@@ -89,7 +89,8 @@ for path_folder in path_folders:
             .split(' ', maxsplit=1)
         )
         # To make some column names the same as those from 'aquarius.orc.govt.nz/AQUARIUS'
-        tmp = tmp.rename({tmp.columns[-1]: 'Value'}).drop_nulls().with_columns(
+        tmp = tmp.rename({tmp.columns[-1]: 'Value'}).with_columns(  # Keep rows with `null`
+        # tmp = tmp.rename({tmp.columns[-1]: 'Value'}).drop_nulls().with_columns(
             pl.lit(param_dict.get(param)).alias('Unit'),
             pl.lit(f'{param}.{lab}@{plate}').alias('ts_id'),
             pl.lit(param).alias('Parameter'),
@@ -215,7 +216,7 @@ for path_folder in path_folders:
 
 # Make a spreadsheet output for data chaecking purposes
 tsv_2_save = path_out / 'data_range_pl.tsv'
-ts_l.group_by(['folder', 'Name', 'ts_id', 'CSV']).agg(
+ts_l.drop_nulls().group_by(['folder', 'Name', 'ts_id', 'CSV']).agg(
     pl.col('Plate').first().alias('Plate'),
     pl.col('Description').first().alias('Description'),
     pl.col('Unit').first().alias('Unit'),

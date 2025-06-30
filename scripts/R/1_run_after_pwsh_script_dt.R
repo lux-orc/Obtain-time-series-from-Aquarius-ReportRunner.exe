@@ -67,7 +67,8 @@ for (path_folder in path_folders) {
       Description = desc
     )]
     setnames(ts_i, old = names(ts_i)[2], new = "Value")
-    ts_df <- rbindlist(list(ts_df, na.omit(ts_i, cols = "Value")))
+    # ts_df <- rbindlist(list(ts_df, na.omit(ts_i, cols = "Value")))
+    ts_df <- rbindlist(list(ts_df, ts_i))
   }
   
   # Store the time series from each folder inside the csv folder
@@ -148,7 +149,7 @@ for (path_folder in path_folders) {
 
 
 # Make a spreadsheet output for primitive data checking purposes
-ts_l[, .(
+ts_l[!is.na(Value), .(
   Plate = first(Plate),
   Description = first(Description),
   Unit = first(Unit),
