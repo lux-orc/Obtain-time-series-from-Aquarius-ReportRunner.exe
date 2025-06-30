@@ -89,8 +89,8 @@ for path_folder in path_folders:
             .split(' ', maxsplit=1)
         )
         # To make some column names the same as those from 'aquarius.orc.govt.nz/AQUARIUS'
-        tmp = tmp.rename({tmp.columns[-1]: 'Value'}).with_columns(  # Keep rows with `null`
-        # tmp = tmp.rename({tmp.columns[-1]: 'Value'}).drop_nulls().with_columns(
+        # Keep rows with `null`
+        tmp = tmp.rename({tmp.columns[-1]: 'Value'}).with_columns(
             pl.lit(param_dict.get(param)).alias('Unit'),
             pl.lit(f'{param}.{lab}@{plate}').alias('ts_id'),
             pl.lit(param).alias('Parameter'),

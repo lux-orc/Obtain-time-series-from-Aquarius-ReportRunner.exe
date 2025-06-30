@@ -75,7 +75,6 @@ for path_folder in path_folders:
         )
         # To make some column names the same as those from 'aquarius.orc.govt.nz/AQUARIUS'
         tmp = tmp.rename(columns={tmp.columns[-1]: 'Value'}).assign(
-        # tmp = tmp.rename(columns={tmp.columns[-1]: 'Value'}).dropna().assign(
             Unit=param_dict.get(param),
             ts_id=f'{param}.{lab}@{plate}',
             Parameter=param,
