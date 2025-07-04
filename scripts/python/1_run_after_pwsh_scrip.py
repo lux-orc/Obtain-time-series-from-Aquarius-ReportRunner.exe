@@ -216,20 +216,24 @@ for path_folder in path_folders:
 
 # Make a spreadsheet output for data chaecking purposes
 tsv_2_save = path_out / 'data_range_pl.tsv'
-ts_l.drop_nulls().group_by(['folder', 'Name', 'ts_id', 'CSV']).agg(
-    pl.col('Plate').first().alias('Plate'),
-    pl.col('Description').first().alias('Description'),
-    pl.col('Unit').first().alias('Unit'),
-    pl.col('TimeStamp').min().dt.strftime(fmt).alias('Start'),
-    pl.col('TimeStamp').max().dt.strftime(fmt).alias('End'),
-    pl.col('Value').min().round(3).alias('Min'),
-    pl.col('TimeStamp').get(pl.col('Value').arg_min()).dt.strftime(fmt).alias('Time_min'),
-    pl.col('Value').max().round(3).alias('Max'),
-    pl.col('TimeStamp').get(pl.col('Value').arg_max()).dt.strftime(fmt).alias('Time_max'),
-).sort(['folder', 'Name', 'ts_id']).write_csv(
-    tsv_2_save,
-    separator='\t',
+data_summary = (
+    ts_l.drop_nulls()
+    .group_by(['folder', 'Name', 'ts_id', 'CSV'])
+    .agg(
+        Plate=pl.col('Plate').first(),
+        Description=pl.col('Description').first(),
+        Unit=pl.col('Unit').first(),
+        Start=pl.col('TimeStamp').min().dt.strftime(fmt),
+        End=pl.col('TimeStamp').max().dt.strftime(fmt),
+        Min=pl.col('Value').min().round(3),
+        Time_min=pl.col('TimeStamp').get(pl.col('Value').arg_min()).dt.strftime(fmt),
+        Max=pl.col('Value').max().round(3),
+        Time_max=pl.col('TimeStamp').get(pl.col('Value').arg_max()).dt.strftime(fmt),
+    )
+    .sort(['folder', 'Name', 'ts_id'])
 )
+data_summary.write_csv(tsv_2_save, separator='\t')
+
 
 
 # Print out something showing it runs properly

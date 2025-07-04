@@ -17,6 +17,7 @@ scripts/duckdb/_steps_limitations.sql
 scripts/duckdb/_steps_in_general.sql
 scripts/duckdb/1_run_after_pwsh_script_duckdb_limitations.sql
 scripts/python/0_run_before_pwsh_script - NOT WORKING.py
+scripts/python/1_run_after_pwsh_script_pd.py
 scripts/R/0_run_before_pwsh_script - NOT WORKING.R
 scripts/R/1_run_after_pwsh_script_df.R
 scripts/read_duckdb_file.py
