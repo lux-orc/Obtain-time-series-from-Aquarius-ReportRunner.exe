@@ -6,6 +6,6 @@
         "-m",
         "IPython",
         "--no-autoindent",
-        "--simple-prompt"
+        // "--simple-prompt"
     ]
 }
