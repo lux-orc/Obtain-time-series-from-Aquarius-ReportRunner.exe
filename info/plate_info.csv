@@ -1510,34 +1510,7 @@ FM631,Lower Tomahawk Lagoon at Pump House
 FM632,Lower Tomahawk Lagoon at Tomahawk Road
 G42/0532,G42/0532
 FM633,Unnamed Stream at Lower Tomahawk Lagoon Confluence Upstream
-FP812,14 Mile Creek at Glenorchy Queenstown Road
-FP811,13 Mile Creek at Glenorchy Queenstown Road
 FP814,Clutha at Clutha Stage
-FP813,15 Mile Creek at Glenorchy Queenstown Road
-FP815,16 Mile Creek at Glenorchy Queenstown Road
-FP816,17 Mile Creek at Glenorchy Queenstown Road
-FP817,18 Mile Creek at Glenorchy Queenstown Road
-FP818,19 Mile Creek at Glenorchy Queenstown Road
-FP819,20 Mile Creek at Glenorchy Queenstown Road
-FP820,21 Mile Creek at Glenorchy Queenstown Road
-FP821,22 Mile Creek at Glenorchy Queenstown Road
-FP822,23 Mile Creek at Glenorchy Queenstown Road
-FP823,24 Mile Creek at Glenorchy Queenstown Road
-FP824,26 Mile Creek at Glenorchy Queenstown Road
-FP826,28 Mile Creek at Glenorchy Queenstown Road
-FP825,27 Mile Creek at Glenorchy Queenstown Road
-FP827,29 Mile Creek at Glenorchy Queenstown Road
-FP828,30 Mile Creek at Glenorchy Queenstown Road
-FP830,32 Mile Creek at Glenorchy Queenstown Road
-FP829,31 Mile Creek at Glenorchy Queenstown Road
-FP831,33 Mile Creek at Glenorchy Queenstown Road
-FP832,34 Mile Creek at Glenorchy Queenstown Road
-FP834,36 Mile Creek at Glenorchy Queenstown Road
-FP833,35 Mile Creek at Glenorchy Queenstown Road
-FP836,38 Mile Creek at Glenorchy Queenstown Road
-FP835,37 Mile Creek at Glenorchy Queenstown Road
-FP837,39 Mile Creek at Glenorchy Queenstown Road
-FP838,40 Mile Creek at Glenorchy Queenstown Road
 FP943,Naseby Oxidation Ponds Final Effluent - ORC Sampling
 FP944,Ranfurly STP Final Effluent - ORC Sampling
 FP946,Bandys Creek u/s Ranfurly STP Discharge - ORC Sampling
@@ -9921,7 +9894,7 @@ WM1715,WM1715
 J41/0273,Spring Hill Rd Papakaio
 GT790,George Street /SH88 Dry Weather Outfall 3 DCC31
 96489,96489
-WM1649,WM1649
+WM1649,Paerau Weir Residual
 GT791,George Street /SH88 Dry Weather Outfall 3 DCC31
 GT792,Magnet Street Dry Weather Outfall 2 DCC29
 GT793,Magnet Street Dry Weather Outfall 1 DCC28
@@ -9967,4 +9940,5 @@ RM25.008.01,RM25.008.01
 WM1724,WM1724
 RM25.006.01,RM25.006.01
 WM1725,WM1725
-CB16/0142,Beaumaris Street at Outram
+2001.394,2001.394
+2001.386,2001.386
