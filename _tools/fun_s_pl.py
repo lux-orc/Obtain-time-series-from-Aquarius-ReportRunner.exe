@@ -58,8 +58,8 @@ def _ts_valid_pd(ts: Any, /) -> 'str | None':
     if not isinstance(ts, (pd.Series, pd.DataFrame)):
         return '`ts` must be either pandas.Series or pandas.DataFrame!'
     if not (
-            all(isinstance(i, (datetime.datetime, datetime.date)) for i in ts.index)
-            or pd.api.types.is_datetime64_any_dtype(ts.index)
+        all(isinstance(i, (datetime.datetime, datetime.date)) for i in ts.index)
+        or pd.api.types.is_datetime64_any_dtype(ts.index)
     ):
         return f'Wrong dtype in the index: `{ts.index.dtype}` detected!'
     if not (ts.index.size == ts.index.unique().size):
@@ -135,11 +135,13 @@ def is_ts_daily(ts: pl.DataFrame, /) -> bool:
         raise TypeError(err_str)
     col_dt = ts.select(cs.temporal()).columns[0]
     if not pl.Date.is_(ts[col_dt].dtype):
-        time_no_hms = all([
-            ts[col_dt].dt.hour().eq(0).all(),
-            ts[col_dt].dt.minute().eq(0).all(),
-            ts[col_dt].dt.second().eq(0).all(),
-        ])
+        time_no_hms = all(
+            [
+                ts[col_dt].dt.hour().eq(0).all(),
+                ts[col_dt].dt.minute().eq(0).all(),
+                ts[col_dt].dt.second().eq(0).all(),
+            ]
+        )
         return (ts_step(ts) == 86400) and time_no_hms
     return True
 
@@ -204,10 +206,10 @@ def na_ts_insert(ts: pl.DataFrame) -> pl.DataFrame:
 
 
 def hourly_2_daily(
-        hts: pl.DataFrame,
-        day_starts_at: int = 0,
-        agg: Callable = pl.mean,
-        prop: float = 1.,
+    hts: pl.DataFrame,
+    day_starts_at: int = 0,
+    agg: Callable = pl.mean,
+    prop: float = 1.0,
 ) -> pl.DataFrame:
     """
     Aggregate the hourly time series to daily time series using customised function
@@ -289,7 +291,8 @@ def ts_info(ts: pl.DataFrame) -> 'pl.DataFrame | None':
         .rename(dict(zip(col_rest, col_rest_)))
         .unpivot(on=col_rest_, index=col_dt, variable_name='Site', value_name='V')
         .filter(pl.col('V').fill_nan(None).is_not_null())
-        .group_by('Site', maintain_order=True).agg(
+        .group_by('Site', maintain_order=True)
+        .agg(
             pl.col(col_dt).min().alias('Start'),
             pl.col(col_dt).max().alias('End'),
             pl.col('V').len().alias('n'),

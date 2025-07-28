@@ -1,13 +1,12 @@
-
 rm(list = ls(all.names = TRUE))
 
-library(data.table)  # Fast operations on large data frames
+library(data.table) # Fast operations on large data frames
 
 # https://rdatatable.gitlab.io/data.table/articles/datatable-faq.html
 
 source("_tools/fun_s.R")
 
-time_start <- Sys.time()  # Start the timer
+time_start <- Sys.time() # Start the timer
 
 # Set up the path of the project folder
 path <- getwd()
@@ -15,8 +14,9 @@ path_out <- file.path(path, "out")
 path_csv <- file.path(path_out, "csv")
 
 # Check if folder <out/csv> exists, raise otherwise
-if (!dir.exists(path_csv))
+if (!dir.exists(path_csv)) {
   stop(paste0("\n\tFolder <", path_relative(path_csv, path), "> doesn't exist!"))
+}
 
 # Load the reference list between the plate numbers and the site names
 path_info <- file.path(path, "info")
@@ -70,43 +70,59 @@ for (path_folder in path_folders) {
     # ts_df <- rbindlist(list(ts_df, na.omit(ts_i, cols = "Value")))
     ts_df <- rbindlist(list(ts_df, ts_i))
   }
-  
+
   # Store the time series from each folder inside the csv folder
   ts_l <- rbind(ts_l, data.table(ts_df, folder = folder_name))
-  
+
   # Save the data from this folder
   parquet_2_save <- file.path(path_out, paste0(folder_name, ".parquet"))
   arrow::write_parquet(as.data.frame(ts_df), parquet_2_save)
   msg <- paste0(
-    "\nThe data from folder <", pr, "> has been saved as ",
-    '"', path_relative(parquet_2_save, path), '"'
+    "\nThe data from folder <",
+    pr,
+    "> has been saved as ",
+    '"',
+    path_relative(parquet_2_save, path),
+    '"'
   )
   message(msg)
   # Convert to wide format for the time series of a regular time step when:
   if (ts_df[, length(unique(Plate))] < length(csv_paths)) {
     loc_dup <-
-      ts_df[, .(Plate = unique(Plate)), CSV][
-        , .(CSV, C = .N), Plate][
-          C > 1, sort(CSV)]
-    cat(cp(
-      paste0(
-        "Wide format is ignored due to the duplicated site names from files: [",
-        paste(loc_dup, collapse = ", "),
-        "]"
+      ts_df[, .(Plate = unique(Plate)), CSV][,
+        .(CSV, C = .N),
+        Plate
+      ][
+        C > 1,
+        sort(CSV)
+      ]
+    cat(
+      cp(
+        paste0(
+          "Wide format is ignored due to the duplicated site names from files: [",
+          paste(loc_dup, collapse = ", "),
+          "]"
+        ),
+        fg = 35
       ),
-      fg = 35
-    ), "\n", sep = "")
+      "\n",
+      sep = ""
+    )
     next
   }
   if (unique(ts_df[, .(Unit, Parameter)])[, .N] > 1) {
-    cat(cp(
-      paste0(
-        "Wide format is ignored as data's `Unit` & `Parameter` from <",
-        pr,
-        "> are NOT uniform!"
+    cat(
+      cp(
+        paste0(
+          "Wide format is ignored as data's `Unit` & `Parameter` from <",
+          pr,
+          "> are NOT uniform!"
+        ),
+        fg = 35
       ),
-      fg = 35
-    ), "\n", sep = "")
+      "\n",
+      sep = ""
+    )
     next
   }
   udt_df <- ts_df[, .(
@@ -115,13 +131,17 @@ for (path_folder in path_folders) {
   )]
   step_sec <- ts_step(udt_df)
   if (step_sec == -1 || step_sec > 86400) {
-    cat(cp(
-      paste(
-        "Wide format is ignored as the time series is",
-        "either in irregular time step or its time step > a day!"
+    cat(
+      cp(
+        paste(
+          "Wide format is ignored as the time series is",
+          "either in irregular time step or its time step > a day!"
+        ),
+        fg = 35
       ),
-      fg = 35
-    ), "\n", sep = "")
+      "\n",
+      sep = ""
+    )
     next
   }
   w <- dcast(ts_df, formula = TimeStamp ~ Name, value.var = "Value")
@@ -134,34 +154,45 @@ for (path_folder in path_folders) {
     setnames(ts_w, old = "TimeStamp", new = "Time")
     ts_w[, Time := format(Time, format = "%Y-%m-%d %H:%M:%S")]
   }
-  
+
   # Save the data in wide format
   parquet_2_save_wide <- file.path(path_out, paste0(folder_name, "_wide.parquet"))
   arrow::write_parquet(as.data.frame(ts_w), parquet_2_save_wide)
-  cat(cp(
-    paste0(
-      "The wide format has been saved as ",
-      "'", path_relative(parquet_2_save_wide, path), "'"
+  cat(
+    cp(
+      paste0(
+        "The wide format has been saved as ",
+        "'",
+        path_relative(parquet_2_save_wide, path),
+        "'"
+      ),
+      fg = 32
     ),
-    fg = 32
-  ), "\n", sep = "")
+    "\n",
+    sep = ""
+  )
 }
 
 
 # Make a spreadsheet output for primitive data checking purposes
-ts_l[!is.na(Value), .(
-  Plate = first(Plate),
-  Description = first(Description),
-  Unit = first(Unit),
-  Start = min(TimeStamp),
-  End = max(TimeStamp),
-  Min = min(Value) |> round(3),
-  Time_min = TimeStamp[which.min(Value)],
-  Max = max(Value) |> round(3),
-  Time_max = TimeStamp[which.max(Value)]
-), by = .(folder, Name, ts_id, CSV)][
+ts_l[
+  !is.na(Value),
+  .(
+    Plate = first(Plate),
+    Description = first(Description),
+    Unit = first(Unit),
+    Start = min(TimeStamp),
+    End = max(TimeStamp),
+    Min = min(Value) |> round(3),
+    Time_min = TimeStamp[which.min(Value)],
+    Max = max(Value) |> round(3),
+    Time_max = TimeStamp[which.max(Value)]
+  ),
+  by = .(folder, Name, ts_id, CSV)
+][
   order(folder, Name, ts_id)
-] |> fwrite(file.path(path_out, "data_range_dt.tsv"), sep = "\t")
+] |>
+  fwrite(file.path(path_out, "data_range_dt.tsv"), sep = "\t")
 
 cat(
   "Time elapsed:\t",

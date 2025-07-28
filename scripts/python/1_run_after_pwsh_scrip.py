@@ -1,4 +1,3 @@
-
 """
 Notes:
     There is no procedure to validate the read data!
@@ -11,6 +10,7 @@ import time
 from pathlib import Path
 
 import polars as pl
+
 import _tools.fun_s_pl as fpl
 
 time_start = time.perf_counter()
@@ -50,7 +50,6 @@ ts_l = pl.DataFrame()
 
 # For each folder, read the csv data files
 for path_folder in path_folders:
-
     # Get the list of CSV files in full path
     csv_paths = [i for i in path_folder.iterdir() if i.is_file()]
     csv_names = [i.name for i in csv_paths]
@@ -110,11 +109,10 @@ for path_folder in path_folders:
             ts.with_columns(
                 pl.col.TimeStamp.str.to_datetime('%Y-%m-%d %H:%M:%S').name.keep(),
                 pl.lit(folder_name).alias('folder'),
-            )
+            ),
         ],
         how='vertical',
     )
-
 
     # Save the data as a parquet (for data sharing purpose) from this folder
     parquet_2_save = path_out / f'{folder_name}.parquet'
@@ -190,17 +188,11 @@ for path_folder in path_folders:
         False: ['Time', '%Y-%m-%d %H:%M:%S', pl.Datetime],
     }
     col_dt, fmt, fdt = daily_dict.get(fpl.is_ts_daily(udt_df))
-    ts_w = (
-        w.rename({'TimeStamp': col_dt})
-        .cast({pl.Datetime: fdt})
-        .pipe(fpl.na_ts_insert)
-    )
+    ts_w = w.rename({'TimeStamp': col_dt}).cast({pl.Datetime: fdt}).pipe(fpl.na_ts_insert)
 
     # Save the wide format as a parquet file
     parquet_2_save_wide = path_out / f'{folder_name}_wide.parquet'
-    ts_w.with_columns(
-        pl.col(col_dt).dt.strftime(fmt)
-    ).write_parquet(
+    ts_w.with_columns(pl.col(col_dt).dt.strftime(fmt)).write_parquet(
         parquet_2_save_wide,
         # compression='zstd',
         # compression_level=22,
@@ -233,7 +225,6 @@ data_summary = (
     .sort(['folder', 'Name', 'ts_id'])
 )
 data_summary.write_csv(tsv_2_save, separator='\t')
-
 
 
 # Print out something showing it runs properly

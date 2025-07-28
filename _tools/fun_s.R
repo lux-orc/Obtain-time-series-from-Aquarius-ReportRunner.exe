@@ -1,14 +1,14 @@
-
 # https://adv-r.hadley.nz/functions.html
 # https://r-pkgs.org/index.html
 
-if (getRversion() < "4.3.0")
+if (getRversion() < "4.3.0") {
   stop("R version should be no older than 4.3.0! Upgrade R from https://cran.r-project.org")
+}
 
-library(data.table)  # Fast operations on large data frames
-library(httr)  # Useful tools for working with HTTP organised by HTTP verbs
+library(data.table) # Fast operations on large data frames
+library(httr) # Useful tools for working with HTTP organised by HTTP verbs
 
-Sys.setenv(TZ = "Etc/GMT-12")  # Sys.unsetenv("TZ"); Sys.timezone()
+Sys.setenv(TZ = "Etc/GMT-12") # Sys.unsetenv("TZ"); Sys.timezone()
 
 
 path_relative <- function(path, to) {
@@ -26,8 +26,9 @@ ok_comma <- function(FUN) {
     len <- length(arg_list)
     if (len > 1L) {
       last <- arg_list[[len]]
-      if (missing(last))
+      if (missing(last)) {
         arg_list <- arg_list[-len]
+      }
     }
     do.call(FUN, arg_list)
   }
@@ -124,8 +125,9 @@ xts_2_dt <- function(xts_obj) {
   #
   # Returns:
   #   The time series (TS) with all completely empty rows removed.
-  if (xts::is.xts(TS))
+  if (xts::is.xts(TS)) {
     TS <- xts_2_dt(TS)
+  }
   x <- as.data.table(TS)
   col_dt <- x[, names(.SD), .SDcols = is_datetime]
   col_v <- x[, names(.SD), .SDcols = !is_datetime]
@@ -150,8 +152,9 @@ ts_step <- function(TS, minimum_time_step_in_second = 60L) {
   #   any integer greater than 0: time series is in a regular time step (in secs),
   #   NULL: time series doesn't contain any values (i.e., empty).
   t1 <- .trim_ts(TS)[[1]]
-  if (any(c(0, 1) %in% length(t1)))
+  if (any(c(0, 1) %in% length(t1))) {
     return(message("Not enough data to determine steps -> `NULL` returned!"))
+  }
   if (is(t1, "Date")) {
     return(0L)
   } else {
@@ -172,8 +175,9 @@ na_ts_insert <- function(TS) {
   # Returns:
   #   Padded time series for regular time-step TS;
   #   empty-row-removed time series for irregular time-step TS.
-  if (xts::is.xts(TS))
+  if (xts::is.xts(TS)) {
     TS <- xts_2_dt(TS)
+  }
   x <- .trim_ts(data.table(TS))
   if (dim(x)[1]) {
     con <- ts_step(x)
@@ -208,10 +212,12 @@ hourly_2_daily <- function(hts, day_starts_at = 0L, agg = mean, prop = 1.) {
   # Returns:
   #   A frame of daily time series with an extra column of site name.
   is_wholenumber <- function(x, tol = sqrt(.Machine$double.eps)) abs(x - round(x)) < tol
-  if (!is_wholenumber(day_starts_at) || day_starts_at < 0L || day_starts_at > 23L)
+  if (!is_wholenumber(day_starts_at) || day_starts_at < 0L || day_starts_at > 23L) {
     stop("`day_starts_at` must be an integer in [0L, 23L]!\n")
-  if (prop < 0 || prop > 1)
+  }
+  if (prop < 0 || prop > 1) {
     stop("`prop` must be in [0, 1]!\n")
+  }
   hts_c <- as.data.table(na_ts_insert(hts))
   site_name <- names(hts_c)[2]
   setnames(hts_c, old = names(hts_c), new = c("Time", "Value"))
@@ -239,14 +245,18 @@ ts_info <- function(TS) {
   ts_w <- if (xts::is.xts(TS)) xts_2_dt(TS) else as.data.table(TS)
   names(ts_w)[1] <- "Time"
   con <- ts_step(ts_w)
-  if (is.null(con)) return(NULL)
+  if (is.null(con)) {
+    return(NULL)
+  }
   empty_df <- data.table(Site = names(TS)[-1L])
   ts_l <- melt.data.table(ts_w, id.vars = "Time", variable.name = "Site", value.name = "V")
   info_df <- na.omit(ts_l)[, .(Start = min(Time), End = max(Time), n = .N), Site]
   d_yr <- 365.2422
   info_df[, Length_yr := as.numeric(difftime(End, Start, units = "d")) / d_yr]
   info_df <- merge.data.table(empty_df, info_df, by = "Site", all.x = TRUE, sort = FALSE)
-  if (con == -1L) return(.as_df(TS)(info_df[, -"n"]))
+  if (con == -1L) {
+    return(.as_df(TS)(info_df[, -"n"]))
+  }
   step_day <- if (con == 0L) 1L else con / (3600 * 24)
   info_df[, `:=`(N = Length_yr * d_yr + step_day, Length_yr = Length_yr + step_day / d_yr)]
   info_df[, `:=`(Completion = n * step_day / N * 100, n = NULL, N = NULL)]
@@ -263,11 +273,14 @@ ts_2_list <- function(TS) {
   #
   # Returns:
   #   A list split by columns in the input TS.
-  if (xts::is.xts(TS)) TS <- xts_2_dt(TS)
+  if (xts::is.xts(TS)) {
+    TS <- xts_2_dt(TS)
+  }
   x <- as.data.frame(TS)
   L <- vector(mode = "list", length = dim(x)[2] - 1L)
-  for (i in seq_len(length(L)))
+  for (i in seq_len(length(L))) {
     L[[i]] <- .as_df(TS)(na_ts_insert(x[, c(1, i + 1)]))
+  }
   return(`names<-`(L, names(TS)[-1]))
 }
 
@@ -282,7 +295,9 @@ ts_melt <- function(TS, value_name = "Value") {
   # Returns:
   #   A long format of the time series.
   con <- ts_step(TS)
-  if (is.null(con)) return(NULL)
+  if (is.null(con)) {
+    return(NULL)
+  }
   x <- as.data.table(na_ts_insert(TS))
   dt_name <- names(x[, .SD, .SDcols = is_datetime])
   y <- NULL

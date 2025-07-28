@@ -1,4 +1,3 @@
-
 import datetime
 from typing import Any, Callable
 
@@ -54,8 +53,8 @@ def _ts_valid_pd(ts: Any, /) -> 'str | None':
     if not isinstance(ts, (pd.Series, pd.DataFrame)):
         return '`ts` must be either pandas.Series or pandas.DataFrame!'
     if not (
-            all(isinstance(i, (datetime.datetime, datetime.date)) for i in ts.index)
-            or pd.api.types.is_datetime64_any_dtype(ts.index)
+        all(isinstance(i, (datetime.datetime, datetime.date)) for i in ts.index)
+        or pd.api.types.is_datetime64_any_dtype(ts.index)
     ):
         return f'Wrong dtype in the index: `{ts.index.dtype}` detected!'
     if not (ts.index.size == ts.index.unique().size):
@@ -74,8 +73,7 @@ def _ts_valid_pd(ts: Any, /) -> 'str | None':
 
 
 def ts_step(
-        ts: 'pd.DataFrame | pd.Series',
-        minimum_time_step_in_second: int = 60
+    ts: 'pd.DataFrame | pd.Series', minimum_time_step_in_second: int = 60
 ) -> 'int | None':
     """
     Identify the temporal resolution (in seconds) for a time series
@@ -138,10 +136,10 @@ def na_ts_insert(ts: 'pd.DataFrame | pd.Series') -> pd.DataFrame:
 
 
 def hourly_2_daily(
-        hts: 'pd.DataFrame | pd.Series',
-        day_starts_at: int = 0,
-        agg: Callable = pd.Series.mean,
-        prop: float = 1.
+    hts: 'pd.DataFrame | pd.Series',
+    day_starts_at: int = 0,
+    agg: Callable = pd.Series.mean,
+    prop: float = 1.0,
 ) -> pd.DataFrame:
     """
     Aggregate the hourly time series to daily time series using customised function
@@ -222,7 +220,8 @@ def ts_info(ts: 'pd.DataFrame | pd.Series') -> pd.DataFrame:
     d_yr = 365.2422
     info['Length_yr'] = (info['End'] - info['Start']) / pd.Timedelta(f'{d_yr}D')
     info = empty_df.join(info, how='left').set_index(col_name).reset_index()
-    if con == -1: return info.drop('n', axis=1)
+    if con == -1:
+        return info.drop('n', axis=1)
     step_day = con / (3600 * 24)
     info = info.assign(
         N=info['Length_yr'] * d_yr + step_day,

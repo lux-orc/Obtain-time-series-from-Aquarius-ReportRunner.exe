@@ -1,10 +1,9 @@
-
 rm(list = ls(all.names = TRUE))
 
-library(httr)  # Useful tools for working with HTTP organised by HTTP verbs
-library(data.table)  # Fast operations on large data frames
+library(httr) # Useful tools for working with HTTP organised by HTTP verbs
+library(data.table) # Fast operations on large data frames
 
-time_start <- Sys.time()  # Start the timer
+time_start <- Sys.time() # Start the timer
 
 
 end_point <- "https://aquarius.orc.govt.nz/AQUARIUS/Publish/v2"
@@ -40,8 +39,9 @@ setnames(param_df, old = c("Identifier", "UnitIdentifier"), new = c("Param", "Un
 # ===================================
 path <- getwd()
 path_info <- file.path(path, "info")
-if (!dir.exists(path_info))
+if (!dir.exists(path_info)) {
   dir.create(path_info)
+}
 fwrite(plate_df, file.path(path_info, "plate_info.csv"))
 fwrite(param_df, file.path(path_info, "param_info.csv"))
 
