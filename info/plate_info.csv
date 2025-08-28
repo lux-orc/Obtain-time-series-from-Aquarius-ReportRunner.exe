@@ -7421,7 +7421,7 @@ I44/1120,Pretoria Street Dunedin
 I44/1121,Fitzroy Dunedin
 I44/1122,Andersons Bay Dunedin
 I44/1123,King Edward Street Dunedin
-I44/1124,Council St Mills St  Corner Dunedin
+I44/1124,Council St Mills St Corner Dunedin
 I44/1125,Alma Street Dunedin
 EN499,Orokonui Park Effluent
 EN496,Mainland Effluent
@@ -7858,7 +7858,7 @@ CE17/0124,Scout Hall (shallow) Dunedin
 CE17/0125,Scout Hall (deep) Dunedin
 CE17/0131,Tahuna Road Dunedin
 GT198,Tautuku River at McLean Falls
-GT199,Duckaday Creek at McLean Falls Footbridge
+GT199,Duckaday Creek 350m upstream of Footbridge
 GT200,Unnamed Trib. at Poolburn
 GT201,Totara Creek at Old Dunstan Road
 GT202,Unnamed Trib. at Loganburn Huts
@@ -9843,7 +9843,7 @@ RM17.301.22,RM17.301.22
 RM24.444.01,RM24.444.01
 CE16/0139,Orme Street Outram
 CE16/0141,Bowling Club Outram
-CE16/0142,Beaumaris St Outram
+CE16/0142,Beaumaris Street Outram
 CE16/0143,Rugby Club Outram
 CE16/0138,Holyhead Street Outram
 RM20.448.03,RM20.448.03
@@ -9942,3 +9942,34 @@ RM25.006.01,RM25.006.01
 WM1725,WM1725
 2001.394,2001.394
 2001.386,2001.386
+GT811,Weekly Sampling Final Effluent
+IN24.0004,IN24.0004
+CE17/0127,"Murrayfield Street, South Dunedin"
+RM24.281.03,RM24.281.03
+WM1727,WM1727
+WM1729,WM1729
+RM23.819.03,RM23.819.03
+G43/0112,CODC Landfill Well
+G43/0183,Control Well 1
+G43/0193,Control Well 2
+MF250,MF250
+G43/0142,MF252
+GT819,Millers Flat Mine Pit Pond
+GT818,Millers Flat Settling Pond
+RM24.744.03,RM24.744.03
+WM1721,WM1721
+RM24.268.01,RM24.268.01
+WM1730,WM1730
+WM1731,WM1731
+GT822,Final Discharge Infiltration Area
+GT821,True Left 100m upstream
+GT820,True Left 500m downstream
+RM25.069.01,RM25.069.01
+RM24.619.01,RM24.619.01
+WM1736,WM1736
+WM1737,WM1737
+GT835,Hog Burn at Waipiata
+RM24.509.01,RM24.509.01
+RM23.233.01,RM23.233.01
+RM23.868.02,RM23.868.02
+WM1726,WM1726
