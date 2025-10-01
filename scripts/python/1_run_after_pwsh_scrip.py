@@ -9,9 +9,8 @@ import json
 import time
 from pathlib import Path
 
-import polars as pl
-
 import _tools.fun_s_pl as fpl
+import polars as pl
 
 time_start = time.perf_counter()
 
@@ -215,12 +214,12 @@ data_summary = (
         Plate=pl.col('Plate').first(),
         Description=pl.col('Description').first(),
         Unit=pl.col('Unit').first(),
-        Start=pl.col('TimeStamp').min().dt.strftime(fmt),
-        End=pl.col('TimeStamp').max().dt.strftime(fmt),
+        Start=pl.col('TimeStamp').min(),
+        End=pl.col('TimeStamp').max(),
         Min=pl.col('Value').min().round(3),
-        Time_min=pl.col('TimeStamp').get(pl.col('Value').arg_min()).dt.strftime(fmt),
+        Time_min=pl.col('TimeStamp').get(pl.col('Value').arg_min()),
         Max=pl.col('Value').max().round(3),
-        Time_max=pl.col('TimeStamp').get(pl.col('Value').arg_max()).dt.strftime(fmt),
+        Time_max=pl.col('TimeStamp').get(pl.col('Value').arg_max()),
     )
     .sort(['folder', 'Name', 'ts_id'])
 )
