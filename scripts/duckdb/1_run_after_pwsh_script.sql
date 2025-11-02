@@ -6,6 +6,11 @@ duckdb out/df_long.duckdb
 
 -- Read 'plate_info.json' from <info> folder
 set variable file_plate = 'info/plate_info.json';
+-- set variable file_plate = (
+--     'https://github.com/lux-orc/' ||
+--     'Obtain-time-series-from-Aquarius-ReportRunner.exe/' ||
+--     'blob/main/info/plate_info.json'
+-- );
 create or replace table plates as
     with cte_pn as (
         select * as plate_name
@@ -16,9 +21,14 @@ create or replace table plates as
         unnest(map_values(plate_name)) as Name
     from cte_pn
 ;
-set variable file_param = 'info/param_info.json';
 
 -- Read 'param_info.json' from <info> folder
+set variable file_param = 'info/param_info.json';
+-- set variable file_param = (
+--     'https://github.com/lux-orc/' ||
+--     'Obtain-time-series-from-Aquarius-ReportRunner.exe/' ||
+--     'blob/main/info/param_info.json'
+-- );
 create or replace table params as
     with param_unit as (
         select * as param_unit
