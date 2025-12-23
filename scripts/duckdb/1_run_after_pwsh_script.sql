@@ -12,15 +12,23 @@ set variable file_plate = 'info/plate_info.json';
 --     'blob/main/info/plate_info.json'
 -- );
 create or replace table plates as
-    with cte_pn as (
-        select * as plate_name
-        from read_json(getvariable('file_plate'))
-    )
     select
-        unnest(map_keys(plate_name)) as Plate,
-        unnest(map_values(plate_name)) as Name
-    from cte_pn
+        e.key as Plate,
+        e.value as Name
+    from
+        read_json(getvariable('file_plate')) as t,
+        unnest(map_entries(t.json)) as u(e)
 ;
+-- create or replace table plates as
+--     with cte_pn as (
+--         select * as plate_name
+--         from read_json(getvariable('file_plate'))
+--     )
+--     select
+--         unnest(map_keys(plate_name)) as Plate,
+--         unnest(map_values(plate_name)) as Name
+--     from cte_pn
+-- ;
 
 -- Read 'param_info.json' from <info> folder
 set variable file_param = 'info/param_info.json';
@@ -30,16 +38,23 @@ set variable file_param = 'info/param_info.json';
 --     'blob/main/info/param_info.json'
 -- );
 create or replace table params as
-    with param_unit as (
-        select * as param_unit
-        from read_json(getvariable('file_param'))
-    )
     select
-        unnest(map_keys(param_unit)) as Parameter,
-        unnest(map_values(param_unit)) as Unit
-    from param_unit
+        e.key as Parameter,
+        e.value as Unit
+    from
+        read_json(getvariable('file_param')) as t,
+        unnest(map_entries(t.json)) as u(e)
 ;
-
+-- create or replace table params as
+--     with param_unit as (
+--         select * as param_unit
+--         from read_json(getvariable('file_param'))
+--     )
+--     select
+--         unnest(map_keys(param_unit)) as Parameter,
+--         unnest(map_values(param_unit)) as Unit
+--     from param_unit
+-- ;
 
 -- Create a long format frame before save
 create or replace table ts_long as

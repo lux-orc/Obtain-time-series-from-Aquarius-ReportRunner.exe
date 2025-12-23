@@ -101,7 +101,7 @@ EM533,Clutha at Otama
 EM558,Lake Onslow at Simulated Net Inflow
 EM557,Lake Onslow at Dam (Natural Outflows)
 EM559,Lake Onslow at Simulated Natural Inflow
-I44/0835,Donnellys Bores
+I44/0835,Donnelly P2 (Deep)
 EM566,Harleys Bore
 EM567,Dunstan Creek at Beattie Road
 EM577,Kakanui GW at Patons
@@ -791,7 +791,7 @@ EW541,Otokia Creek at Brighton Rd Bridge
 EW572,Dunstan Peak at Ecan Border
 EW569,Haast at Roaring Billy
 EW734,Arrow at Cornwall street d/s
-EW706,Manuherikia at Falls Dam
+EW706,Manuherikia at Falls Dam Lake
 EW867,Lake Hawea at Hunter Valley
 EW864,Queenstown Aero AWS
 EW868,Tokomairiro at Glenledi
@@ -1812,16 +1812,16 @@ I44/0005,Bathgate Park Dunedin
 I43/0044,I43/0044
 I44/0007,Kennedy Street Dunedin
 I44/0006,Tonga Park (Shallow) Dunedin
-I44/0385,I44/0385
+I44/0385,Marshalls bore
 I44/0074,I44/0074
 I44/0422,I44/0422
-I44/0387,Donnellys Bores (Deep)
+I44/0387,I44/0387
 I44/0519,Gordon Rd Mosgiel
 I44/0495,Outram Mosgiel Rd
 I44/0729,I44/0729
 I44/0821,Dukes Rd Mosgiel
 I44/0836,Outram Bore
-I44/0837,I44/0837
+I44/0837,Donnelly P6 (shallow)
 I44/0842,Piezo 2 (Harleys Bore)
 I44/0838,Outram Bore
 I44/0844,Piezo 6 (Harleys Bore)
@@ -8986,7 +8986,7 @@ RM20.335.07,RM20.335.07
 RM20.335.14,RM20.335.14
 RM20.335.15,RM20.335.15
 WM0054,WM0054
-GT379,Boundary  Creek at SH6
+GT379,Boundary Creek at SH6
 RM17.035.01,RM17.035.01
 GT382,Tapanui WTP D/S 100m Whiskey Gulley Creek
 GT381,Tapanui WTP D/S 50m Whiskey Gulley Creek
@@ -8998,7 +8998,7 @@ GT384,Patearoa at Taieri River above balancing pond
 CE17/0165,Burnside Landfill New Downgradient Bore
 WM1659,WM1659
 GT386,Dunedin at Clyde Street Air Quality
-GT387,Wanaka Air Quality
+GT387,Wanaka at Stone St Air Quality
 RM21.481.01,RM21.481.01
 GT388,Havoc Farms Final Eflluent
 RM22.178.02,RM22.178.02
@@ -10028,3 +10028,30 @@ RM24.741.02,RM24.741.02
 RM25.327.01,RM25.327.01
 WM1748,WM1748
 WM1749,WM1749
+GT599,Falls Dam
+GT598,Butchers Dam
+RM23.680.01,RM23.680.01
+WM1751,WM1751
+RM20.454.04,RM20.454.04
+RM24.291.01,RM24.291.01
+WM1716,WM1716
+RM25.313.01,RM25.313.01
+RM25.240.01,RM25.240.01
+GT884,Wanaka at Upton St Air Quality
+RM24.768.01,RM24.768.01
+WM1723,WM1723
+RM23.648.03,RM23.648.03
+RM24.120.02,RM24.120.02
+WM1694,WM1694
+GT903,Lake Ascog at Lake Ascog Pump
+RM23.551.01,RM23.551.01
+RM24.544.02,RM24.544.02
+GT905,Lake Hayes Effluent 225 m SW Baird Lane
+GT907,Taieri 200m downstream of Sow Burn Confluence
+CB18/0113,Gibson Road Pebbles
+RM24.635.01,RM24.635.01
+WM1757,WM1757
+RM25.011.01,RM25.011.01
+RM25.292.01,RM25.292.01
+GT908,Carrick Winery Wastewater
+WM1758,WM1758

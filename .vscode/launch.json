@@ -1,0 +1,21 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Current File (project root cwd)",
+            "type": "debugpy", // manage debug
+            "request": "launch",
+            "program": "${file}", // The current file to debug
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}", // Set the project root as the cwd
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}", // Ensure _tools can be imported
+                "PYTHON_ENV": "debug", // debug flag
+                "PROJECT_ROOT": "${workspaceFolder}" // define the project root
+            }
+        }
+    ]
+}

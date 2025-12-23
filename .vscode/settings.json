@@ -1,11 +1,9 @@
 {
     "powershell.cwd": "scripts",
+    "python.terminal.activateEnvironment": false,
     "python.REPL.enableREPLSmartSend": false,
-    "python.REPL.sendToNativeREPL": false,
-    "python.terminal.launchArgs": [
-        "-m",
-        "IPython",
-        "--no-autoindent",
-        // "--simple-prompt"
-    ]
+    "python.REPL.sendToNativeREPL": true,
+    "python.terminal.launchArgs": [],
+    "notebook.output.fontFamily": "Cascadia Code Light",
+    "notebook.output.fontSize": 14
 }

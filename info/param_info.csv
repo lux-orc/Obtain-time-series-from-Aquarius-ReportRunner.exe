@@ -236,6 +236,7 @@ Cryptosporidium,#/l
 Current,A
 Cyanide Total,g/m^3
 Cyanide WAD,g/m^3
+Cyanobacteria biovolume,mm^3/L
 DCP bad characters,None
 DCP DelivryDelayTime,s
 DCP frequency drift,Hz
