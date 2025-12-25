@@ -18,11 +18,11 @@ To download the time series data from Aquarius and organise the data in `DataFra
     - To run the [Python](https://www.microsoft.com/store/productId/9NRWMJP3717K?ocid=pdpshare) scripts, run the following to install the needed modules:
       ```powershell
       # Create a virtual environment after unzip or clone
-      > python -m venv venv
+      > uv venv
       # Activate the environment
-      > venv\Scripts\activate.bat
+      > .venv\Scripts\activate
       # Install the required modules
-      > pip install -r requirements.txt
+      (_ts_AQ)> uv sync
       ```
     - To run the [R](https://cran.r-project.org/) scripts, the following packages are needed:
       - [httr](https://cran.r-project.org/web/packages/httr/index.html)
