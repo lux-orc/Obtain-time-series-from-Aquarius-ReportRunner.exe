@@ -1,0 +1,12 @@
+[project]
+name = "ts-aq"
+version = "0.1.0"
+description = "To download the time series data from Aquarius and organise the data in `DataFrame`s"
+readme = "README.md"
+requires-python = ">=3.14,<3.15"
+dependencies = [
+    "pandas==2.3.3",
+    "polars==1.36.1",
+    "pyarrow==22.0.0",
+    "urllib3==2.6.2",
+]
