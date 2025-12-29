@@ -7,6 +7,7 @@ _tools/__pycache__/
 .Rproj.user/
 .ruff_cache/
 _ts_AQ.Rproj
+.ruff.toml
 _tools/ReportRunner.exe
 _tools/ReportRunner.Readme.html
 out/*.*
@@ -28,4 +29,3 @@ scripts/tmp.py
 scripts/tmp.R
 scripts/tmp.sql
 bak/*.*
-./.ruff.toml
