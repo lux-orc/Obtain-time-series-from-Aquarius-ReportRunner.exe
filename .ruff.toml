@@ -1,0 +1,10 @@
+
+cache-dir = "~/.cache/ruff"
+
+# Allow lines to be as long as 92.
+line-length = 92
+
+[format]
+# Unlike Black, use single quotes for strings.
+quote-style = "single"
+
